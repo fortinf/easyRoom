@@ -18,3 +18,5 @@
 .project
 .buildpath
 .composer.lock
+/nbproject
+/nbproject/private/
