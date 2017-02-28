@@ -1,3 +1,7 @@
+easy_room_test:
+    resource: "@EasyRoomTestBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
