@@ -1,0 +1,23 @@
+easy_room_app_login_index:
+    path:     /
+    defaults: { _controller: EasyRoomAppBundle:Login:index }
+
+easy_room_app_accueil_index:
+    path:     /accueil-index
+    defaults: { _controller: EasyRoomAppBundle:Accueil:index }
+
+easy_room_app_salle_index:
+    path:     /salle-index
+    defaults: { _controller: EasyRoomAppBundle:Salle:index }
+
+easy_room_app_equipemet_index:
+    path:     /equipement-index
+    defaults: { _controller: EasyRoomAppBundle:Equipement:index }
+
+easy_room_app_reservation_index:
+    path:     /reservation-index
+    defaults: { _controller: EasyRoomAppBundle:Reservation:index }
+
+easy_room_app_utilisateur_index:
+    path:     /utilisateur-index
+    defaults: { _controller: EasyRoomAppBundle:Utilisateur:index }
