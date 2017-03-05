@@ -1,0 +1,103 @@
+<?php
+
+namespace EasyRoom\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Equipement
+ *
+ * @ORM\Table(name="T_EQUIPEMENT", uniqueConstraints={@ORM\UniqueConstraint(name="EQU_ID", columns={"EQU_ID"}), @ORM\UniqueConstraint(name="EQU_FK_TEQ_ID", columns={"EQU_FK_TEQ_ID"})}, indexes={@ORM\Index(name="EQU_FK_SAL_ID", columns={"EQU_FK_SAL_ID"})})
+ * @ORM\Entity
+ */
+class Equipement
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="EQU_LIBELLE", type="string", length=255, nullable=false)
+     */
+    private $libelle;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="EQU_DISPO", type="boolean", nullable=false)
+     */
+    private $disponible;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="EQU_REF", type="string", length=25, nullable=true)
+     */
+    private $reference;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="EQU_MOBILITE", type="boolean", nullable=false)
+     */
+    private $mobilite;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="EQU_DESCRIPTION", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="EQU_ID", type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \EasyRoom\AppBundle\Entity\Salle
+     *
+     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Salle")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="EQU_FK_SAL_ID", referencedColumnName="SAL_ID")
+     * })
+     */
+    private $salle;
+
+    /**
+     * @var \EasyRoom\AppBundle\Entity\TypeEquipement
+     *
+     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\TypeEquipement")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="EQU_FK_TEQ_ID", referencedColumnName="TEQ_ID")
+     * })
+     */
+    private $typeEquipement;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Reservation", inversedBy="eqrFkEqu")
+     * @ORM\JoinTable(name="t_equipement_reservation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="EQR_FK_EQU_ID", referencedColumnName="EQU_ID")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="EQR_FK_RES_ID", referencedColumnName="RES_ID")
+     *   }
+     * )
+     */
+    private $reservations;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

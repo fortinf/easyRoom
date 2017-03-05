@@ -1,0 +1,86 @@
+<?php
+
+namespace EasyRoom\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Utilisateur
+ *
+ * @ORM\Table(name="T_UTILISATEUR", uniqueConstraints={@ORM\UniqueConstraint(name="UTI_ID", columns={"UTI_ID"})}, indexes={@ORM\Index(name="UTI_FK_ROL_ID", columns={"UTI_FK_ROL_ID"})})
+ * @ORM\Entity
+ */
+class Utilisateur
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="UTI_MAIL", type="string", length=255, nullable=false)
+     */
+    private $mail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="UTI_NOM", type="string", length=50, nullable=false)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="UTI_PRENOM", type="string", length=50, nullable=false)
+     */
+    private $prenom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="UTI_MDP", type="string", length=50, nullable=false)
+     */
+    private $motDePasse;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="UTI_ID", type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \EasyRoom\AppBundle\Entity\Role
+     *
+     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Role")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="UTI_FK_ROL_ID", referencedColumnName="ROL_ID")
+     * })
+     */
+    private $role;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Reservation", inversedBy="uirFkUti")
+     * @ORM\JoinTable(name="t_utilisateur_i_reservation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="UIR_FK_UTI_ID", referencedColumnName="UTI_ID")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="UIR_FK_RES_ID", referencedColumnName="RES_ID")
+     *   }
+     * )
+     */
+    private $reservations;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

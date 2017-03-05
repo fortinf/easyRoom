@@ -1,0 +1,47 @@
+<?php
+
+namespace EasyRoom\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Disposition
+ *
+ * @ORM\Table(name="T_DISPOSITION", uniqueConstraints={@ORM\UniqueConstraint(name="DIS_ID", columns={"DIS_ID"})})
+ * @ORM\Entity
+ */
+class Disposition
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="DIS_LIBELLE", type="string", length=50, nullable=false)
+     */
+    private $libelle;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="DIS_ID", type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Salle", mappedBy="tdsFkDis")
+     */
+    private $salles;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->salles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

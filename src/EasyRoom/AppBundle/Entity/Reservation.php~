@@ -1,0 +1,117 @@
+<?php
+
+namespace EasyRoom\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Reservation
+ *
+ * @ORM\Table(name="T_RESERVATION", uniqueConstraints={@ORM\UniqueConstraint(name="RES_ID", columns={"RES_ID"})}, indexes={@ORM\Index(name="RES_FK_SAL_ID", columns={"RES_FK_SAL_ID"}), @ORM\Index(name="RES_FK_UTI_ID", columns={"RES_FK_UTI_ID"})})
+ * @ORM\Entity
+ */
+class Reservation
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="RES_LIBELLE", type="string", length=50, nullable=true)
+     */
+    private $libelle;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="RES_DATE_DEBUT", type="date", nullable=false)
+     */
+    private $dateDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="RES_DATE_FIN", type="date", nullable=false)
+     */
+    private $dateFin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="RES_HEURE_DEBUT", type="time", nullable=false)
+     */
+    private $heureDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="RES_HEURE_FIN", type="time", nullable=false)
+     */
+    private $heureFin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="RES_DUREE_HEURE", type="smallint", nullable=true)
+     */
+    private $dureeHeure;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="RES_DUREE_JOUR", type="smallint", nullable=true)
+     */
+    private $dureeJour;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="RES_ID", type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \EasyRoom\AppBundle\Entity\Salle
+     *
+     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Salle")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="RES_FK_SAL_ID", referencedColumnName="SAL_ID")
+     * })
+     */
+    private $salle;
+
+    /**
+     * @var \EasyRoom\AppBundle\Entity\Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Utilisateur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="RES_FK_UTI_ID", referencedColumnName="UTI_ID")
+     * })
+     */
+    private $utilisateurMaitre;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Utilisateur", mappedBy="uirFkRes")
+     */
+    private $utlisateurs;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Equipement", mappedBy="eqrFkRes")
+     */
+    private $equipements;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->utlisateurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

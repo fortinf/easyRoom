@@ -1,0 +1,90 @@
+<?php
+
+namespace EasyRoom\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Salle
+ *
+ * @ORM\Table(name="T_SALLE", uniqueConstraints={@ORM\UniqueConstraint(name="SAL_ID", columns={"SAL_ID"})})
+ * @ORM\Entity
+ */
+class Salle
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SAL_LIBELLE", type="string", length=50, nullable=false)
+     */
+    private $libelle;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="SAL_DISPO", type="boolean", nullable=false)
+     */
+    private $disponible;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SAL_DESCRIPTION", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SAL_PHOTO", type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="SAL_JOUR", type="boolean", nullable=false)
+     */
+    private $lumiereJour;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="SAL_HANDICAP", type="boolean", nullable=false)
+     */
+    private $handicap;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="SAL_ID", type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Disposition", inversedBy="tdsFkSal")
+     * @ORM\JoinTable(name="t_disposition_salle",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="TDS_FK_SAL_ID", referencedColumnName="SAL_ID")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="TDS_FK_DIS_ID", referencedColumnName="DIS_ID")
+     *   }
+     * )
+     */
+    private $dispositions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dispositions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+
