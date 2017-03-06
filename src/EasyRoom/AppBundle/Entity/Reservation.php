@@ -104,6 +104,13 @@ class Reservation
      * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Equipement", mappedBy="eqrFkRes")
      */
     private $equipements;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\InviteExterne", mappedBy="reservation")
+     */
+    private $inviteExternes;
 
     /**
      * Constructor
@@ -112,6 +119,7 @@ class Reservation
     {
         $this->utlisateurs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->equipements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inviteExternes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -407,5 +415,39 @@ class Reservation
     public function getEquipements()
     {
         return $this->equipements;
+    }
+
+    /**
+     * Add inviteExterne
+     *
+     * @param \EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne
+     *
+     * @return Reservation
+     */
+    public function addInviteExterne(\EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne)
+    {
+        $this->inviteExternes[] = $inviteExterne;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteExterne
+     *
+     * @param \EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne
+     */
+    public function removeInviteExterne(\EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne)
+    {
+        $this->inviteExternes->removeElement($inviteExterne);
+    }
+
+    /**
+     * Get inviteExternes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInviteExterne()
+    {
+        return $this->inviteExternes;
     }
 }
