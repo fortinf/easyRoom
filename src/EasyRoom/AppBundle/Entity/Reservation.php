@@ -446,7 +446,7 @@ class Reservation
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getInviteExterne()
+    public function getInviteExternes()
     {
         return $this->inviteExternes;
     }
