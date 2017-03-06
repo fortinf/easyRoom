@@ -74,6 +74,13 @@ class Utilisateur
      * )
      */
     private $reservations;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\Reservation", mappedBy="utilisateurMaitre")
+     */
+    private $reservationProprietaires;
 
     /**
      * Constructor
@@ -81,6 +88,7 @@ class Utilisateur
     public function __construct()
     {
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservationProprietaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -246,5 +254,39 @@ class Utilisateur
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+    /**
+     * Add reservationProprietaire
+     *
+     * @param \EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire
+     *
+     * @return Utilisateur
+     */
+    public function addReservationProprietaire(\EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire)
+    {
+        $this->reservationProprietaires = $reservationProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire
+     */
+    public function removeReservationProprietaire(\EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire)
+    {
+        $this->reservationProprietaires->removeElement($reservationProprietaire);
+    }
+
+    /**
+     * Get reservationProprietaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservationProprietaires()
+    {
+        return $this->reservationProprietaires;
     }
 }
