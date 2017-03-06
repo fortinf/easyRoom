@@ -69,6 +69,20 @@ class Salle
      * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\DispositionSalle", mappedBy="salle")
      */
     private $dispositionSalles;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\Equipement", mappedBy="salle")
+     */
+    private $equipements;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\Reservation", mappedBy="salle")
+     */
+    private $reservations;
 
     /**
      * Constructor
@@ -76,6 +90,8 @@ class Salle
     public function __construct()
     {
         $this->dispositionSalles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -265,5 +281,73 @@ class Salle
     public function getDispositionSalles()
     {
         return $this->dispositionSalles;
+    }
+
+    /**
+     * Add equipement
+     *
+     * @param \EasyRoom\AppBundle\Entity\Equipement $equipement
+     *
+     * @return Salle
+     */
+    public function addEquipement(\EasyRoom\AppBundle\Entity\Equipement $equipement)
+    {
+        $this->equipements[] = $equipement;
+
+        return $this;
+    }
+
+    /**
+     * Remove equipement
+     *
+     * @param \EasyRoom\AppBundle\Entity\Equipement $equipement
+     */
+    public function removeEquipement(\EasyRoom\AppBundle\Entity\Equipement $equipement)
+    {
+        $this->equipements->removeElement($equipement);
+    }
+
+    /**
+     * Get equipements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEquipements()
+    {
+        return $this->equipements;
+    }
+
+    /**
+     * Add reservation
+     *
+     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     *
+     * @return Salle
+     */
+    public function addReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     */
+    public function removeReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }
