@@ -2,10 +2,3 @@ easy_room_app:
     resource: "@EasyRoomAppBundle/Resources/config/routing.yml"
     prefix:   /
 
-easy_room_test:
-    resource: "@EasyRoomTestBundle/Resources/config/routing.yml"
-    prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

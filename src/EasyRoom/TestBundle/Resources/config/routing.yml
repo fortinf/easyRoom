@@ -1,3 +1,0 @@
-easy_room_test_homepage:
-    path:     /
-    defaults: { _controller: EasyRoomTestBundle:Default:index }
