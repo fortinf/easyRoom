@@ -1,4 +1,24 @@
 services:
-#    easy_room_app.example:
-#        class: EasyRoom\AppBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    disposition.service:
+        class: EasyRoom\AppBundle\Service\DispositionService
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    salle.service:
+        class: EasyRoom\AppBundle\Service\SalleService
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    utilisateur.service:
+        class: EasyRoom\AppBundle\Service\UtilisateurService
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    role.service:
+        class: EasyRoom\AppBundle\Service\RoleService
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    equipement.service:
+        class: EasyRoom\AppBundle\Service\EquipementService
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    typeequipement.service:
+        class: EasyRoom\AppBundle\Service\TypeEquipementService
+        arguments: ["@doctrine.orm.default_entity_manager"]
