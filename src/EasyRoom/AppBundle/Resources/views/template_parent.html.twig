@@ -6,24 +6,23 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>{EasyRoom</title>
+        <title>EasyRoom</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/css/materialize.css') }}"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/css/style.css') }}"  media="screen,projection"/>
+        {% block stylesheets %}{% endblock %}
       </head>
     <body>
         <header>
-          <nav>
+          {% block navbar_profil %}{% endblock %}
+          <nav class="white">
             <div class="nav-wrapper">
-              <a href="#" class="brand-logo">Logo</a>
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="Accueil.html">Accueil</a></li>
-                <li><a href="Salles.html">Salles</a></li>
-                <li><a href="Mes réservations.html">Mes réservations</a></li>
-              </ul>
+              <a href="#" class="brand-logo blue-text text-lighten-1">Logo</a>
+                {% block navbar %}{% endblock %}
             </div>
           </nav>
         </header>
@@ -38,5 +37,6 @@ and open the template in the editor.
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="{{ asset('bundles/easyroomapp/js/materialize.js') }}"></script>
+        {% block javascript %}{% endblock %}
     </body>
 </html>
