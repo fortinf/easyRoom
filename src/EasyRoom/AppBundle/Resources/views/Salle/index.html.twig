@@ -1,1 +1,51 @@
-Page : index salle
+{% extends "EasyRoomAppBundle::template_parent.html.twig" %}
+
+{# Contenu du block stylesheets #}
+{% block stylesheets %}
+    {# (Contenu optionnel) ici doit être ajouté seulement des balises <link> pour faire appel à des fichiers css spécifiques à la vue #}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/css/Accueil/accueil_style.css') }}"/>
+{% endblock %}
+
+{# Contenu du block navbar_profil #}
+{% block navbar_profil %}
+    {# (Contenu optionnel) ici doit être ajoutéle contenu du menu déroulant pour l'onglet profil du menu #}
+     <ul id="dropdown1" class="dropdown-content">
+        <li>
+            <a href="#!" class="blue-text text-lighten-1">Mon compte</a>
+        </li>
+        <li class="divider blue-text text-lighten-1"></li>
+        <li>
+            <a href="#!" class="blue-text text-lighten-1">Déconnexion</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{# Contenu du block navbar #}
+{% block navbar %}
+    {# (Contenu obligatoire) ici doit être ajouté le contenu du menu identique pour tous les écran sauf pour la page de login #}
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+            <a href="#" class="blue-text text-lighten-1">Accueil</a>
+        </li>
+        <li>
+            <a href="#" class="blue-text text-lighten-1">Salles</a>
+        </li>
+        <li>
+            <a href="#" class="blue-text text-lighten-1">Mes réservations</a>
+        </li>
+        <li>
+            <a class="dropdown-button blue-text text-lighten-1" href="#!" data-activates="dropdown1">Compte<i class="material-icons right">perm_identity</i>
+            </a>
+        </li>
+    </ul>    
+{% endblock %}
+
+{# Contenu du block navbar #}
+{% block main %}
+    {# (Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
+{% endblock %}
+
+{# Contenu du block javascript #}
+{% block javascript %}
+    {# (Contenu optionnel) ici doit être ajouté seulement des balises <script src=""></script> pour faire appel à des fichiers js spécifiques à la vue #}
+{% endblock %}
