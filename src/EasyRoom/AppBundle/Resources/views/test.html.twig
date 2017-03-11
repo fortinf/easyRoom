@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        <header>
+            <h1>Salle : "{{ salle.libelle }}" (n°{{ salle.id }})</h1>
+        </header>
+        <main>
+            <section>
+                <h2>Dispositions</h2>
+                {% for dispositionSalle in salle.dispositionSalles %}
+                    <div>
+                        <h3>{{ dispositionSalle.disposition.libelle }}:</h3>
+                        <ul>
+                            <li>Nombre de place : {{ dispositionSalle.nbPlace }}</li>
+                            <li>Disposition par défaut : {{ dispositionSalle.dispositionDefaut }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </section>
+            <section>
+                <h2>Réservation</h2>
+                <div>
+                    <p>Libellé : {{ reservation.libelle }}</p>
+                    <p>Début : le {{ reservation.dateDebut|date("d/m/Y") }} à {{ reservation.heureDebut|date("H:i") }}</p>
+                    <p>Fin : le {{ reservation.dateFin|date("d/m/Y") }} à {{ reservation.heureFin|date("H:i") }}</p>
+                </div>
+            </section>
+            
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
