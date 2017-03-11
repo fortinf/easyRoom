@@ -31,10 +31,11 @@ class SalleService {
     }
 
     /**
-     *  Fonction de création d'une salle
+     * Fonction de création d'une salle
      * 
      * @param Salle $salle
      * @param Collection $dispositionSalles
+     * @return integer
      */
     public function create(Salle $salle, Collection $dispositionSalles) {
  
@@ -57,6 +58,8 @@ class SalleService {
         // Création de la salle
         $this->em->persist($salle);
         $this->em->flush();
+        
+        return $salle->getId();
     }
     
     /**
@@ -67,7 +70,7 @@ class SalleService {
      * @param Salle $salle
      * @param array $tabDispositionSalles
      */
-    public function update($id, Salle $salle, $tabDispositionSalles) {
+    public function update($id, Salle $salle, array $tabDispositionSalles) {
         
         $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
         
@@ -95,6 +98,11 @@ class SalleService {
         $this->em->persist($udpateSalle);
         $this->em->flush();
         
+    }
+    
+    public function getSalleById($id) {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
+        return $repository->find($id);
     }
     
     /**

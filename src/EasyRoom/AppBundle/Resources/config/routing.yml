@@ -2,6 +2,10 @@ easy_room_app_login_index:
     path:     /
     defaults: { _controller: EasyRoomAppBundle:Login:index }
 
+easy_room_app_test_index:
+    path:     /test
+    defaults: { _controller: EasyRoomAppBundle:Test:index }
+
 easy_room_app_accueil_index:
     path:     /accueil-index
     defaults: { _controller: EasyRoomAppBundle:Accueil:index }

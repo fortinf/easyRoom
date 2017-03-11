@@ -2,6 +2,9 @@
 
 namespace EasyRoom\AppBundle\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,28 +33,28 @@ class Reservation
     private $libelle;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="RES_DATE_DEBUT", type="date", nullable=false)
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="RES_DATE_FIN", type="date", nullable=false)
      */
     private $dateFin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="RES_HEURE_DEBUT", type="time", nullable=false)
      */
     private $heureDebut;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="RES_HEURE_FIN", type="time", nullable=false)
      */
@@ -72,9 +75,9 @@ class Reservation
     private $dureeJour;
 
     /**
-     * @var \EasyRoom\AppBundle\Entity\Salle
+     * @var Salle
      *
-     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Salle")
+     * @ORM\ManyToOne(targetEntity="Salle", inversedBy="reservations")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="RES_FK_SAL_ID", referencedColumnName="SAL_ID")
      * })
@@ -82,9 +85,9 @@ class Reservation
     private $salle;
 
     /**
-     * @var \EasyRoom\AppBundle\Entity\Utilisateur
+     * @var Utilisateur
      *
-     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Utilisateur")
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="reservationProprietaires")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="RES_FK_UTI_ID", referencedColumnName="UTI_ID")
      * })
@@ -92,23 +95,39 @@ class Reservation
     private $utilisateurMaitre;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Utilisateur", mappedBy="uirFkRes")
+     * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="reservations")
+     * @ORM\JoinTable(name="t_utilisateur_i_reservation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="UIR_FK_RES_ID", referencedColumnName="RES_ID")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="UIR_FK_UTI_ID", referencedColumnName="UTI_ID")
+     *   }
+     * )
      */
-    private $utlisateurs;
+    private $utilisateurs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Equipement", mappedBy="eqrFkRes")
+     * @ORM\ManyToMany(targetEntity="Equipement", inversedBy="reservations")
+     * @ORM\JoinTable(name="t_equipement_reservation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="EQR_FK_RES_ID", referencedColumnName="RES_ID")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="EQR_FK_EQU_ID", referencedColumnName="EQU_ID")
+     *   }
+     * )
      */
     private $equipements;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\InviteExterne", mappedBy="reservation")
+     * @ORM\OneToMany(targetEntity="InviteExterne", mappedBy="reservation")
      */
     private $inviteExternes;
 
@@ -117,9 +136,9 @@ class Reservation
      */
     public function __construct()
     {
-        $this->utlisateurs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->equipements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->inviteExternes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utlisateurs = new ArrayCollection();
+        $this->equipements = new ArrayCollection();
+        $this->inviteExternes = new ArrayCollection();
     }
 
 
@@ -150,7 +169,7 @@ class Reservation
     /**
      * Set dateDebut
      *
-     * @param \DateTime $dateDebut
+     * @param DateTime $dateDebut
      *
      * @return Reservation
      */
@@ -164,7 +183,7 @@ class Reservation
     /**
      * Get dateDebut
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateDebut()
     {
@@ -174,7 +193,7 @@ class Reservation
     /**
      * Set dateFin
      *
-     * @param \DateTime $dateFin
+     * @param DateTime $dateFin
      *
      * @return Reservation
      */
@@ -188,7 +207,7 @@ class Reservation
     /**
      * Get dateFin
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateFin()
     {
@@ -198,7 +217,7 @@ class Reservation
     /**
      * Set heureDebut
      *
-     * @param \DateTime $heureDebut
+     * @param DateTime $heureDebut
      *
      * @return Reservation
      */
@@ -212,7 +231,7 @@ class Reservation
     /**
      * Get heureDebut
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getHeureDebut()
     {
@@ -222,7 +241,7 @@ class Reservation
     /**
      * Set heureFin
      *
-     * @param \DateTime $heureFin
+     * @param DateTime $heureFin
      *
      * @return Reservation
      */
@@ -236,7 +255,7 @@ class Reservation
     /**
      * Get heureFin
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getHeureFin()
     {
@@ -304,11 +323,11 @@ class Reservation
     /**
      * Set salle
      *
-     * @param \EasyRoom\AppBundle\Entity\Salle $salle
+     * @param Salle $salle
      *
      * @return Reservation
      */
-    public function setSalle(\EasyRoom\AppBundle\Entity\Salle $salle = null)
+    public function setSalle(Salle $salle = null)
     {
         $this->salle = $salle;
 
@@ -318,7 +337,7 @@ class Reservation
     /**
      * Get salle
      *
-     * @return \EasyRoom\AppBundle\Entity\Salle
+     * @return Salle
      */
     public function getSalle()
     {
@@ -328,11 +347,11 @@ class Reservation
     /**
      * Set utilisateurMaitre
      *
-     * @param \EasyRoom\AppBundle\Entity\Utilisateur $utilisateurMaitre
+     * @param Utilisateur $utilisateurMaitre
      *
      * @return Reservation
      */
-    public function setUtilisateurMaitre(\EasyRoom\AppBundle\Entity\Utilisateur $utilisateurMaitre = null)
+    public function setUtilisateurMaitre(Utilisateur $utilisateurMaitre = null)
     {
         $this->utilisateurMaitre = $utilisateurMaitre;
 
@@ -342,7 +361,7 @@ class Reservation
     /**
      * Get utilisateurMaitre
      *
-     * @return \EasyRoom\AppBundle\Entity\Utilisateur
+     * @return Utilisateur
      */
     public function getUtilisateurMaitre()
     {
@@ -350,47 +369,47 @@ class Reservation
     }
 
     /**
-     * Add utlisateur
+     * Add utilisateur
      *
-     * @param \EasyRoom\AppBundle\Entity\Utilisateur $utlisateur
+     * @param Utilisateur $utilisateur
      *
      * @return Reservation
      */
-    public function addUtlisateur(\EasyRoom\AppBundle\Entity\Utilisateur $utlisateur)
+    public function addUtilisateur(Utilisateur $utilisateur)
     {
-        $this->utlisateurs[] = $utlisateur;
+        $this->utilisateurs[] = $utilisateur;
 
         return $this;
     }
 
     /**
-     * Remove utlisateur
+     * Remove utilisateur
      *
-     * @param \EasyRoom\AppBundle\Entity\Utilisateur $utlisateur
+     * @param Utilisateur $utilisateur
      */
-    public function removeUtlisateur(\EasyRoom\AppBundle\Entity\Utilisateur $utlisateur)
+    public function removeUtilisateur(Utilisateur $utilisateur)
     {
-        $this->utlisateurs->removeElement($utlisateur);
+        $this->utilisateurs->removeElement($utilisateur);
     }
 
     /**
-     * Get utlisateurs
+     * Get utilisateurs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getUtlisateurs()
+    public function getUtilisateurs()
     {
-        return $this->utlisateurs;
+        return $this->utilisateurs;
     }
 
     /**
      * Add equipement
      *
-     * @param \EasyRoom\AppBundle\Entity\Equipement $equipement
+     * @param Equipement $equipement
      *
      * @return Reservation
      */
-    public function addEquipement(\EasyRoom\AppBundle\Entity\Equipement $equipement)
+    public function addEquipement(Equipement $equipement)
     {
         $this->equipements[] = $equipement;
 
@@ -400,9 +419,9 @@ class Reservation
     /**
      * Remove equipement
      *
-     * @param \EasyRoom\AppBundle\Entity\Equipement $equipement
+     * @param Equipement $equipement
      */
-    public function removeEquipement(\EasyRoom\AppBundle\Entity\Equipement $equipement)
+    public function removeEquipement(Equipement $equipement)
     {
         $this->equipements->removeElement($equipement);
     }
@@ -410,7 +429,7 @@ class Reservation
     /**
      * Get equipements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getEquipements()
     {
@@ -420,11 +439,11 @@ class Reservation
     /**
      * Add inviteExterne
      *
-     * @param \EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne
+     * @param InviteExterne $inviteExterne
      *
      * @return Reservation
      */
-    public function addInviteExterne(\EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne)
+    public function addInviteExterne(InviteExterne $inviteExterne)
     {
         $this->inviteExternes[] = $inviteExterne;
 
@@ -434,9 +453,9 @@ class Reservation
     /**
      * Remove inviteExterne
      *
-     * @param \EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne
+     * @param InviteExterne $inviteExterne
      */
-    public function removeInviteExterne(\EasyRoom\AppBundle\Entity\inviteExterne $inviteExterne)
+    public function removeInviteExterne(InviteExterne $inviteExterne)
     {
         $this->inviteExternes->removeElement($inviteExterne);
     }
@@ -444,7 +463,7 @@ class Reservation
     /**
      * Get inviteExternes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getInviteExternes()
     {

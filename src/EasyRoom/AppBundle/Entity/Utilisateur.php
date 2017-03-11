@@ -2,7 +2,10 @@
 
 namespace EasyRoom\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use EasyRoom\AppBundle\Entity\Role;
 
 /**
  * Utilisateur
@@ -51,9 +54,9 @@ class Utilisateur
     private $motDePasse;
 
     /**
-     * @var \EasyRoom\AppBundle\Entity\Role
+     * @var Role
      *
-     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Role")
+     * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="UTI_FK_ROL_ID", referencedColumnName="ROL_ID")
      * })
@@ -61,36 +64,27 @@ class Utilisateur
     private $role;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Reservation", inversedBy="uirFkUti")
-     * @ORM\JoinTable(name="t_utilisateur_i_reservation",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="UIR_FK_UTI_ID", referencedColumnName="UTI_ID")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="UIR_FK_RES_ID", referencedColumnName="RES_ID")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Reservation", mappedBy="utilisateurs")
      */
     private $reservations;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\Reservation", mappedBy="utilisateurMaitre")
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="utilisateurMaitre")
      */
     private $reservationProprietaires;
 
     /**
-     * Constructor
+     * 
      */
     public function __construct()
     {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reservationProprietaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new ArrayCollection();
+        $this->reservationProprietaires = new ArrayCollection();
     }
-
 
     /**
      * Set mail
@@ -187,7 +181,7 @@ class Utilisateur
     {
         return $this->motDePasse;
     }
-
+      
     /**
      * Get id
      *
@@ -201,11 +195,11 @@ class Utilisateur
     /**
      * Set role
      *
-     * @param \EasyRoom\AppBundle\Entity\Role $role
+     * @param Role $role
      *
      * @return Utilisateur
      */
-    public function setRole(\EasyRoom\AppBundle\Entity\Role $role = null)
+    public function setRole(Role $role = null)
     {
         $this->role = $role;
 
@@ -215,7 +209,7 @@ class Utilisateur
     /**
      * Get role
      *
-     * @return \EasyRoom\AppBundle\Entity\Role
+     * @return Role
      */
     public function getRole()
     {
@@ -225,11 +219,11 @@ class Utilisateur
     /**
      * Add reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Utilisateur
      */
-    public function addReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -239,9 +233,9 @@ class Utilisateur
     /**
      * Remove reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
@@ -249,7 +243,7 @@ class Utilisateur
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getReservations()
     {
@@ -259,11 +253,11 @@ class Utilisateur
     /**
      * Add reservationProprietaire
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire
+     * @param Reservation $reservationProprietaire
      *
      * @return Utilisateur
      */
-    public function addReservationProprietaire(\EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire)
+    public function addReservationProprietaire(Reservation $reservationProprietaire)
     {
         $this->reservationProprietaires = $reservationProprietaire;
 
@@ -273,9 +267,9 @@ class Utilisateur
     /**
      * Remove reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire
+     * @param Reservation $reservationProprietaire
      */
-    public function removeReservationProprietaire(\EasyRoom\AppBundle\Entity\Reservation $reservationProprietaire)
+    public function removeReservationProprietaire(Reservation $reservationProprietaire)
     {
         $this->reservationProprietaires->removeElement($reservationProprietaire);
     }
@@ -283,7 +277,7 @@ class Utilisateur
     /**
      * Get reservationProprietaires
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getReservationProprietaires()
     {

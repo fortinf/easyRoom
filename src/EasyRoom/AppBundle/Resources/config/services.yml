@@ -22,3 +22,11 @@ services:
     typeequipement.service:
         class: EasyRoom\AppBundle\Service\TypeEquipementService
         arguments: ["@doctrine.orm.default_entity_manager"]
+
+    reservation.service:
+        class: EasyRoom\AppBundle\Service\ReservationService
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    inviteexterne.service:
+        class: EasyRoom\AppBundle\Service\InviteExterneService
+        arguments: ["@doctrine.orm.default_entity_manager"]
