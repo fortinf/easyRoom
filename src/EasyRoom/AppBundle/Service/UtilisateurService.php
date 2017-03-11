@@ -10,6 +10,7 @@ namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Entity\Utilisateur;
+use Proxies\__CG__\EasyRoom\AppBundle\Entity\Role;
 
 /**
  * Description of UtilisateurService
@@ -28,16 +29,20 @@ class UtilisateurService {
      * Fonction de création d'un utilisateur
      * 
      * @param Utilisateur $utilisateur
+     * @param Role $role
+     * @return integer
      */
-    public function create(Utilisateur $utilisateur) {
+    public function create(Utilisateur $utilisateur, Role $role) {
+        $utilisateur->setRole($role);
         $this->em->persist($utilisateur);
         $this->em->flush();
+        return $utilisateur->getId();
     }
     
     /**
      * Fonction de modification d'un utilisateur
      * 
-     * @param type $id
+     * @param integer $id
      * @param Utilisateur $utilisateur
      */
     public function update($id, Utilisateur $utilisateur) {
@@ -57,6 +62,11 @@ class UtilisateurService {
         // Modification de l'utilisateur
         $this->em->persist($updateUtilisateur);
         $this->em->flush();
+    }
+    
+    public function getUtilisateurById($id) {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Utilisateur');
+        return $repository->find($id);
     }
     
 }

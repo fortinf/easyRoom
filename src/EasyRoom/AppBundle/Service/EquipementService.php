@@ -10,6 +10,7 @@ namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Entity\Equipement;
+use EasyRoom\AppBundle\Entity\TypeEquipement;
 
 /**
  * Description of EquipementService
@@ -28,10 +29,14 @@ class EquipementService {
      * Fonction de création d'un équipement
      * 
      * @param Equipement $equipement
+     * @param TypeEquipement $typeEquipement
+     * @return integer
      */
-    public function create(Equipement $equipement) {
+    public function create(Equipement $equipement, TypeEquipement $typeEquipement) {
+        $equipement->setTypeEquipement($typeEquipement);
         $this->em->persist($equipement);
         $this->em->flush();
+        return $equipement->getId();
     }
     
     /**
