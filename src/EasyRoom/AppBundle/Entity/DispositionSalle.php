@@ -36,19 +36,19 @@ class DispositionSalle {
     private $dispositionDefaut;
     
     /**
-     * @var \EasyRoom\AppBundle\Entity\Salle
+     * @var Salle
      * 
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="\EasyRoom\AppBundle\Entity\Salle", inversedBy="dispositionSalles") 
+     * @ORM\ManyToOne(targetEntity="Salle", inversedBy="dispositionSalles") 
      * @ORM\JoinColumn(name="TDS_FK_SAL_ID", referencedColumnName="SAL_ID", nullable=false)
      */
     private $salle;
     
     /**
-     * @var \EasyRoom\AppBundle\Entity\Disposition
+     * @var Disposition
      * 
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="\EasyRoom\AppBundle\Entity\Disposition", inversedBy="dispositionSalles") 
+     * @ORM\ManyToOne(targetEntity="Disposition", inversedBy="dispositionSalles") 
      * @ORM\JoinColumn(name="TDS_FK_DIS_ID", referencedColumnName="DIS_ID", nullable=false)
      */
     private $disposition;
@@ -92,7 +92,7 @@ class DispositionSalle {
      * 
      * @param boolean $dispositionDefaut
      * 
-     * @return DispositionDefaut
+     * @return DispositionSalle
      */
     public function setDispositionDefaut($dispositionDefaut)
     {
@@ -106,11 +106,11 @@ class DispositionSalle {
     /**
      * Set disposition
      *
-     * @param \EasyRoom\AppBundle\Entity\Disposition $disposition
+     * @param Disposition $disposition
      *
      * @return Reservation
      */
-    public function setDisposition(\EasyRoom\AppBundle\Entity\Disposition $disposition = null)
+    public function setDisposition(Disposition $disposition = null)
     {
         $this->disposition = $disposition;
 
@@ -120,7 +120,7 @@ class DispositionSalle {
     /**
      * Get salle
      *
-     * @return \EasyRoom\AppBundle\Entity\Disposition
+     * @return Disposition
      */
     public function getDisposition()
     {
@@ -130,11 +130,11 @@ class DispositionSalle {
     /**
      * Set salle
      *
-     * @param \EasyRoom\AppBundle\Entity\Salle $salle
+     * @param Salle $salle
      *
      * @return Reservation
      */
-    public function setSalle(\EasyRoom\AppBundle\Entity\Salle $salle = null)
+    public function setSalle(Salle $salle = null)
     {
         $this->salle = $salle;
 
@@ -144,7 +144,7 @@ class DispositionSalle {
     /**
      * Get salle
      *
-     * @return \EasyRoom\AppBundle\Entity\Salle
+     * @return Salle
      */
     public function getSalle()
     {

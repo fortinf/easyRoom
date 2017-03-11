@@ -2,6 +2,8 @@
 
 namespace EasyRoom\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,9 +32,9 @@ class Disposition
     private $libelle;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\DispositionSalle", mappedBy="disposition")
+     * @ORM\OneToMany(targetEntity="DispositionSalle", mappedBy="disposition")
      */
     private $dispositionSalles;
 
@@ -41,7 +43,7 @@ class Disposition
      */
     public function __construct()
     {
-        $this->dispositionSalles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dispositionSalles = new ArrayCollection();
     }
 
 
@@ -82,11 +84,11 @@ class Disposition
     /**
      * Add dispositionSalle
      *
-     * @param \EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle
+     * @param DispositionSalle $dispositionSalle
      *
      * @return Disposition
      */
-    public function addDispositionSalle(\EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle)
+    public function addDispositionSalle(DispositionSalle $dispositionSalle)
     {
         $this->dispositionSalles[] = $dispositionSalle;
 
@@ -96,9 +98,9 @@ class Disposition
     /**
      * Remove dispositionSalle
      *
-     * @param \EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle
+     * @param DispositionSalle $dispositionSalle
      */
-    public function removeDispositionSalle(\EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle)
+    public function removeDispositionSalle(DispositionSalle $dispositionSalle)
     {
         $this->dispositionSalles->removeElement($dispositionSalle);
     }
@@ -106,7 +108,7 @@ class Disposition
     /**
      * Get dispositionSalles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getDispositionSalles()
     {

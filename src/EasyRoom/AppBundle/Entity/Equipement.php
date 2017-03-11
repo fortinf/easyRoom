@@ -2,6 +2,8 @@
 
 namespace EasyRoom\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,9 +60,9 @@ class Equipement
     private $description;
     
     /**
-     * @var \EasyRoom\AppBundle\Entity\Salle
+     * @var Salle
      *
-     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Salle")
+     * @ORM\ManyToOne(targetEntity="Salle", inversedBy="equipements")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="EQU_FK_SAL_ID", referencedColumnName="SAL_ID")
      * })
@@ -68,9 +70,9 @@ class Equipement
     private $salle;
 
     /**
-     * @var \EasyRoom\AppBundle\Entity\TypeEquipement
+     * @var TypeEquipement
      *
-     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\TypeEquipement")
+     * @ORM\ManyToOne(targetEntity="TypeEquipement")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="EQU_FK_TEQ_ID", referencedColumnName="TEQ_ID")
      * })
@@ -78,17 +80,9 @@ class Equipement
     private $typeEquipement;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="EasyRoom\AppBundle\Entity\Reservation", inversedBy="eqrFkEqu")
-     * @ORM\JoinTable(name="t_equipement_reservation",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="EQR_FK_EQU_ID", referencedColumnName="EQU_ID")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="EQR_FK_RES_ID", referencedColumnName="RES_ID")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Reservation", mappedBy="equipements")
      */
     private $reservations;
 
@@ -97,7 +91,7 @@ class Equipement
      */
     public function __construct()
     {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 
@@ -234,11 +228,11 @@ class Equipement
     /**
      * Set salle
      *
-     * @param \EasyRoom\AppBundle\Entity\Salle $salle
+     * @param Salle $salle
      *
      * @return Equipement
      */
-    public function setSalle(\EasyRoom\AppBundle\Entity\Salle $salle = null)
+    public function setSalle(Salle $salle = null)
     {
         $this->salle = $salle;
 
@@ -248,7 +242,7 @@ class Equipement
     /**
      * Get salle
      *
-     * @return \EasyRoom\AppBundle\Entity\Salle
+     * @return Salle
      */
     public function getSalle()
     {
@@ -258,11 +252,11 @@ class Equipement
     /**
      * Set typeEquipement
      *
-     * @param \EasyRoom\AppBundle\Entity\TypeEquipement $typeEquipement
+     * @param TypeEquipement $typeEquipement
      *
      * @return Equipement
      */
-    public function setTypeEquipement(\EasyRoom\AppBundle\Entity\TypeEquipement $typeEquipement = null)
+    public function setTypeEquipement(TypeEquipement $typeEquipement = null)
     {
         $this->typeEquipement = $typeEquipement;
 
@@ -272,7 +266,7 @@ class Equipement
     /**
      * Get typeEquipement
      *
-     * @return \EasyRoom\AppBundle\Entity\TypeEquipement
+     * @return TypeEquipement
      */
     public function getTypeEquipement()
     {
@@ -282,11 +276,11 @@ class Equipement
     /**
      * Add reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Equipement
      */
-    public function addReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -296,9 +290,9 @@ class Equipement
     /**
      * Remove reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
@@ -306,7 +300,7 @@ class Equipement
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getReservations()
     {

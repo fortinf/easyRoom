@@ -2,7 +2,9 @@
 
 namespace EasyRoom\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * Salle
@@ -64,23 +66,23 @@ class Salle
     private $handicap;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\DispositionSalle", mappedBy="salle")
+     * @ORM\OneToMany(targetEntity="DispositionSalle", mappedBy="salle")
      */
     private $dispositionSalles;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\Equipement", mappedBy="salle")
+     * @ORM\OneToMany(targetEntity="Equipement", mappedBy="salle")
      */
     private $equipements;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="\EasyRoom\AppBundle\Entity\Reservation", mappedBy="salle")
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="salle")
      */
     private $reservations;
 
@@ -89,9 +91,9 @@ class Salle
      */
     public function __construct()
     {
-        $this->dispositionSalles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->equipements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dispositionSalles = new ArrayCollection();
+        $this->equipements = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
 
@@ -252,11 +254,11 @@ class Salle
     /**
      * Add dispositionSalle
      *
-     * @param \EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle
+     * @param DispositionSalle $dispositionSalle
      *
      * @return Salle
      */
-    public function addDispositionSalle(\EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle)
+    public function addDispositionSalle(DispositionSalle $dispositionSalle)
     {
         $this->dispositionSalles[] = $dispositionSalle;
 
@@ -266,9 +268,9 @@ class Salle
     /**
      * Remove dispositionSalle
      *
-     * @param \EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle
+     * @param DispositionSalle $dispositionSalle
      */
-    public function removeDispositionSalle(\EasyRoom\AppBundle\Entity\DispositionSalle $dispositionSalle)
+    public function removeDispositionSalle(DispositionSalle $dispositionSalle)
     {
         $this->dispositionSalles->removeElement($dispositionSalle);
     }
@@ -276,7 +278,7 @@ class Salle
     /**
      * Get dispositionSalles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getDispositionSalles()
     {
@@ -286,11 +288,11 @@ class Salle
     /**
      * Add equipement
      *
-     * @param \EasyRoom\AppBundle\Entity\Equipement $equipement
+     * @param Equipement $equipement
      *
      * @return Salle
      */
-    public function addEquipement(\EasyRoom\AppBundle\Entity\Equipement $equipement)
+    public function addEquipement(Equipement $equipement)
     {
         $this->equipements[] = $equipement;
 
@@ -300,9 +302,9 @@ class Salle
     /**
      * Remove equipement
      *
-     * @param \EasyRoom\AppBundle\Entity\Equipement $equipement
+     * @param Equipement $equipement
      */
-    public function removeEquipement(\EasyRoom\AppBundle\Entity\Equipement $equipement)
+    public function removeEquipement(Equipement $equipement)
     {
         $this->equipements->removeElement($equipement);
     }
@@ -310,7 +312,7 @@ class Salle
     /**
      * Get equipements
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getEquipements()
     {
@@ -320,11 +322,11 @@ class Salle
     /**
      * Add reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return Salle
      */
-    public function addReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -334,9 +336,9 @@ class Salle
     /**
      * Remove reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      */
-    public function removeReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation)
+    public function removeReservation(Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
@@ -344,7 +346,7 @@ class Salle
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getReservations()
     {

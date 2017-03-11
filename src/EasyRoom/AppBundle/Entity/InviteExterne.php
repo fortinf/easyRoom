@@ -51,9 +51,9 @@ class InviteExterne
     private $mail;
 
     /**
-     * @var \EasyRoom\AppBundle\Entity\Reservation
+     * @var Reservation
      *
-     * @ORM\ManyToOne(targetEntity="EasyRoom\AppBundle\Entity\Reservation")
+     * @ORM\ManyToOne(targetEntity="Reservation", inversedBy="inviteExternes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="INV_FK_RES_ID", referencedColumnName="RES_ID")
      * })
@@ -171,11 +171,11 @@ class InviteExterne
     /**
      * Set reservation
      *
-     * @param \EasyRoom\AppBundle\Entity\Reservation $reservation
+     * @param Reservation $reservation
      *
      * @return InviteExterne
      */
-    public function setReservation(\EasyRoom\AppBundle\Entity\Reservation $reservation = null)
+    public function setReservation(Reservation $reservation = null)
     {
         $this->reservation = $reservation;
 
@@ -185,7 +185,7 @@ class InviteExterne
     /**
      * Get reservation
      *
-     * @return \EasyRoom\AppBundle\Entity\Reservation
+     * @return Reservation
      */
     public function getReservation()
     {
