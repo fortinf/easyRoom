@@ -23,12 +23,12 @@ class TypeEquipementService {
         $this->em = $entityManager;
     }
     
-    public function getTypeEquipementById($id) {
+    public function getById($id) {
         $repository = $this->em->getRepository('EasyRoomAppBundle:TypeEquipement');
         return $repository->find($id);
     }
     
-    public function getAllTypeEquipement() {
+    public function getAll() {
         $repository = $this->em->getRepository('EasyRoomAppBundle:TypeEquipement');
         return $repository->findAll();
     }

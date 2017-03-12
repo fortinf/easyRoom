@@ -19,9 +19,15 @@ use EasyRoom\AppBundle\Entity\Reservation;
 class ReservationService {
 
     private $em;
+    private $equipementService;
+    private $salleService;
+    private $utilisateurService;
 
-    public function __construct(EntityManager $entityManager) {
+    public function __construct(EntityManager $entityManager, SalleService $salleSrv, UtilisateurService $utilisateurSrv,EquipementService $equipementSrv) {
         $this->em = $entityManager;
+        $this->salleService = $salleSrv;
+        $this->utilisateurService = $utilisateurSrv;
+        $this->equipementService = $equipementSrv;
     }
 
     /**
@@ -38,51 +44,47 @@ class ReservationService {
      */
     public function create(Reservation $reservation, $idSalle, $idUtilisateurMaitre, array $idUtilisateurs, array $idEquipements, array $inviteExternes) {
 
-        $repoUtilisateur = $this->em->getRepository('EasyRoomAppBundle:Utilisateur');
-        $repoSalle = $this->em->getRepository('EasyRoomAppBundle:Salle');
-
         // Salle
-        $salle = $repoSalle->find($idSalle);
-        $salle->addReservation($reservation);
-        $this->em->persist($salle);
+        $salle = $this->salleService->getById($idSalle);
         $reservation->setSalle($salle);
-        
+
         // Utilisateuru maître
-        $utilisateurMaitre = $repoUtilisateur->find($idUtilisateurMaitre);
-        $utilisateurMaitre->addReservationProprietaire($reservation);
-        $this->em->persist($utilisateurMaitre);
+        $utilisateurMaitre = $this->utilisateurService->getById($idUtilisateurMaitre);
         $reservation->setUtilisateurMaitre($utilisateurMaitre);
-        
+
         // Utilisateurs participants
         foreach ($idUtilisateurs as $idUtilisateur) {
-            $utilisateur = $repoUtilisateur->find($idUtilisateur);
-            $utilisateur->addReservation($reservation);
-            $this->em->persist($utilisateur);
+            $utilisateur = $this->utilisateurService->getById($idUtilisateur);
             $reservation->addUtilisateur($utilisateur);
         }
 
         // Invités externes
         foreach ($inviteExternes as $inviteExterne) {
-            $inviteExterne->setReservation($reservation);
-            $this->em->persist($inviteExterne);
             $reservation->addInviteExterne($inviteExterne);
         }
 
         // Equipements
-        if (count($idEquipements) > 0) {
-            $repoEquipement = $this->em->getRepository('EasyRoomAppBundle:Equipement');
-            foreach ($idEquipements as $idEquipement) {
-                $equipement = $repoEquipement->find($idEquipement);
-                $equipement->addReservation($reservation);
-                $this->em->persist($equipement);
-                $reservation->addEquipement($equipement);
-            }
+        foreach ($idEquipements as $idEquipement) {
+            $equipement = $this->equipementService->getById($idEquipement);
+            $reservation->addEquipement($equipement);
         }
-        
+
         $this->em->persist($reservation);
         $this->em->flush();
 
         return $reservation->getId();
     }
     
+    /**
+     * Fonction de modification d'une réservation
+     * 
+     * @param Reservation $reservation
+     * @param array $idUtilisateurs
+     * @param array $idEquipements
+     * @param array $inviteExternes
+     */
+    public function update($id, Reservation $reservation, array $idUtilisateurs, array $idEquipements, array $inviteExternes) {
+        
+    }
+
 }

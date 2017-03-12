@@ -94,8 +94,6 @@ class TestController extends Controller {
          */
         
         // RESERVATION
-        
-        // Infos de base
         $reservation = new Reservation();
         $reservation->setLibelle('Projet easyRoom : dailyscrum');
         $reservation->setDateDebut(DateTime::createFromFormat('d/m/Y', '01/12/2016'));
@@ -105,7 +103,7 @@ class TestController extends Controller {
         
         // Salle
         $salleService = $this->container->get('salle.service');
-        $salle = $salleService->getSalleById(2);
+        $salle = $salleService->getById(1);
         
         // Utilisateurs occupants
         $idUtilisateurs = array(2, 3);
@@ -129,13 +127,32 @@ class TestController extends Controller {
         $inviteExterne2->setEntreprise('ECOVert');
         array_push($inviteExternes, $inviteExterne2);
         
-        // Création de la réservation
-        $reservationService = $this->container->get('reservation.service');
-        $reservationService->create($reservation, 1, 1, $idUtilisateurs, $idEquipements, $inviteExternes);
+        // MAJ de la 2nd réservation
+        $em = $this->getDoctrine()->getManager();
+        $repoReservation = $em->getRepository('EasyRoomAppBundle:Reservation');
+        $reservation2 = $repoReservation->find(2);
         
+
+        $collUtilisateurs = $reservation2->getUtilisateurs();
+        //$utilisateur = $collUtilisateurs->last();
+        //$reservation2->removeUtilisateur($utilisateur);
+        
+        
+        //$repoUtilisateur = $em->getRepository('EasyRoomAppBundle:Utilisateur');
+        //$utilisateur4 = $repoUtilisateur->find(4);
+        //$reservation2->addUtilisateur($utilisateur4);
+        
+        $em->persist($reservation2);
+        $em->flush();
+        
+        
+        // Création de la réservation
+        //$reservationService = $this->container->get('reservation.service');
+        //$reservationService->create($reservation, 1, 1, $idUtilisateurs, $idEquipements, $inviteExternes);
+
         return $this->render('EasyRoomAppBundle::test.html.twig', array(
             'salle' => $salle,
-            'reservation' => $reservation
+            'reservation' => $reservation2
         ));
     }
     

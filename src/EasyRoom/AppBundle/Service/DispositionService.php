@@ -23,8 +23,13 @@ class DispositionService {
         $this->em = $entityManager;
     }
     
-    public function getDispositionById($id) { 
+    public function getById($id) { 
         $repository = $this->em->getRepository('EasyRoomAppBundle:Disposition');
         return $repository->find($id);
+    }
+    
+    public function getAll() {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Disposition');
+        return $repository->findAll();
     }
 }

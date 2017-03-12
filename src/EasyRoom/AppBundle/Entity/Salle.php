@@ -12,8 +12,8 @@ use Doctrine\Common\Collections\Collection;
  * @ORM\Table(name="T_SALLE", uniqueConstraints={@ORM\UniqueConstraint(name="SAL_ID", columns={"SAL_ID"})})
  * @ORM\Entity
  */
-class Salle
-{
+class Salle {
+
     /**
      * @var integer
      *
@@ -22,7 +22,7 @@ class Salle
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
+
     /**
      * @var string
      *
@@ -64,21 +64,21 @@ class Salle
      * @ORM\Column(name="SAL_HANDICAP", type="boolean", nullable=false)
      */
     private $handicap;
-    
+
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="DispositionSalle", mappedBy="salle")
+     * @ORM\OneToMany(targetEntity="DispositionSalle", mappedBy="salle", cascade={"persist"})
      */
     private $dispositionSalles;
-    
+
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="Equipement", mappedBy="salle")
+     * @ORM\OneToMany(targetEntity="Equipement", mappedBy="salle", cascade={"persist"})
      */
     private $equipements;
-    
+
     /**
      * @var Collection
      *
@@ -89,13 +89,11 @@ class Salle
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->dispositionSalles = new ArrayCollection();
         $this->equipements = new ArrayCollection();
         $this->reservations = new ArrayCollection();
     }
-
 
     /**
      * Set libelle
@@ -104,8 +102,7 @@ class Salle
      *
      * @return Salle
      */
-    public function setLibelle($libelle)
-    {
+    public function setLibelle($libelle) {
         $this->libelle = $libelle;
 
         return $this;
@@ -116,8 +113,7 @@ class Salle
      *
      * @return string
      */
-    public function getLibelle()
-    {
+    public function getLibelle() {
         return $this->libelle;
     }
 
@@ -128,8 +124,7 @@ class Salle
      *
      * @return Salle
      */
-    public function setDisponible($disponible)
-    {
+    public function setDisponible($disponible) {
         $this->disponible = $disponible;
 
         return $this;
@@ -140,8 +135,7 @@ class Salle
      *
      * @return boolean
      */
-    public function getDisponible()
-    {
+    public function getDisponible() {
         return $this->disponible;
     }
 
@@ -152,8 +146,7 @@ class Salle
      *
      * @return Salle
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -164,8 +157,7 @@ class Salle
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -176,8 +168,7 @@ class Salle
      *
      * @return Salle
      */
-    public function setPhoto($photo)
-    {
+    public function setPhoto($photo) {
         $this->photo = $photo;
 
         return $this;
@@ -188,8 +179,7 @@ class Salle
      *
      * @return string
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
 
@@ -200,8 +190,7 @@ class Salle
      *
      * @return Salle
      */
-    public function setLumiereJour($lumiereJour)
-    {
+    public function setLumiereJour($lumiereJour) {
         $this->lumiereJour = $lumiereJour;
 
         return $this;
@@ -212,8 +201,7 @@ class Salle
      *
      * @return boolean
      */
-    public function getLumiereJour()
-    {
+    public function getLumiereJour() {
         return $this->lumiereJour;
     }
 
@@ -224,8 +212,7 @@ class Salle
      *
      * @return Salle
      */
-    public function setHandicap($handicap)
-    {
+    public function setHandicap($handicap) {
         $this->handicap = $handicap;
 
         return $this;
@@ -236,8 +223,7 @@ class Salle
      *
      * @return boolean
      */
-    public function getHandicap()
-    {
+    public function getHandicap() {
         return $this->handicap;
     }
 
@@ -246,8 +232,7 @@ class Salle
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -255,24 +240,12 @@ class Salle
      * Add dispositionSalle
      *
      * @param DispositionSalle $dispositionSalle
-     *
-     * @return Salle
      */
-    public function addDispositionSalle(DispositionSalle $dispositionSalle)
-    {
-        $this->dispositionSalles->add($dispositionSalle);
-
-        return $this;
-    }
-
-    /**
-     * Remove dispositionSalle
-     *
-     * @param DispositionSalle $dispositionSalle
-     */
-    public function removeDispositionSalle(DispositionSalle $dispositionSalle)
-    {
-        $this->dispositionSalles->removeElement($dispositionSalle);
+    public function addDispositionSalle(DispositionSalle $dispositionSalle) {
+        if (!$this->dispositionSalles->contains($dispositionSalle)) {
+            $this->dispositionSalles->add($dispositionSalle);
+            $dispositionSalle->setSalle($this);
+        }
     }
 
     /**
@@ -280,8 +253,7 @@ class Salle
      *
      * @return Collection
      */
-    public function getDispositionSalles()
-    {
+    public function getDispositionSalles() {
         return $this->dispositionSalles;
     }
 
@@ -289,14 +261,12 @@ class Salle
      * Add equipement
      *
      * @param Equipement $equipement
-     *
-     * @return Salle
      */
-    public function addEquipement(Equipement $equipement)
-    {
-        $this->equipements->add($equipement);
-
-        return $this;
+    public function addEquipement(Equipement $equipement) {
+        if (!$this->equipements->contains($equipement)) {
+            $this->equipements->add($equipement);
+            $equipement->setSalle($this);
+        }
     }
 
     /**
@@ -304,9 +274,11 @@ class Salle
      *
      * @param Equipement $equipement
      */
-    public function removeEquipement(Equipement $equipement)
-    {
-        $this->equipements->removeElement($equipement);
+    public function removeEquipement(Equipement $equipement) {
+        if ($$this->equipements->contains($equipement)) {
+            $this->equipements->removeElement($equipement);
+            $equipement->setSalle(null);
+        }
     }
 
     /**
@@ -314,33 +286,8 @@ class Salle
      *
      * @return Collection
      */
-    public function getEquipements()
-    {
+    public function getEquipements() {
         return $this->equipements;
-    }
-
-    /**
-     * Add reservation
-     *
-     * @param Reservation $reservation
-     *
-     * @return Salle
-     */
-    public function addReservation(Reservation $reservation)
-    {
-        $this->reservations->add($reservation);
-
-        return $this;
-    }
-
-    /**
-     * Remove reservation
-     *
-     * @param Reservation $reservation
-     */
-    public function removeReservation(Reservation $reservation)
-    {
-        $this->reservations->removeElement($reservation);
     }
 
     /**
@@ -348,8 +295,8 @@ class Salle
      *
      * @return Collection
      */
-    public function getReservations()
-    {
+    public function getReservations() {
         return $this->reservations;
     }
+
 }

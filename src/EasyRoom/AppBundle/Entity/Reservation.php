@@ -13,8 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="T_RESERVATION", uniqueConstraints={@ORM\UniqueConstraint(name="RES_ID", columns={"RES_ID"})}, indexes={@ORM\Index(name="RES_FK_SAL_ID", columns={"RES_FK_SAL_ID"}), @ORM\Index(name="RES_FK_UTI_ID", columns={"RES_FK_UTI_ID"})})
  * @ORM\Entity
  */
-class Reservation
-{
+class Reservation {
 
     /**
      * @var integer
@@ -24,7 +23,7 @@ class Reservation
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
+
     /**
      * @var string
      *
@@ -123,24 +122,26 @@ class Reservation
      * )
      */
     private $equipements;
-    
+
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="InviteExterne", mappedBy="reservation")
+     * @ORM\OneToMany(
+     *      targetEntity="InviteExterne", 
+     *      mappedBy="reservation",
+     *      cascade={"persist", "remove"}
+     *      orphanRemoval=true)
      */
     private $inviteExternes;
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->utilisateurs = new ArrayCollection();
         $this->equipements = new ArrayCollection();
         $this->inviteExternes = new ArrayCollection();
     }
-
 
     /**
      * Set libelle
@@ -149,8 +150,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setLibelle($libelle)
-    {
+    public function setLibelle($libelle) {
         $this->libelle = $libelle;
 
         return $this;
@@ -161,8 +161,7 @@ class Reservation
      *
      * @return string
      */
-    public function getLibelle()
-    {
+    public function getLibelle() {
         return $this->libelle;
     }
 
@@ -173,8 +172,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setDateDebut($dateDebut)
-    {
+    public function setDateDebut($dateDebut) {
         $this->dateDebut = $dateDebut;
 
         return $this;
@@ -185,8 +183,7 @@ class Reservation
      *
      * @return DateTime
      */
-    public function getDateDebut()
-    {
+    public function getDateDebut() {
         return $this->dateDebut;
     }
 
@@ -197,8 +194,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setDateFin($dateFin)
-    {
+    public function setDateFin($dateFin) {
         $this->dateFin = $dateFin;
 
         return $this;
@@ -209,8 +205,7 @@ class Reservation
      *
      * @return DateTime
      */
-    public function getDateFin()
-    {
+    public function getDateFin() {
         return $this->dateFin;
     }
 
@@ -221,8 +216,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setHeureDebut($heureDebut)
-    {
+    public function setHeureDebut($heureDebut) {
         $this->heureDebut = $heureDebut;
 
         return $this;
@@ -233,8 +227,7 @@ class Reservation
      *
      * @return DateTime
      */
-    public function getHeureDebut()
-    {
+    public function getHeureDebut() {
         return $this->heureDebut;
     }
 
@@ -245,8 +238,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setHeureFin($heureFin)
-    {
+    public function setHeureFin($heureFin) {
         $this->heureFin = $heureFin;
 
         return $this;
@@ -257,8 +249,7 @@ class Reservation
      *
      * @return DateTime
      */
-    public function getHeureFin()
-    {
+    public function getHeureFin() {
         return $this->heureFin;
     }
 
@@ -269,8 +260,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setDureeHeure($dureeHeure)
-    {
+    public function setDureeHeure($dureeHeure) {
         $this->dureeHeure = $dureeHeure;
 
         return $this;
@@ -281,8 +271,7 @@ class Reservation
      *
      * @return integer
      */
-    public function getDureeHeure()
-    {
+    public function getDureeHeure() {
         return $this->dureeHeure;
     }
 
@@ -293,8 +282,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setDureeJour($dureeJour)
-    {
+    public function setDureeJour($dureeJour) {
         $this->dureeJour = $dureeJour;
 
         return $this;
@@ -305,8 +293,7 @@ class Reservation
      *
      * @return integer
      */
-    public function getDureeJour()
-    {
+    public function getDureeJour() {
         return $this->dureeJour;
     }
 
@@ -315,8 +302,7 @@ class Reservation
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -327,8 +313,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setSalle(Salle $salle = null)
-    {
+    public function setSalle(Salle $salle = null) {
         $this->salle = $salle;
 
         return $this;
@@ -339,8 +324,7 @@ class Reservation
      *
      * @return Salle
      */
-    public function getSalle()
-    {
+    public function getSalle() {
         return $this->salle;
     }
 
@@ -351,8 +335,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setUtilisateurMaitre(Utilisateur $utilisateurMaitre = null)
-    {
+    public function setUtilisateurMaitre(Utilisateur $utilisateurMaitre = null) {
         $this->utilisateurMaitre = $utilisateurMaitre;
 
         return $this;
@@ -363,8 +346,7 @@ class Reservation
      *
      * @return Utilisateur
      */
-    public function getUtilisateurMaitre()
-    {
+    public function getUtilisateurMaitre() {
         return $this->utilisateurMaitre;
     }
 
@@ -373,13 +355,12 @@ class Reservation
      *
      * @param Utilisateur $utilisateur
      *
-     * @return Reservation
      */
-    public function addUtilisateur(Utilisateur $utilisateur)
-    {
-        $this->utilisateurs->add($utilisateur);
-
-        return $this;
+    public function addUtilisateur(Utilisateur $utilisateur) {
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->add($utilisateur);
+            $utilisateur->addReservation($this);
+        }
     }
 
     /**
@@ -387,9 +368,11 @@ class Reservation
      *
      * @param Utilisateur $utilisateur
      */
-    public function removeUtilisateur(Utilisateur $utilisateur)
-    {
-        $this->utilisateurs->removeElement($utilisateur);
+    public function removeUtilisateur(Utilisateur $utilisateur) {
+        if ($this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->removeElement($utilisateur);
+            $utilisateur->removeReservation($this);
+        }
     }
 
     /**
@@ -397,8 +380,7 @@ class Reservation
      *
      * @return Collection
      */
-    public function getUtilisateurs()
-    {
+    public function getUtilisateurs() {
         return $this->utilisateurs;
     }
 
@@ -407,13 +389,12 @@ class Reservation
      *
      * @param Equipement $equipement
      *
-     * @return Reservation
      */
-    public function addEquipement(Equipement $equipement)
-    {
-        $this->equipements->add($equipement);
-
-        return $this;
+    public function addEquipement(Equipement $equipement) {
+        if (!$this->equipements->contains($equipement)) {
+            $this->equipements->add($equipement);
+            $equipement->addReservation($this);
+        }
     }
 
     /**
@@ -421,9 +402,11 @@ class Reservation
      *
      * @param Equipement $equipement
      */
-    public function removeEquipement(Equipement $equipement)
-    {
-        $this->equipements->removeElement($equipement);
+    public function removeEquipement(Equipement $equipement) {
+        if ($this->equipements->contains($equipement)) {
+            $this->equipements->removeElement($equipement);
+            $equipement->removeReservation($this);
+        }
     }
 
     /**
@@ -431,8 +414,7 @@ class Reservation
      *
      * @return Collection
      */
-    public function getEquipements()
-    {
+    public function getEquipements() {
         return $this->equipements;
     }
 
@@ -441,13 +423,12 @@ class Reservation
      *
      * @param InviteExterne $inviteExterne
      *
-     * @return Reservation
      */
-    public function addInviteExterne(InviteExterne $inviteExterne)
-    {
-        $this->inviteExternes->add($inviteExterne);
-
-        return $this;
+    public function addInviteExterne(InviteExterne $inviteExterne) {
+        if (!$this->inviteExternes->contains($inviteExterne)) {
+            $this->inviteExternes->add($inviteExterne);
+            $inviteExterne->setReservation($this);
+        }
     }
 
     /**
@@ -455,9 +436,10 @@ class Reservation
      *
      * @param InviteExterne $inviteExterne
      */
-    public function removeInviteExterne(InviteExterne $inviteExterne)
-    {
-        $this->inviteExternes->removeElement($inviteExterne);
+    public function removeInviteExterne(InviteExterne $inviteExterne) {
+        if ($this->inviteExternes->contains($inviteExterne)) {
+            $this->inviteExternes->removeElement($inviteExterne);
+        }
     }
 
     /**
@@ -465,8 +447,8 @@ class Reservation
      *
      * @return Collection
      */
-    public function getInviteExternes()
-    {
+    public function getInviteExternes() {
         return $this->inviteExternes;
     }
+
 }

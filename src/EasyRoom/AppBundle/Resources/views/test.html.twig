@@ -30,8 +30,30 @@
                     <p>Début : le {{ reservation.dateDebut|date("d/m/Y") }} à {{ reservation.heureDebut|date("H:i") }}</p>
                     <p>Fin : le {{ reservation.dateFin|date("d/m/Y") }} à {{ reservation.heureFin|date("H:i") }}</p>
                 </div>
+                <div>
+                    <h3>Utilisateur maître:</h3>
+                    <ul>
+                        <li>{{ reservation.utilisateurMaitre.prenom }} {{ reservation.utilisateurMaitre.nom }} (mail : {{ reservation.utilisateurMaitre.mail }})</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Utilisateurs participants:</h3>
+                    <ul>
+                    {% for utilisateur in reservation.utilisateurs %}
+                        <li>{{ utilisateur.prenom }} {{ utilisateur.nom }} (mail : {{ utilisateur.mail }})</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h3>Invites externes:</h3>
+                    <ul>
+                    {% for inviteExterne in reservation.inviteExternes %}
+                        <li>{{ inviteExterne.prenom }} {{ inviteExterne.nom }} de chez {{ inviteExterne.entreprise }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
             </section>
-            
+
         </main>
         <footer>
 

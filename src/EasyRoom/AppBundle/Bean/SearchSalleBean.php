@@ -13,7 +13,7 @@ namespace EasyRoom\AppBundle\Bean;
  *
  * @author ffortin
  */
-class SearchSalle {
+class SearchSalleBean {
     
     /**
      *

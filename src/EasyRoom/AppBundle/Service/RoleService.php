@@ -29,9 +29,18 @@ class RoleService {
      * @param type $id
      * @return type
      */
-    public function getRoleById($id) {
+    public function getById($id) {
         $repository = $this->em->getRepository('EasyRoomAppBundle:Role');
         return $repository->find($id);
+    }
+    
+    /**
+     * 
+     * @return mixed
+     */
+    public function getAll() {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Role');
+        return $repository->findAll();
     }
 
 }

@@ -64,4 +64,14 @@ class EquipementService {
         $this->em->flush();
     }
     
+    /**
+     * 
+     * @param integer $id
+     * @return Equipement
+     */
+    public function getById($id) {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Equipement');
+        return $repository->find($id);
+    }
+    
 }
