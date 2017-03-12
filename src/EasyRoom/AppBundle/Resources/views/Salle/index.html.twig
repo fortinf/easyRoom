@@ -55,22 +55,40 @@
                     <textarea id="description-salle" class="materialize-textarea"></textarea>
                     <label for="description-salle">Description</label>
                 </div>
+                  <img class="materialboxed" width="300" src="{{ asset('bundles/easyroomapp/images/card_salle_manathan.jpg') }}">
+                  <a class="btn-floating blue"><i class="material-icons">attach_file</i></a>
                 <form action="#">
     				<p>
       					<input name="disposition" type="radio" id="disposition-rectangle" />
       					<label for="disposition-rectangle">Disposition Rectangle</label>
+      					<div class="input-field col s12">
+                    		<input id="effectif-rectangle" type="number" class="validate">
+                    		<label for="effectif-rectangle">Effectif</label>
+                		</div>
     				</p>
     				<p>
       					<input name="disposition" type="radio" id="disposition-salle" />
       					<label for="disposition-salle">Disposition Salle de classe</label>
+      					<div class="input-field col s12">
+                    		<input id="effectif-salle" type="number" class="validate">
+                    		<label for="effectif-salle">Effectif</label>
+                		</div>
     				</p>
     				<p>
       					<input name="disposition" type="radio" id="disposition-conference"  />
       					<label for="disposition-conference">Disposition Conférence</label>
+      					<div class="input-field col s12">
+                    		<input id="effectif-conference" type="number" class="validate">
+                    		<label for="effectif-conference">Effectif</label>
+                		</div>
     				</p>
     				<p>
       					<input name="disposition" type="radio" id="disposition-vide" />
       					<label for="disposition-vide">Disposition Vide</label>
+      					<div class="input-field col s12">
+                    		<input id="effectif-vide" type="number" class="validate">
+                    		<label for="effectif-vide">Effectif</label>
+                		</div>
     				</p>
   				</form> 
     			<form action="#">
