@@ -17,9 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class SalleController extends Controller {
     
-    public function indexAction()
+    public function creationAction()
     {
-        return $this->render('EasyRoomAppBundle:Salle:index.html.twig');
+        return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
     }
     
 }

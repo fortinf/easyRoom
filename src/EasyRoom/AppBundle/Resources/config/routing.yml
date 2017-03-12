@@ -10,9 +10,9 @@ easy_room_app_accueil_index:
     path:     /accueil-index
     defaults: { _controller: EasyRoomAppBundle:Accueil:index }
 
-easy_room_app_salle_index:
-    path:     /salle-index
-    defaults: { _controller: EasyRoomAppBundle:Salle:index }
+easy_room_app_salle_creation:
+    path:     /salle-creation
+    defaults: { _controller: EasyRoomAppBundle:Salle:creation }
 
 easy_room_app_equipemet_index:
     path:     /equipement-index
