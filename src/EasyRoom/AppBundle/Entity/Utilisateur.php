@@ -225,7 +225,7 @@ class Utilisateur
      */
     public function addReservation(Reservation $reservation)
     {
-        $this->reservations[] = $reservation;
+        $this->reservations->add($reservation);
 
         return $this;
     }
@@ -259,7 +259,7 @@ class Utilisateur
      */
     public function addReservationProprietaire(Reservation $reservationProprietaire)
     {
-        $this->reservationProprietaires = $reservationProprietaire;
+        $this->reservationProprietaires->add($reservationProprietaire);
 
         return $this;
     }

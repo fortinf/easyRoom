@@ -90,7 +90,7 @@ class Disposition
      */
     public function addDispositionSalle(DispositionSalle $dispositionSalle)
     {
-        $this->dispositionSalles[] = $dispositionSalle;
+        $this->dispositionSalles->add($dispositionSalle);
 
         return $this;
     }

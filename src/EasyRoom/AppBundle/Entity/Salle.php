@@ -4,7 +4,7 @@ namespace EasyRoom\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Collection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Salle
@@ -260,7 +260,7 @@ class Salle
      */
     public function addDispositionSalle(DispositionSalle $dispositionSalle)
     {
-        $this->dispositionSalles[] = $dispositionSalle;
+        $this->dispositionSalles->add($dispositionSalle);
 
         return $this;
     }
@@ -294,7 +294,7 @@ class Salle
      */
     public function addEquipement(Equipement $equipement)
     {
-        $this->equipements[] = $equipement;
+        $this->equipements->add($equipement);
 
         return $this;
     }
@@ -328,7 +328,7 @@ class Salle
      */
     public function addReservation(Reservation $reservation)
     {
-        $this->reservations[] = $reservation;
+        $this->reservations->add($reservation);
 
         return $this;
     }

@@ -136,7 +136,7 @@ class Reservation
      */
     public function __construct()
     {
-        $this->utlisateurs = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
         $this->equipements = new ArrayCollection();
         $this->inviteExternes = new ArrayCollection();
     }
@@ -377,7 +377,7 @@ class Reservation
      */
     public function addUtilisateur(Utilisateur $utilisateur)
     {
-        $this->utilisateurs[] = $utilisateur;
+        $this->utilisateurs->add($utilisateur);
 
         return $this;
     }
@@ -411,7 +411,7 @@ class Reservation
      */
     public function addEquipement(Equipement $equipement)
     {
-        $this->equipements[] = $equipement;
+        $this->equipements->add($equipement);
 
         return $this;
     }
@@ -445,7 +445,7 @@ class Reservation
      */
     public function addInviteExterne(InviteExterne $inviteExterne)
     {
-        $this->inviteExternes[] = $inviteExterne;
+        $this->inviteExternes->add($inviteExterne);
 
         return $this;
     }

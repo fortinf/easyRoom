@@ -10,7 +10,6 @@ namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Entity\Reservation;
-use EasyRoom\AppBundle\Entity\Utilisateur;
 
 /**
  * Description of ReservationService
@@ -38,7 +37,6 @@ class ReservationService {
      * @return integer
      */
     public function create(Reservation $reservation, $idSalle, $idUtilisateurMaitre, array $idUtilisateurs, array $idEquipements, array $inviteExternes) {
-
 
         $repoUtilisateur = $this->em->getRepository('EasyRoomAppBundle:Utilisateur');
         $repoSalle = $this->em->getRepository('EasyRoomAppBundle:Salle');
@@ -86,5 +84,5 @@ class ReservationService {
 
         return $reservation->getId();
     }
-
+    
 }

@@ -9,6 +9,7 @@
 namespace EasyRoom\AppBundle\Controller;
 
 use DateTime;
+use EasyRoom\AppBundle\Entity\InviteExterne;
 use EasyRoom\AppBundle\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -94,7 +95,7 @@ class TestController extends Controller {
         
         // RESERVATION
         
-        $reservationService = $this->container->get('reservation.service');
+        // Infos de base
         $reservation = new Reservation();
         $reservation->setLibelle('Projet easyRoom : dailyscrum');
         $reservation->setDateDebut(DateTime::createFromFormat('d/m/Y', '01/12/2016'));
@@ -102,9 +103,35 @@ class TestController extends Controller {
         $reservation->setHeureDebut(DateTime::createFromFormat('H:i', '14:00'));
         $reservation->setHeureFin(DateTime::createFromFormat('H:i', '15:30'));
         
-        
+        // Salle
         $salleService = $this->container->get('salle.service');
         $salle = $salleService->getSalleById(2);
+        
+        // Utilisateurs occupants
+        $idUtilisateurs = array(2, 3);
+        
+        // Equipements
+        $idEquipements = array();
+        
+        // occupants externe 
+        $inviteExternes = array();
+        $inviteExterne1 = new InviteExterne();
+        $inviteExterne1->setNom('Martin');
+        $inviteExterne1->setPrenom('David');
+        $inviteExterne1->setMail('david.martin@yopmail.com');
+        $inviteExterne1->setEntreprise('ECOVert');
+        array_push($inviteExternes, $inviteExterne1);
+        
+        $inviteExterne2 = new InviteExterne();
+        $inviteExterne2->setNom('Moreau');
+        $inviteExterne2->setPrenom('Vanessa');
+        $inviteExterne2->setMail('vanessa.moreau@yopmail.com');
+        $inviteExterne2->setEntreprise('ECOVert');
+        array_push($inviteExternes, $inviteExterne2);
+        
+        // Création de la réservation
+        $reservationService = $this->container->get('reservation.service');
+        $reservationService->create($reservation, 1, 1, $idUtilisateurs, $idEquipements, $inviteExternes);
         
         return $this->render('EasyRoomAppBundle::test.html.twig', array(
             'salle' => $salle,
