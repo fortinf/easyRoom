@@ -14,6 +14,10 @@ easy_room_app_salle_creation:
     path:     /salle-creation
     defaults: { _controller: EasyRoomAppBundle:Salle:creation }
 
+easy_room_app_salle_fiche:
+    path:     /salle-fiche
+    defaults: { _controller: EasyRoomAppBundle:Salle:affichage }
+
 easy_room_app_equipemet_index:
     path:     /equipement-index
     defaults: { _controller: EasyRoomAppBundle:Equipement:index }
