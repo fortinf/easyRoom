@@ -83,14 +83,14 @@ class SalleService {
      * 
      * Fonction de mise à jour de la salle
      * 
-     * @param integer $id
+     * @param integer $idSalle
      * @param Salle $salle
      * @param array $dispositionBeans { integer idDisposition => DispositionBean dispositionBean }
      */
-    public function update($id, Salle $salle, array $dispositionBeans) {
+    public function update($idSalle, Salle $salle, array $dispositionBeans) {
 
         $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-        $udpateSalle = $repository->find($id);
+        $udpateSalle = $repository->find($idSalle);
 
         if (!is_null($udpateSalle)) {
             // Informations de base
@@ -116,10 +116,16 @@ class SalleService {
             $this->em->flush();
         }
     }
-
-    public function getById($id) {
+    
+    /**
+     * Retourne une salle depuis un id
+     * 
+     * @param integer $idSalle
+     * @return Salle
+     */
+    public function getById($idSalle) {
         $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-        return $repository->find($id);
+        return $repository->find($idSalle);
     }
 
     /**

@@ -64,18 +64,18 @@ class InviteExterneService {
     }
 
     /**
-     * Fonction de suppression d'un invité externe
+     * Retourne un invité externe depuis un id
      * 
-     * @param type $id
+     * @param integer $idInviteExterne
+     * @return InviteExterne
      */
-    public function remove($id) {
-
-        $repository = $this->em->getRepository('EasyRoomAppBundle:InviteExterne');
-        $inviteExterne = $repository->find($id);
-        
-        $this->em->remove($inviteExterne);
-        $this->em->flush();
-        
+    public function getById($idInviteExterne) {
+        if (!is_null($idInviteExterne) && is_int($idInviteExterne)) {
+            $repository = $this->em->getRepository('EasyRoomAppBundle:InviteExterne');
+            return $repository->find($idInviteExterne);
+        } else {
+            return null;
+        }
     }
 
 }

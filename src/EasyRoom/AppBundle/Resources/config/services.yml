@@ -25,7 +25,7 @@ services:
 
     reservation.service:
         class: EasyRoom\AppBundle\Service\ReservationService
-        arguments: ["@doctrine.orm.default_entity_manager", "@salle.service", "@utilisateur.service", "@equipement.service"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@salle.service", "@utilisateur.service", "@equipement.service", "@inviteexterne.service"]
 
     inviteexterne.service:
         class: EasyRoom\AppBundle\Service\InviteExterneService
