@@ -9,6 +9,7 @@
 namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use EasyRoom\AppBundle\Entity\InviteExterne;
 use EasyRoom\AppBundle\Entity\Reservation;
 
 /**
@@ -24,11 +25,11 @@ class ReservationService {
     private $utilisateurService;
     private $inviteExterneService;
 
-    public function __construct(EntityManager $entityManager, SalleService $salleSrv, UtilisateurService $utilisateurSrv, EquipementService $equipementSrv, \EasyRoom\AppBundle\Service\InviteExterneService $inviteExterneSrv) {
-        $this->em = $entityManager;
-        $this->salleService = $salleSrv;
-        $this->utilisateurService = $utilisateurSrv;
-        $this->equipementService = $equipementSrv;
+    public function __construct(EntityManager $entityManager, SalleService $salleSrv, UtilisateurService $utilisateurSrv, EquipementService $equipementSrv, InviteExterneService $inviteExterneSrv) {
+        $this->em                   = $entityManager;
+        $this->salleService         = $salleSrv;
+        $this->utilisateurService   = $utilisateurSrv;
+        $this->equipementService    = $equipementSrv;
         $this->inviteExterneService = $inviteExterneSrv;
     }
 
@@ -46,35 +47,53 @@ class ReservationService {
      */
     public function create(Reservation $reservation, $idSalle, $idUtilisateurMaitre, array $idUtilisateurs, array $idEquipements, array $inviteExternes) {
 
-        // Salle
-        $salle = $this->salleService->getById($idSalle);
-        $reservation->setSalle($salle);
+        if (!is_null($reservation) && $reservation instanceof Reservation && !is_null($idSalle) && is_int($idSalle) && !is_null($idUtilisateurMaitre) && is_int($idUtilisateurMaitre) && !is_null($idUtilisateurs) && is_array($idUtilisateurs) && !is_null($idEquipements) && is_array($idEquipements) && !is_null($inviteExternes) && is_array($inviteExternes)) {
+            // Salle
+            $salle = $this->salleService->getById($idSalle);
+            if (!is_null($salle)) {
+                $reservation->setSalle($salle);
+            }
 
-        // Utilisateuru maître
-        $utilisateurMaitre = $this->utilisateurService->getById($idUtilisateurMaitre);
-        $reservation->setUtilisateurMaitre($utilisateurMaitre);
+            // Utilisateuru maître
+            $utilisateurMaitre = $this->utilisateurService->getById($idUtilisateurMaitre);
+            if (!is_null($utilisateurMaitre)) {
+                $reservation->setUtilisateurMaitre($utilisateurMaitre);
+            }
 
-        // Utilisateurs participants
-        foreach ($idUtilisateurs as $idUtilisateur) {
-            $utilisateur = $this->utilisateurService->getById($idUtilisateur);
-            $reservation->addUtilisateur($utilisateur);
+            // Utilisateurs participants
+            foreach ($idUtilisateurs as $idUtilisateur) {
+                if (!is_null($idUtilisateur) && is_int($idUtilisateur)) {
+                    $utilisateur = $this->utilisateurService->getById($idUtilisateur);
+                    if (!is_null($utilisateur)) {
+                        $reservation->addUtilisateur($utilisateur);
+                    }
+                }
+            }
+
+            // Invités externes
+            foreach ($inviteExternes as $inviteExterne) {
+                if (!is_null($inviteExterne) && $inviteExterne instanceof InviteExterne) {
+                    $reservation->addInviteExterne($inviteExterne);
+                }
+            }
+
+            // Equipements
+            foreach ($idEquipements as $idEquipement) {
+                if (!is_null($idEquipement) && is_int($idEquipement)) {
+                    $equipement = $this->equipementService->getById($idEquipement);
+                    if (!is_null($equipement)) {
+                        $reservation->addEquipement($equipement);
+                    }
+                }
+            }
+
+            $this->em->persist($reservation);
+            $this->em->flush();
+
+            return $reservation->getId();
+        } else {
+            return NULL;
         }
-
-        // Invités externes
-        foreach ($inviteExternes as $inviteExterne) {
-            $reservation->addInviteExterne($inviteExterne);
-        }
-
-        // Equipements
-        foreach ($idEquipements as $idEquipement) {
-            $equipement = $this->equipementService->getById($idEquipement);
-            $reservation->addEquipement($equipement);
-        }
-
-        $this->em->persist($reservation);
-        $this->em->flush();
-
-        return $reservation->getId();
     }
 
     /**
@@ -86,33 +105,33 @@ class ReservationService {
      * @param array $inviteExternes
      */
     public function update($idReservation, Reservation $reservation) {
-
-        $repository = $this->em->getRepository('EasyRoomAppBundle:Reservation');
-        $updateReservation = $repository->find($idReservation);
-
-        if (!is_null($updateReservation)) {
-            $updateReservation->setLibelle($reservation->getLibelle());
-            $updateReservation->setDateDebut($reservation->getDateDebut());
-            $updateReservation->setDateFin($reservation->getDateFin());
-            $updateReservation->setHeureDebut($reservation->getHeureDebut());
-            $updateReservation->setHeureFin($reservation->getHeureFin());
-            $this->em->persist($reservation);
-            $this->em->flush();
+        if (!is_null($idReservation) && is_int($idReservation) && !is_null($reservation) && $reservation instanceof Reservation) {
+            $repository        = $this->em->getRepository('EasyRoomAppBundle:Reservation');
+            $updateReservation = $repository->find($idReservation);
+            if (!is_null($updateReservation)) {
+                $updateReservation->setLibelle($reservation->getLibelle());
+                $updateReservation->setDateDebut($reservation->getDateDebut());
+                $updateReservation->setDateFin($reservation->getDateFin());
+                $updateReservation->setHeureDebut($reservation->getHeureDebut());
+                $updateReservation->setHeureFin($reservation->getHeureFin());
+                $this->em->persist($reservation);
+                $this->em->flush();
+            }
         }
     }
 
     /**
      * Retourne une réservation depuis un id
      * 
-     * @param integer $idReservation
+     * @param integer $id
      * @return Reservation
      */
-    public function getById($idReservation) {
-        if (!is_null($idReservation) && is_int($idReservation)) {
+    public function getById($id) {
+        if (!is_null($id) && is_int($id)) {
             $repository = $this->em->getRepository('EasyRoomAppBundle:Reservation');
-            return $repository->find($idReservation);
+            return $repository->find($id);
         } else {
-            return null;
+            return NULL;
         }
     }
 
@@ -124,16 +143,13 @@ class ReservationService {
      */
     public function addUtilisateur($idReservation, $idUtilisateur) {
         if (!is_null($idReservation) && is_int($idReservation) && !is_null($idUtilisateur) && is_int($idUtilisateur)) {
-            
             $reservation = $this->getById($idReservation);
             $utilisateur = $this->utilisateurService->getById($idUtilisateur);
-            
             if (!is_null($reservation) && !is_null($utilisateur)) {
                 $reservation->addUtilisateur($utilisateur);
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
-            
         }
     }
 
@@ -145,16 +161,13 @@ class ReservationService {
      */
     public function removeUtilisateur($idReservation, $idUtilisateur) {
         if (!is_null($idReservation) && is_int($idReservation) && !is_null($idUtilisateur) && is_int($idUtilisateur)) {
-            
             $reservation = $this->getById($idReservation);
             $utilisateur = $this->utilisateurService->getById($idUtilisateur);
-            
             if (!is_null($reservation) && !is_null($utilisateur)) {
                 $reservation->removeUtilisateur($utilisateur);
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
-            
         }
     }
 
@@ -166,17 +179,14 @@ class ReservationService {
      */
     public function addEquipement($idReservation, $idEquipement) {
         if (!is_null($idReservation) && is_int($idReservation) && !is_null($idEquipement) && is_int($idEquipement)) {
-            
             $reservation = $this->getById($idReservation);
-            $equipement = $this->equipementService->getById($idEquipement);
-            
+            $equipement  = $this->equipementService->getById($idEquipement);
             if (!is_null($reservation) && !is_null($equipement)) {
                 $reservation->addEquipement($equipement);
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
-            
-        } 
+        }
     }
 
     /**
@@ -187,17 +197,14 @@ class ReservationService {
      */
     public function removeEquipement($idReservation, $idEquipement) {
         if (!is_null($idReservation) && is_int($idReservation) && !is_null($idEquipement) && is_int($idEquipement)) {
-            
             $reservation = $this->getById($idReservation);
-            $equipement = $this->equipementService->getById($idEquipement);
-            
+            $equipement  = $this->equipementService->getById($idEquipement);
             if (!is_null($reservation) && !is_null($equipement)) {
                 $reservation->removeEquipement($equipement);
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
-            
-        } 
+        }
     }
 
     /**
@@ -208,17 +215,14 @@ class ReservationService {
      */
     public function addInviteExterne($idReservation, $idInviteExterne) {
         if (!is_null($idReservation) && is_int($idReservation) && !is_null($idInviteExterne) && is_int($idInviteExterne)) {
-            
-            $reservation = $this->getById($idReservation);
+            $reservation   = $this->getById($idReservation);
             $inviteExterne = $this->inviteExterneService->getById($idInviteExterne);
-            
             if (!is_null($reservation) && !is_null($inviteExterne)) {
                 $reservation->addInviteExterne($inviteExterne);
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
-            
-        } 
+        }
     }
 
     /**
@@ -229,17 +233,14 @@ class ReservationService {
      */
     public function removeInviteExterne($idReservation, $idInviteExterne) {
         if (!is_null($idReservation) && is_int($idReservation) && !is_null($idInviteExterne) && is_int($idInviteExterne)) {
-            
-            $reservation = $this->getById($idReservation);
+            $reservation   = $this->getById($idReservation);
             $inviteExterne = $this->inviteExterneService->getById($idInviteExterne);
-            
             if (!is_null($reservation) && !is_null($inviteExterne)) {
                 $reservation->removeInviteExterne($inviteExterne);
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
-            
-        } 
+        }
     }
 
 }

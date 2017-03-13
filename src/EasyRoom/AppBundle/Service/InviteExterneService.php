@@ -10,7 +10,6 @@ namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Entity\InviteExterne;
-use EasyRoom\AppBundle\Entity\Reservation;
 
 /**
  * Description of InviteExterneService
@@ -26,56 +25,19 @@ class InviteExterneService {
     }
 
     /**
-     * Fonction de création d'un invité externe
-     * 
-     * @param InviteExterne $inviteExterne
-     * @return integer
-     */
-    public function create(InviteExterne $inviteExterne, Reservation $reservation) {
-        $inviteExterne->setReservation($reservation);
-        $this->em->persist($inviteExterne);
-        $this->flush();
-        return $inviteExterne->getId();
-    }
-
-    /**
-     * Fonction de modification d'un invité externe
-     * 
-     * @param integer $id
-     * @param InviteExterne $inviteExterne
-     */
-    public function update($id, InviteExterne $inviteExterne) {
-
-        $repository = $this->em->getRepository('EasyRoomAppBundle:InviteExterne');
-        $updateInviteExterne = $repository->find($id);
-
-        // Informations de base
-        $updateInviteExterne->setNom($inviteExterne->getNom());
-        $updateInviteExterne->setPrenom($inviteExterne->getPrenom());
-        $updateInviteExterne->setMail($inviteExterne->getMail());
-        $updateInviteExterne->setEntreprise($inviteExterne->getEntreprise());
-
-        // Réservation
-        $updateInviteExterne->setReservation($inviteExterne->getReservation());
-
-        // Modification de l'invité externe
-        $this->em->persist($updateInviteExterne);
-        $this->em->flush();
-    }
-
-    /**
      * Retourne un invité externe depuis un id
      * 
-     * @param integer $idInviteExterne
+     * @param integer $id
      * @return InviteExterne
      */
-    public function getById($idInviteExterne) {
-        if (!is_null($idInviteExterne) && is_int($idInviteExterne)) {
+    public function getById($id) {
+        if (!is_null($id) && is_int($id)) {
             $repository = $this->em->getRepository('EasyRoomAppBundle:InviteExterne');
-            return $repository->find($idInviteExterne);
+            return $repository->find($id);
         } else {
-            return null;
+            return NULL;
         }
     }
+    
 
 }

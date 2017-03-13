@@ -30,10 +30,14 @@ class RoleService {
      * @return type
      */
     public function getById($id) {
-        $repository = $this->em->getRepository('EasyRoomAppBundle:Role');
-        return $repository->find($id);
+        if (!is_null($id) && is_int($id)) {
+            $repository = $this->em->getRepository('EasyRoomAppBundle:Role');
+            return $repository->find($id);
+        } else {
+            return NULL;
+        }
     }
-    
+
     /**
      * 
      * @return mixed

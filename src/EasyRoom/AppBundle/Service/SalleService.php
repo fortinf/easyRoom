@@ -30,9 +30,9 @@ class SalleService {
     private $equipementService;
 
     public function __construct(EntityManager $entityManager, DispositionService $dispositionSrv, EquipementService $equipementSrv) {
-        $this->em = $entityManager;
+        $this->em                 = $entityManager;
         $this->dispositionService = $dispositionSrv;
-        $this->equipementService = $equipementSrv;
+        $this->equipementService  = $equipementSrv;
     }
 
     /**
@@ -44,39 +44,45 @@ class SalleService {
      * @return integer
      */
     public function create(Salle $salle, array $dispositionBeans, array $idEquipements) {
-        // Dispositions
-        foreach ($dispositionBeans as $id => $dispositionBean) {
-            if (!is_null($id) && is_int($id)) {
-                $disposition = $this->dispositionService->getById($id);
 
-                if (!is_null($disposition)) {
-                    $dispositionSalle = new DispositionSalle();
-                    $dispositionSalle->setDisposition($disposition);
-                    $dispositionSalle->setNbPlace($dispositionBean->getNbPlace());
-                    $dispositionSalle->setDispositionDefaut($dispositionBean->getDispositionDefaut());
-                    $salle->addDispositionSalle($dispositionSalle);
-                    $this->em->persist($dispositionSalle);
+        if (!is_null($salle) && $salle instanceof Salle && !is_null($dispositionBeans) && is_array($dispositionBeans) && !is_null($idEquipements) && is_array($idEquipements)) {
+
+            // Dispositions
+            foreach ($dispositionBeans as $id => $dispositionBean) {
+                if (!is_null($id) && is_int($id)) {
+                    $disposition = $this->dispositionService->getById($id);
+
+                    if (!is_null($disposition)) {
+                        $dispositionSalle = new DispositionSalle();
+                        $dispositionSalle->setDisposition($disposition);
+                        $dispositionSalle->setNbPlace($dispositionBean->getNbPlace());
+                        $dispositionSalle->setDispositionDefaut($dispositionBean->getDispositionDefaut());
+                        $salle->addDispositionSalle($dispositionSalle);
+                        $this->em->persist($dispositionSalle);
+                    }
                 }
             }
-        }
 
-        // Equipements
-        foreach ($idEquipements as $idEquipement) {
-            if (!is_null($idEquipement) && is_int($idEquipement)) {
+            // Equipements
+            foreach ($idEquipements as $idEquipement) {
+                if (!is_null($idEquipement) && is_int($idEquipement)) {
 
-                $equipement = $this->equipementService->getById($idEquipement);
+                    $equipement = $this->equipementService->getById($idEquipement);
 
-                if (!is_null($equipement)) {
-                    $salle->addEquipement($equipement);
+                    if (!is_null($equipement)) {
+                        $salle->addEquipement($equipement);
+                    }
                 }
             }
+
+            // Création de la salle
+            $this->em->persist($salle);
+            $this->em->flush();
+
+            return $salle->getId();
+        } else {
+            return NULL;
         }
-
-        // Création de la salle
-        $this->em->persist($salle);
-        $this->em->flush();
-
-        return $salle->getId();
     }
 
     /**
@@ -89,43 +95,49 @@ class SalleService {
      */
     public function update($idSalle, Salle $salle, array $dispositionBeans) {
 
-        $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-        $udpateSalle = $repository->find($idSalle);
+        if (!is_null($idSalle) && is_int($idSalle) && !is_null($salle) && $salle instanceof Salle && !is_null($dispositionBeans) && is_array($dispositionBeans)) {
+            $repository  = $this->em->getRepository('EasyRoomAppBundle:Salle');
+            $udpateSalle = $repository->find($idSalle);
 
-        if (!is_null($udpateSalle)) {
-            // Informations de base
-            $udpateSalle->setLibelle($salle->getLibelle());
-            $udpateSalle->setDescription($salle->getDescription());
-            $udpateSalle->setDisponible($salle->getDisponible());
-            $udpateSalle->setHandicap($salle->getHandicap());
-            $udpateSalle->setLumiereJour($salle->getLumiereJour());
+            if (!is_null($udpateSalle)) {
+                // Informations de base
+                $udpateSalle->setLibelle($salle->getLibelle());
+                $udpateSalle->setDescription($salle->getDescription());
+                $udpateSalle->setDisponible($salle->getDisponible());
+                $udpateSalle->setHandicap($salle->getHandicap());
+                $udpateSalle->setLumiereJour($salle->getLumiereJour());
 
-            // Dispostions
-            $arrayDispositionSalles = $udpateSalle->getDispositionSalles()->toArray();
-            foreach ($arrayDispositionSalles as $dispositionSalle) {
-                $idDisposition = $dispositionSalle->getDisposition()->getId();
-                if (!is_null($dispositionBeans) && array_key_exists($idDisposition, $dispositionBeans)) {
-                    $dispositionBean = $dispositionBeans[$idDisposition];
-                    $dispositionSalle->setNbPlace($dispositionBean->getNbPlace());
-                    $dispositionSalle->setDispositionDefaut($dispositionBean->getDispositionDefaut());
+                // Dispostions
+                $arrayDispositionSalles = $udpateSalle->getDispositionSalles()->toArray();
+                foreach ($arrayDispositionSalles as $dispositionSalle) {
+                    $idDisposition = $dispositionSalle->getDisposition()->getId();
+                    if (!is_null($dispositionBeans) && array_key_exists($idDisposition, $dispositionBeans)) {
+                        $dispositionBean = $dispositionBeans[$idDisposition];
+                        $dispositionSalle->setNbPlace($dispositionBean->getNbPlace());
+                        $dispositionSalle->setDispositionDefaut($dispositionBean->getDispositionDefaut());
+                    }
                 }
-            }
 
-            // Modification de la salle
-            $this->em->persist($udpateSalle);
-            $this->em->flush();
+                // Modification de la salle
+                $this->em->persist($udpateSalle);
+                $this->em->flush();
+            }
         }
     }
-    
+
     /**
      * Retourne une salle depuis un id
      * 
-     * @param integer $idSalle
+     * @param integer $id
      * @return Salle
      */
-    public function getById($idSalle) {
-        $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-        return $repository->find($idSalle);
+    public function getById($id) {
+        if (!is_null($id) && is_int($id)) {
+            $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
+            return $repository->find($id);
+        } else {
+            return NULL;
+        }
     }
 
     /**
@@ -155,10 +167,8 @@ class SalleService {
      */
     public function addEquipement($idSalle, $idEquipement) {
         if (!is_null($idSalle) && is_int($idSalle) && !is_null($idEquipement) && is_int($idEquipement)) {
-
-            $salle = $this->getById($idSalle);
+            $salle      = $this->getById($idSalle);
             $equipement = $this->equipementService->getById($idEquipement);
-
             if (!is_null($salle) && !is_null($equipement)) {
                 $salle->addEquipement($equipement);
                 $this->em->persist($salle);
@@ -175,10 +185,8 @@ class SalleService {
      */
     public function removeEquipement($idSalle, $idEquipement) {
         if (!is_null($idSalle) && is_int($idSalle) && !is_null($idEquipement) && is_int($idEquipement)) {
-
-            $salle = $this->getById($idSalle);
+            $salle      = $this->getById($idSalle);
             $equipement = $this->equipementService->getById($idEquipement);
-
             if (!is_null($salle) && !is_null($equipement)) {
                 $salle->removeEquipement($equipement);
                 $this->em->persist($salle);

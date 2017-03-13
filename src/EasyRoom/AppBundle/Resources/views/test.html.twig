@@ -8,50 +8,61 @@
     </head>
     <body>
         <header>
-            <h1>Salle : "{{ salle.libelle }}" (n°{{ salle.id }})</h1>
         </header>
         <main>
-            <section>
-                <h2>Dispositions</h2>
-                {% for dispositionSalle in salle.dispositionSalles %}
+            {% if salle is not null %}
+                <h1>Salle : "{{ salle.libelle }}" (n°{{ salle.id }})</h1>
+                <section>
+                    <h2>Dispositions</h2>
+                    {% for dispositionSalle in salle.dispositionSalles %}
+                        <div>
+                            <h3>{{ dispositionSalle.disposition.libelle }}:</h3>
+                            <ul>
+                                <li>Nombre de place : {{ dispositionSalle.nbPlace }}</li>
+                                <li>Disposition par défaut : {{ dispositionSalle.dispositionDefaut }}</li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </section>
+                <section>
+                    <h2>Réservation</h2>
                     <div>
-                        <h3>{{ dispositionSalle.disposition.libelle }}:</h3>
+                        <p>Libellé : {{ reservation.libelle }}</p>
+                        <p>Début : le {{ reservation.dateDebut|date("d/m/Y") }} à {{ reservation.heureDebut|date("H:i") }}</p>
+                        <p>Fin : le {{ reservation.dateFin|date("d/m/Y") }} à {{ reservation.heureFin|date("H:i") }}</p>
+                    </div>
+                    <div>
+                        <h3>Utilisateur maître:</h3>
                         <ul>
-                            <li>Nombre de place : {{ dispositionSalle.nbPlace }}</li>
-                            <li>Disposition par défaut : {{ dispositionSalle.dispositionDefaut }}</li>
+                            <li>{{ reservation.utilisateurMaitre.prenom }} {{ reservation.utilisateurMaitre.nom }} (mail : {{ reservation.utilisateurMaitre.mail }})</li>
                         </ul>
                     </div>
-                {% endfor %}
-            </section>
+                    <div>
+                        <h3>Utilisateurs participants:</h3>
+                        <ul>
+                            {% for utilisateur in reservation.utilisateurs %}
+                                <li>{{ utilisateur.prenom }} {{ utilisateur.nom }} (mail : {{ utilisateur.mail }})</li>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Invites externes:</h3>
+                        <ul>
+                            {% for inviteExterne in reservation.inviteExternes %}
+                                <li>{{ inviteExterne.prenom }} {{ inviteExterne.nom }} de chez {{ inviteExterne.entreprise }}</li>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                </section>
+            {% endif %}
             <section>
-                <h2>Réservation</h2>
-                <div>
-                    <p>Libellé : {{ reservation.libelle }}</p>
-                    <p>Début : le {{ reservation.dateDebut|date("d/m/Y") }} à {{ reservation.heureDebut|date("H:i") }}</p>
-                    <p>Fin : le {{ reservation.dateFin|date("d/m/Y") }} à {{ reservation.heureFin|date("H:i") }}</p>
-                </div>
-                <div>
-                    <h3>Utilisateur maître:</h3>
-                    <ul>
-                        <li>{{ reservation.utilisateurMaitre.prenom }} {{ reservation.utilisateurMaitre.nom }} (mail : {{ reservation.utilisateurMaitre.mail }})</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Utilisateurs participants:</h3>
-                    <ul>
-                    {% for utilisateur in reservation.utilisateurs %}
-                        <li>{{ utilisateur.prenom }} {{ utilisateur.nom }} (mail : {{ utilisateur.mail }})</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <div>
-                    <h3>Invites externes:</h3>
-                    <ul>
-                    {% for inviteExterne in reservation.inviteExternes %}
-                        <li>{{ inviteExterne.prenom }} {{ inviteExterne.nom }} de chez {{ inviteExterne.entreprise }}</li>
-                    {% endfor %}
-                    </ul>
-                </div>
+                {% if app.session.flashBag.has('error') %}
+                    <div>
+                        {% for msg in app.session.flashBag.get('error') %}
+                            {{ msg}}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </section>
 
         </main>

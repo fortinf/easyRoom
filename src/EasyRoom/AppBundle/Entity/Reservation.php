@@ -129,7 +129,7 @@ class Reservation {
      * @ORM\OneToMany(
      *      targetEntity="InviteExterne", 
      *      mappedBy="reservation",
-     *      cascade={"persist", "remove"}
+     *      cascade={"persist", "remove"},
      *      orphanRemoval=true)
      */
     private $inviteExternes;
