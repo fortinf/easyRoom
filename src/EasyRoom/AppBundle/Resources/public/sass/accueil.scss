@@ -1,6 +1,6 @@
 @import "_variables.scss";
 
-div.recherche {
+section.recherche {
   background: url(../images/accueil_background_search_salle.png) 50% 70%;
   background-size: cover;
   min-height: 300px;
@@ -30,7 +30,7 @@ div.recherche {
   }
 }
 
-.mes-reservations {
+section.mes-reservations {
   &.container {
     width:95%;
     max-width:1500px;

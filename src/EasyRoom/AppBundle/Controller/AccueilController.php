@@ -8,7 +8,7 @@ class AccueilController
         extends Controller {
 
     public function indexAction() {
-        return $this->render('EasyRoomAppBundle:Accueil:copyaccueil.html.twig');
+        return $this->render('EasyRoomAppBundle:Accueil:accueil.html.twig');
     }
 
 }

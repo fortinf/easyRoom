@@ -20,15 +20,8 @@ and open the template in the editor.
       </head>
     <body>
         <header>
-          {% block navbar_profil %}{% endblock %}
-          <nav class="white">
-            <div class="nav-wrapper">
-              <a href="#" class="brand-logo blue-text text-lighten-1">Logo</a>
-                {% block navbar %}{% endblock %}
-            </div>
-          </nav>
+            {% block navbar %}{% endblock %}
         </header>
-
         <main>
           {% block main %}
           {% endblock %}
