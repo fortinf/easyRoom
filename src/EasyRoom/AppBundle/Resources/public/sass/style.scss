@@ -31,19 +31,19 @@ nav {
 }
 
 /** INPUTS **/
-input.valid {
-  border-bottom: 1px solid $blue-easyroom !important;
-  box-shadow: 0 1px 0 0 $blue-easyroom !important;
-}
 
-input, input:focus:not([readonly]) {
-  //color: $blue-easyroom;
-  border-bottom: 1px solid $blue-easyroom !important;
-  box-shadow: 0 1px 0 0 $blue-easyroom !important;
-}
-
-input:focus:not([readonly]) + label {
-  color: $blue-easyroom !important;
+input[type=email], input[type=password], input[type=text] {
+  &.valid {
+    border-bottom: 1px solid $blue-easyroom;
+    box-shadow: 0 1px 0 0 $blue-easyroom;
+  }
+  border-bottom: 1px solid $blue-easyroom;
+  box-shadow: 0 1px 0 0 $blue-easyroom;
+  &:focus:not([readonly]) {
+    border-bottom: 1px solid $blue-easyroom;
+    box-shadow: 0 1px 0 0 $blue-easyroom;
+    & + label { color: $blue-easyroom; }
+  }
 }
 
 .input-field .prefix.active {
@@ -58,12 +58,12 @@ input:focus:not([readonly]) + label {
   text-decoration: none;
   color: $blue-easyroom;
   background-color: $white;
+  &:hover {
+    background-color: $blue-easyroom;
+    color:$white;
+  }
 }
 
-.btn:hover, .btn-large:hover {
-  background-color: $blue-easyroom;
-  color:$white;
-}
 
 .btn:focus, .btn-large:focus, .btn-floating:focus {
   background-color: darken($blue-easyroom,10%)
