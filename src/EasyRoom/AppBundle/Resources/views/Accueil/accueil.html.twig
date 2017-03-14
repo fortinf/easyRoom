@@ -5,19 +5,6 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/accueil.css') }}"/>
 {% endblock %}
 
-{# Contenu du block navbar_profil #}
-{% block navbar_profil %}
-    <ul id="dropdown1" class="dropdown-content">
-        <li>
-            <a href="#!" class="blue-text text-lighten-1">Mon compte</a>
-        </li>
-        <li class="divider blue-text text-lighten-1"></li>
-        <li>
-            <a href="#!" class="blue-text text-lighten-1">Déconnexion</a>
-        </li>
-    </ul>
-{% endblock %}
-
 {# Contenu du block navbar #}
 {% block navbar %}
     <div class="navbar-fixed">
@@ -43,7 +30,7 @@
                     <li><a href="#">Mes réservations</a></li>
                     <li><a href="#!">Mon profil</a></li>
                     <li class="divider"></li>
-                    <li><a href="#!">Se déconnecter</a></li>
+                    <li><a href="{{ path('easy_room_app_login_index') }}">Se déconnecter</a></li>
                 </ul>
                 <a href="#" data-activates="nav-mobile" class="blue-text button-collapse"><i class="material-icons">menu</i></a>
             </div>

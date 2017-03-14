@@ -24,7 +24,7 @@ class SalleController extends Controller {
 
     public function searchAction()
     {
-        return $this->render('EasyRoomAppBundle:Salle:search_result.html.twig');
+        return $this->render('EasyRoomAppBundle:Salle:search_salle.html.twig');
     }
     
 }
