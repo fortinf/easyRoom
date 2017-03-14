@@ -8,6 +8,8 @@
 
 namespace EasyRoom\AppBundle\Bean;
 
+use DateTime;
+
 /**
  * Description of SearchSalle
  *
@@ -29,15 +31,33 @@ class SearchSalleBean {
     
     /**
      *
-     * @var Date
+     * @var DateTime
      */
     private $dateDebut;
+    
+    /**
+     *
+     * @var DateTime 
+     */
+    private $dateFin;
     
     /**
      *
      * @var integer 
      */
     private $dureeHeure;
+    
+    /**
+     *
+     * @var DateTime 
+     */
+    private $heureDebut;
+    
+    /**
+     *
+     * @var DateTime 
+     */
+    private $HeureFin;
     
     /**
      *
@@ -57,17 +77,18 @@ class SearchSalleBean {
      */
     private $handicap;
     
-    public function __construct($libelle, $nbPlace, Date $dateDebut, $dureeHeure, $dureeJour, $lumiereJour, $handicap) {
-        $this->libelle = $libelle;
-        $this->nbPlace = $nbPlace;
-        $this->dateDebut = $dateDebut;
-        $this->dureeHeure = $dureeHeure;
-        $this->dureeJour = $dureeJour;
-        $this->lumiereJour = $lumiereJour;
-        $this->handicap = $handicap;
+    public function __construct() {
+        $this->libelle     = '';
+        $this->nbPlace     = 0;
+        $this->dateDebut   = DateTime::createFromFormat('Y-m-d', '1900-01-01');
+        $this->dateFin     = DateTime::createFromFormat('Y-m-d', '1900-01-01');
+        $this->heureDebut  = DateTime::createFromFormat('H:i', '00:00');
+        $this->HeureFin    = DateTime::createFromFormat('H:i', '00:00');
+        $this->lumiereJour = FALSE;
+        $this->handicap    = FALSE;
     }
 
-    public function getLibelle() {
+        public function getLibelle() {
         return $this->libelle;
     }
 
@@ -75,12 +96,24 @@ class SearchSalleBean {
         return $this->nbPlace;
     }
 
-    public function getDateDebut(): Date {
+    public function getDateDebut() {
         return $this->dateDebut;
+    }
+
+    public function getDateFin() {
+        return $this->dateFin;
     }
 
     public function getDureeHeure() {
         return $this->dureeHeure;
+    }
+
+    public function getHeureDebut(){
+        return $this->heureDebut;
+    }
+
+    public function getHeureFin(){
+        return $this->HeureFin;
     }
 
     public function getDureeJour() {
@@ -97,37 +130,44 @@ class SearchSalleBean {
 
     public function setLibelle($libelle) {
         $this->libelle = $libelle;
-        return $this;
     }
 
     public function setNbPlace($nbPlace) {
         $this->nbPlace = $nbPlace;
-        return $this;
     }
 
-    public function setDateDebut(Date $dateDebut) {
+    public function setDateDebut(DateTime $dateDebut) {
         $this->dateDebut = $dateDebut;
-        return $this;
+    }
+
+    public function setDateFin(DateTime $dateFin) {
+        $this->dateFin = $dateFin;
     }
 
     public function setDureeHeure($dureeHeure) {
         $this->dureeHeure = $dureeHeure;
-        return $this;
+    }
+
+    public function setHeureDebut(DateTime $heureDebut) {
+        $this->heureDebut = $heureDebut;
+    }
+
+    public function setHeureFin(DateTime $HeureFin) {
+        $this->HeureFin = $HeureFin;
     }
 
     public function setDureeJour($dureeJour) {
         $this->dureeJour = $dureeJour;
-        return $this;
     }
 
     public function setLumiereJour($lumiereJour) {
         $this->lumiereJour = $lumiereJour;
-        return $this;
     }
 
     public function setHandicap($handicap) {
         $this->handicap = $handicap;
-        return $this;
     }
 
+
+    
 }

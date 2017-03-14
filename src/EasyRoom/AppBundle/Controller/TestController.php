@@ -9,10 +9,8 @@
 namespace EasyRoom\AppBundle\Controller;
 
 use DateTime;
-use EasyRoom\AppBundle\Entity\InviteExterne;
-use EasyRoom\AppBundle\Entity\Reservation;
+use EasyRoom\AppBundle\Bean\SearchSalleBean;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Exception;
 
 /**
  * Description of TestController
@@ -30,9 +28,31 @@ class TestController
 
         $utilisateur = NULL;
 
+
+        $searchSalle = new SearchSalleBean();
         
-        $utilisateur = $utilisateurService->getById(1);
- 
+        /*
+        $searchSalle->setDateDebut(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
+        $searchSalle->setDateFin(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
+        $searchSalle->setHeureDebut(DateTime::createFromFormat('H:i', '09:00'));
+        $searchSalle->setHeureFin(DateTime::createFromFormat('H:i', '12:30'));
+        $searchSalle->setNbPlace(10);
+        */
+        
+        
+        $searchSalle->setDateDebut(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
+        $searchSalle->setDateFin(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
+        $searchSalle->setHeureDebut(DateTime::createFromFormat('H:i', '09:00'));
+        $searchSalle->setHeureFin(DateTime::createFromFormat('H:i', '12:30'));
+        $searchSalle->setNbPlace(10);
+
+
+        $em             = $this->getDoctrine()->getManager();
+        $easyRepository = $em->getRepository('EasyRoomAppBundle:Salle');
+        //$salles = $easyRepository->searchSalle($searchSalle);
+        $salles = $easyRepository->searchSalle($searchSalle);
+        
+        var_dump($salles);
 
         return $this->render('EasyRoomAppBundle::test.html.twig', array(
                     'salle'       => NULL,

@@ -3,14 +3,14 @@
 namespace EasyRoom\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Salle
  *
  * @ORM\Table(name="T_SALLE", uniqueConstraints={@ORM\UniqueConstraint(name="SAL_ID", columns={"SAL_ID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EasyRoom\AppBundle\Repository\SalleRepository")
  */
 class Salle {
 
