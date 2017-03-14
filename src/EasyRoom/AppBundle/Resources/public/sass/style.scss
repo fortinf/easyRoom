@@ -30,7 +30,10 @@ nav {
   .select-wrapper input.select-dropdown {border-bottom:1px solid $white}
 }
 
-/** INPUTS **/
+/** FOOTER **/
+footer {color: $blue-easyroom;margin-right:0.8em}
+
+/** INPUTS & BUTTONS **/
 
 input[type=email], input[type=password], input[type=text] {
   &.valid {
@@ -63,7 +66,6 @@ input[type=email], input[type=password], input[type=text] {
     color:$white;
   }
 }
-
 
 .btn:focus, .btn-large:focus, .btn-floating:focus {
   background-color: darken($blue-easyroom,10%)

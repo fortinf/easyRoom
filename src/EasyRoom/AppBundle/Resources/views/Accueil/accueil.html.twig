@@ -38,7 +38,12 @@
                 </ul>
 
                 <ul id="nav-mobile" class="side-nav">
-                    <li><a href="#">Navbar Link</a></li>
+                    <li class="active"><a href="#">Accueil</a></li>
+                    <li><a href="#">Salles</a></li>
+                    <li><a href="#">Mes réservations</a></li>
+                    <li><a href="#!">Mon profil</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!">Se déconnecter</a></li>
                 </ul>
                 <a href="#" data-activates="nav-mobile" class="blue-text button-collapse"><i class="material-icons">menu</i></a>
             </div>
@@ -54,9 +59,18 @@
         </div>
     </section>
 
-    <section class="section row container mes-reservations">
-        <h3 class="col s12 header">Mes réservations</h3>
-        {% include 'EasyRoomAppBundle:Reservation:carte.html.twig' %}
+    <section class="section row mes-reservations">
+        <div class="container">
+            <h3 class="col s12 header">Mes réservations</h3>
+            {% include 'EasyRoomAppBundle:Reservation:carte-ma-reservation.html.twig' %}
+        </div>
+    </section>
+
+    <section class="section row join-meeting">
+        <div class="container">
+            <h3 class="col s12 header">Vous avez été invité à rejoindre les réunions suivantes :</h3>
+            {% include 'EasyRoomAppBundle:Reservation:carte-invitation.html.twig' %}
+        </div>
     </section>
 {% endblock %}
 

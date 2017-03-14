@@ -22,3 +22,10 @@ div#logo {
   }
 }
 main {margin: 0 auto;position:relative; top:-50px;}
+
+footer {
+  position:absolute;
+  bottom:0;
+  right:0.8em;
+  color: $white;
+}

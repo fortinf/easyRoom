@@ -30,8 +30,8 @@ section.recherche {
   }
 }
 
-section.mes-reservations {
-  &.container {
+section.mes-reservations, section.join-meeting {
+  .container {
     width:95%;
     max-width:1500px;
   }
@@ -48,13 +48,25 @@ section.mes-reservations {
       position:absolute; bottom:0;
       .material-icons {color: $blue-easyroom; position:relative; top:5px;right:5px;}
     }
-    .card-action a {
-      position:relative;
-      left: 2em;
-      color:$blue-easyroom !important;
-    }
-    //a.link-savoir-plus {position:absolute; left: 1em;color: $blue-easyroom !important}
-    //a.link-reserver {position:relative; left:2em; font-weight: bold}
+  }
+}
+
+section.mes-reservations {
+  .card-action a {
+    position:relative;
+    left: 2em;
+    color:$blue-easyroom !important;
+  }
+}
+
+section.join-meeting {
+  h3 {color:$white}
+  background-color: $blue-easyroom;
+  .card-action span {
+    position:relative;
+    left: -0.7em;
+    text-transform: uppercase;
+    color:$blue-easyroom !important;
   }
 }
 
