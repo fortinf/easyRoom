@@ -1,0 +1,67 @@
+@import "_variables.scss";
+
+div.recherche {
+  background: url(../images/accueil_background_search_salle.png) 50% 70%;
+  background-size: cover;
+  min-height: 300px;
+  h3 {color: $white; font-size: 2em;}
+  form {
+    background-color: rgba( $blue-easyroom, 0.97 )
+  }
+  input.valid {
+    border-bottom: 1px solid $white;
+    box-shadow: 0 1px 0 0 $white
+  }
+
+  input, input:focus:not([readonly]) {
+    color: #fff;
+
+    border-bottom: 1px solid $white
+  }
+
+  .input-field label, input:focus:not([readonly]) + label {
+    color: darken( $blue-easyroom, 20% );
+  }
+
+  .btn, .btn-large {
+    text-decoration: none;
+    color: $blue-easyroom;
+    background-color: $white;
+  }
+}
+
+.mes-reservations {
+  &.container {
+    width:95%;
+    max-width:1500px;
+  }
+  h3 {color: $blue-easyroom; font-size: 2.5em;}
+  .card {
+    position:relative;
+    max-width:500px;
+    h4 {margin-top:0}
+    .card-content {padding:1em; margin-bottom:0}
+    .card-description {
+      position:relative; height:100%;
+      p{color: lighten($soft-black, 30%)}}
+    .bottom {
+      position:absolute; bottom:0;
+      .material-icons {color: $blue-easyroom; position:relative; top:5px;right:5px;}
+    }
+    .card-action a {
+      position:relative;
+      left: 2em;
+      color:$blue-easyroom !important;
+    }
+    //a.link-savoir-plus {position:absolute; left: 1em;color: $blue-easyroom !important}
+    //a.link-reserver {position:relative; left:2em; font-weight: bold}
+  }
+}
+
+.picker__frame {
+  max-width: 355px;
+  width: 355px
+}
+
+
+

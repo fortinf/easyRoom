@@ -12,8 +12,10 @@ and open the template in the editor.
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/css/materialize.css') }}"  media="screen,projection"/>
-        <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/css/style.css') }}"  media="screen,projection"/>
+
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+        <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/style.css') }}"  media="screen,projection"/>
         {% block stylesheets %}{% endblock %}
       </head>
     <body>
@@ -36,7 +38,8 @@ and open the template in the editor.
         </footer>
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="{{ asset('bundles/easyroomapp/js/materialize.js') }}"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
         {% block javascript %}{% endblock %}
     </body>
 </html>
