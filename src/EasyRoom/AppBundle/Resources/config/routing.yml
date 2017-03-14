@@ -2,6 +2,10 @@ easy_room_app_login_index:
     path:     /
     defaults: { _controller: EasyRoomAppBundle:Login:index }
 
+easy_room_app_login_authentification:
+    path:     /authentification
+    defaults: { _controller: EasyRoomAppBundle:Login:authentification }
+
 easy_room_app_test_index:
     path:     /test
     defaults: { _controller: EasyRoomAppBundle:Test:index }
@@ -13,6 +17,10 @@ easy_room_app_accueil_index:
 easy_room_app_salle_index:
     path:     /salle-index
     defaults: { _controller: EasyRoomAppBundle:Salle:index }
+
+easy_room_app_salle_search:
+    path:     /salle-search
+    defaults: { _controller: EasyRoomAppBundle:Salle:search }
 
 easy_room_app_equipemet_index:
     path:     /equipement-index

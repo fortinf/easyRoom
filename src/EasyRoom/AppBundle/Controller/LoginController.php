@@ -21,5 +21,9 @@ class LoginController extends Controller {
     {
         return $this->render('EasyRoomAppBundle:Login:index.html.twig');
     }
-    
+
+    public function authentificationAction()
+    {
+        return $this->render('EasyRoomAppBundle:Accueil:accueil.html.twig');
+    }
 }
