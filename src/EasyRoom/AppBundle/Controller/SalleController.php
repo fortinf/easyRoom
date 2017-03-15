@@ -17,9 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class SalleController extends Controller {
     
-    public function indexAction()
+    public function creationAction()
     {
-        return $this->render('EasyRoomAppBundle:Salle:index.html.twig');
+        return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
     }
 
     public function searchAction()
@@ -27,4 +27,8 @@ class SalleController extends Controller {
         return $this->render('EasyRoomAppBundle:Salle:search_salle.html.twig');
     }
     
+    public function affichageAction()
+    {
+    	return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
+    }
 }
