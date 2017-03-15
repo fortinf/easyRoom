@@ -34,7 +34,8 @@ function initTimePicker() {
     $('.timepicker').pickatime({
         autoclose: false,
         twelvehour: false,
-        default: '14:20:00'
+        default: 'now',
+        donetext: 'Valider',      // done button text
     });
 }
 

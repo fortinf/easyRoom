@@ -27,11 +27,15 @@ class LoginController
         $utilisateurService = $this->container->get('utilisateur.service');
         $utilisateur        = $utilisateurService->getById(1);
 
-        // Liste des réservations propriétaires de l'utilisateur courant
-        $reservationMaitres = $utilisateur->getReservationProprietaires();
+        $reservationInvites = null;
+        $reservationMaitres = null;
+        if($utilisateur != null) {
+            // Liste des réservations propriétaires de l'utilisateur courant
+            $reservationMaitres = $utilisateur->getReservationProprietaires();
 
-        // Liste des réservations invitées de l'utilisateur courant
-        $reservationInvites = $utilisateur->getReservations();
+            // Liste des réservations invitées de l'utilisateur courant
+            $reservationInvites = $utilisateur->getReservations();
+        }
 
 
         // Redirection vers la page d'accueil
