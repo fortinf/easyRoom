@@ -42,20 +42,22 @@
 {% block main %}
     <section class="row recherche valign-wrapper">
         <div class="container">
-            {% include 'EasyRoomAppBundle:Reservation:form_recherche.html.twig' %}
+            {% include 'EasyRoomAppBundle:Salle:form_recherche.html.twig' %}
         </div>
     </section>
 
     <section class="section row mes-reservations">
         <div class="container">
             <h3 class="col s12 header">Mes réservations</h3>
-            {% include 'EasyRoomAppBundle:Reservation:carte_ma_reservation.html.twig' %}
+            {% for reservation in reservationsMaitres%}
+                {% include 'EasyRoomAppBundle:Reservation:carte_ma_reservation.html.twig' %}
+            {% endfor %}
         </div>
     </section>
 
     <section class="section row join-meeting">
         <div class="container">
-            <h3 class="col s12 header">Vous avez été invité à rejoindre les réunions suivantes :</h3>
+            <h3 class="col s12 header">Vous avez été invité à rejoindre les salles suivantes :</h3>
             {% include 'EasyRoomAppBundle:Reservation:carte_invitation.html.twig' %}
         </div>
     </section>
@@ -63,5 +65,6 @@
 
 {# Contenu du block navbar #}
 {% block javascript %}
+    <script src="{{ asset('bundles/easyroomapp/dist/js/materialize.clockpicker.js') }}"></script>
     <script src="{{ asset('bundles/easyroomapp/dist/js/accueil.js') }}"></script>
 {% endblock %}

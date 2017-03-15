@@ -9,33 +9,44 @@ function initDatePicker() {
         formatSubmit: 'yyyy/mm/dd'
     });
 
-    var $debut = $('.datepicker#debut').pickadate({
+    var $dateDebut = $('.datepicker#date_debut').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15 // Creates a dropdown of 15 years to control year
     });
 
-    var $fin = $('.datepicker#fin').pickadate({
+    var $dateFin = $('.datepicker#date_fin').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15 // Creates a dropdown of 15 years to control year
     });
 
-    $debut.on('change', function() {
-        var picker = $fin.pickadate('picker');
+    $dateDebut.on('change', function() {
+        var picker = $dateFin.pickadate('picker');
         picker.set('min',$(this).val());
     });
 
-    $fin.on('change', function() {
-        var picker = $debut.pickadate('picker');
+    $dateFin.on('change', function() {
+        var picker = $dateDebut.pickadate('picker');
         picker.set('max',$(this).val());
     });
 }
 
+function initTimePicker() {
+    $('.timepicker').pickatime({
+        autoclose: false,
+        twelvehour: false,
+        default: '14:20:00'
+    });
+}
+
+
 function initSelect() {
     $('select').material_select();
 }
+
 $( document ).ready(function(){
     initDatePicker();
-    initSelect();
+    initTimePicker();
+    //initSelect();
     $(".button-collapse").sideNav();
     $(".dropdown-button").dropdown();
     // Extend the default picker options for all instances.

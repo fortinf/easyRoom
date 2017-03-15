@@ -14,7 +14,8 @@ and open the template in the editor.
         <!--Import materialize.css-->
 
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+        <link rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/materialize.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/materialize.clockpicker.css') }}">
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/style.css') }}"  media="screen,projection"/>
         {% block stylesheets %}{% endblock %}
       </head>
@@ -34,7 +35,7 @@ and open the template in the editor.
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+        <script src="{{ asset('bundles/easyroomapp/dist/js/materialize.min.js') }}"></script>
         {% block javascript %}{% endblock %}
     </body>
 </html>
