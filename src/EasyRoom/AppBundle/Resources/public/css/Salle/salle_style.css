@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 7 mars 2017, 23:41:10
+    Author     : ffortin
+*/
+#salle-section-recherche {
+  background-image: url(../../images/accueil_background_search_salle.png);
+  background-size: 1200px 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 400px;
+}
+
+/* label color */
+ .input-field {
+   color: #fff;
+ }
+
+/* label color */
+ .input-field label {
+   color: #fff;
+ }
+ /* label focus color */
+ .input-field:focus label {
+   color: #fff;
+ }
+ /* label underline focus color */
+ .input-field:focus {
+   border-bottom: 1px solid #fff;
+   box-shadow: 0 1px 0 0 #fff;
+   color: #fff;
+ }
+ /* valid color */
+ .input-field .valid {
+   border-bottom: 1px solid #fff;
+   box-shadow: 0 1px 0 0 #fff;
+ }
+ /* invalid color */
+ .input-field .invalid {
+   border-bottom: 1px solid rgb(171, 39, 3);
+   box-shadow: 0 1px 0 0 rgb(171, 39, 3);
+ }
+ /* icon prefix focus color */
+ .input-field .prefix.active {
+   color: #fff;
+ }

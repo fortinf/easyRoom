@@ -1,120 +1,134 @@
-{% extends "EasyRoomAppBundle::template_parent.html.twig" %}
-
-{# Contenu du block stylesheets #}
-{% block stylesheets %}
-    {# (Contenu optionnel) ici doit être ajouté seulement des balises <link> pour faire appel à des fichiers css spécifiques à la vue #}
-    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/css/Accueil/accueil_style.css') }}"/>
-{% endblock %}
-
-{# Contenu du block navbar_profil #}
-{% block navbar_profil %}
-    {# (Contenu optionnel) ici doit être ajoutéle contenu du menu déroulant pour l'onglet profil du menu #}
-     <ul id="dropdown1" class="dropdown-content">
-        <li>
-            <a href="#!" class="blue-text text-lighten-1">Mon compte</a>
-        </li>
-        <li class="divider blue-text text-lighten-1"></li>
-        <li>
-            <a href="#!" class="blue-text text-lighten-1">Déconnexion</a>
-        </li>
-    </ul>
-{% endblock %}
-
-{# Contenu du block navbar #}
-{% block navbar %}
-    {# (Contenu obligatoire) ici doit être ajouté le contenu du menu identique pour tous les écran sauf pour la page de login #}
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li>
-            <a href="#" class="blue-text text-lighten-1">Accueil</a>
-        </li>
-        <li>
-            <a href="#" class="blue-text text-lighten-1">Salles</a>
-        </li>
-        <li>
-            <a href="#" class="blue-text text-lighten-1">Mes réservations</a>
-        </li>
-        <li>
-            <a class="dropdown-button blue-text text-lighten-1" href="#!" data-activates="dropdown1">Compte<i class="material-icons right">perm_identity</i>
-            </a>
-        </li>
-    </ul>    
-{% endblock %}
-
-{# Contenu du block navbar #}
-{% block main %}
-    {# (Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
-        <section id="salle-section-description" class="valign-wrapper">
-        <div class="valign blue lighten-1 container" id="salle-div-description">
-            <div class="row">
-                <div class="col s12"><h4>Créer une salle</h4></div>
-                <div class="input-field col s12">
-                    <input id="nom-salle" type="text" class="validate">
-                    <label for="nom-salle">Nom de la salle</label>
-                </div>
-                <div class="input-field col s12">
-                    <textarea id="description-salle" class="materialize-textarea"></textarea>
-                    <label for="description-salle">Description</label>
-                </div>
-                  <img class="materialboxed" width="300" src="{{ asset('bundles/easyroomapp/images/card_salle_manathan.jpg') }}">
-                  <a class="btn-floating blue"><i class="material-icons">attach_file</i></a>
-                <form action="#">
-    				<p>
-      					<input name="disposition" type="radio" id="disposition-rectangle" />
-      					<label for="disposition-rectangle">Disposition Rectangle</label>
-      					<div class="input-field col s12">
-                    		<input id="effectif-rectangle" type="number" class="validate">
-                    		<label for="effectif-rectangle">Effectif</label>
-                		</div>
-    				</p>
-    				<p>
-      					<input name="disposition" type="radio" id="disposition-salle" />
-      					<label for="disposition-salle">Disposition Salle de classe</label>
-      					<div class="input-field col s12">
-                    		<input id="effectif-salle" type="number" class="validate">
-                    		<label for="effectif-salle">Effectif</label>
-                		</div>
-    				</p>
-    				<p>
-      					<input name="disposition" type="radio" id="disposition-conference"  />
-      					<label for="disposition-conference">Disposition Conférence</label>
-      					<div class="input-field col s12">
-                    		<input id="effectif-conference" type="number" class="validate">
-                    		<label for="effectif-conference">Effectif</label>
-                		</div>
-    				</p>
-    				<p>
-      					<input name="disposition" type="radio" id="disposition-vide" />
-      					<label for="disposition-vide">Disposition Vide</label>
-      					<div class="input-field col s12">
-                    		<input id="effectif-vide" type="number" class="validate">
-                    		<label for="effectif-vide">Effectif</label>
-                		</div>
-    				</p>
-  				</form> 
-    			<form action="#">
-    				<p>
-      					<input type="checkbox" id="disponibilite-salle" />
-      					<label for="disponibilite-salle">Disponibilité</label>
-    				</p>
-    				<p>
-      					<input type="checkbox" id="lumiere-salle" />
-      					<label for="lumiere-salle">Lumière du jour</label>
-    				</p>
-    				<p>
-      					<input type="checkbox" id="handicap-salle" />
-      					<label for="handicap-salle">Accès handicapé</label>
-    				</p>
-    			</form>
-  				</div>
-    			<div class="input-field col s12">
-                	<input type="submit" value="Valider">
-            	</div>
-   		 	</div>
-   		 </div>
-   		 </section>
-{% endblock %}
-
-{# Contenu du block javascript #}
-{% block javascript %}
-    {# (Contenu optionnel) ici doit être ajouté seulement des balises <script src=""></script> pour faire appel à des fichiers js spécifiques à la vue #}
+{% extends "EasyRoomAppBundle::template_parent.html.twig" %} {# Contenu
+du block stylesheets #} {% block stylesheets %} {# (Contenu optionnel)
+ici doit être ajouté seulement des balises
+<link>
+pour faire appel à des fichiers css spécifiques à la vue #}
+<link type="text/css" rel="stylesheet"
+	href="{{ asset('bundles/easyroomapp/css/Salle/s_style.css') }}" />
+{% endblock %} {# Contenu du block navbar_profil #} {% block
+navbar_profil %} {# (Contenu optionnel) ici doit être ajoutéle contenu
+du menu déroulant pour l'onglet profil du menu #}
+<ul id="dropdown1" class="dropdown-content">
+	<li><a href="#!" class="blue-text text-lighten-1">Mon compte</a></li>
+	<li class="divider blue-text text-lighten-1"></li>
+	<li><a href="#!" class="blue-text text-lighten-1">Déconnexion</a>
+	</li>
+</ul>
+{% endblock %} {# Contenu du block navbar #} {% block navbar %} {#
+(Contenu obligatoire) ici doit être ajouté le contenu du menu identique
+pour tous les écran sauf pour la page de login #}
+<ul id="nav-mobile" class="right hide-on-med-and-down">
+	<li><a href="#" class="blue-text text-lighten-1">Accueil</a></li>
+	<li><a href="#" class="blue-text text-lighten-1">Salles</a></li>
+	<li><a href="#" class="blue-text text-lighten-1">Mes
+			réservations</a></li>
+	<li><a class="dropdown-button blue-text text-lighten-1" href="#!"
+		data-activates="dropdown1">Compte<i class="material-icons right">perm_identity</i>
+	</a></li>
+</ul>
+{% endblock %} {# Contenu du block navbar #} {% block main %} {#
+(Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
+<section id="salle-section-description" class="valign-wrapper">
+	<div class="valign white lighten-1 container"
+		id="salle-div-description">
+		<div class="row">
+			<div class="col s12">
+				<h4>Créer une salle</h4>
+			</div>
+			<div class="input-field col s12">
+				<div class="input-field col s6">
+					<div class="input-field col s12">
+						<input id="nom-salle" type="text" class="validate"> <label
+							for="nom-salle">Nom de la salle</label>
+					</div>
+					<div class="input-field col s12">
+						<textarea id="description-salle" class="materialize-textarea"
+							data-length="120"></textarea>
+						<label for="description-salle">Description</label>
+					</div>
+				</div>
+				<div class="input-field col s6">
+					<img class="materialboxed" width="300"
+						src="{{ asset('bundles/easyroomapp/images/card_salle_manathan.jpg') }}"></img>
+					<a class="btn-floating blue"><i class="material-icons">attach_file</i></a>
+				</div>
+			</div>
+			<h5>Capacité</h5>
+			<form action="#">
+				<p>
+				<div class="input-field col s6">
+					<input name="disposition" type="radio" id="disposition-rectangle" />
+					<label for="disposition-rectangle">Disposition Rectangle</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="effectif-rectangle" type="number" class="validate">
+					<label for="effectif-rectangle">Effectif</label>
+				</div>
+				</p>
+				<p>
+				<div class="input-field col s6">
+					<input name="disposition" type="radio" id="disposition-salle" /> <label
+						for="disposition-salle">Disposition Salle de classe</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="effectif-salle" type="number" class="validate">
+					<label for="effectif-salle">Effectif</label>
+				</div>
+				</p>
+				<p>
+				<div class="input-field col s6">
+					<input name="disposition" type="radio" id="disposition-conference" />
+					<label for="disposition-conference">Disposition Conférence</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="effectif-conference" type="number" class="validate">
+					<label for="effectif-conference">Effectif</label>
+				</div>
+				</p>
+				<p>
+				<div class="input-field col s6">
+					<input name="disposition" type="radio" id="disposition-vide" /> <label
+						for="disposition-vide">Disposition Vide</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="effectif-vide" type="number" class="validate"> <label
+						for="effectif-vide">Effectif</label>
+				</div>
+		</div>
+		</p>
+		</form>
+		<h5>Caractéristiques</h5>
+		<form action="#">
+			<div class="row">
+				<div class="col s12 m4 l4">
+					<p>
+						<input type="checkbox" id="disponibilite-salle" /> <label
+							for="disponibilite-salle">Disponibilité</label>
+					</p>
+				</div>
+				<div class="col s12 m4 l4">
+					<p>
+						<input type="checkbox" id="lumiere-salle" /> <label
+							for="lumiere-salle">Lumière du jour</label>
+					</p>
+				</div>
+				<div class="col s12 m4 l4">
+					<p>
+						<input type="checkbox" id="handicap-salle" /> <label
+							for="handicap-salle">Accès handicapé</label>
+					</p>
+				</div>
+			</div>
+		</form>
+		<div class="input-field col s12">
+			<input type="submit" value="Valider">
+		</div>
+	</div>
+	</div>
+	</div>
+</section>
+{% endblock %} {# Contenu du block javascript #} {% block javascript %}
+{# (Contenu optionnel) ici doit être ajouté seulement des balisespour
+faire appel à des fichiers js spécifiques à la vue #}
+<script src="{{ asset('bundles/easyroomapp/js/Salle/salle.js') }}"></script>
 {% endblock %}
