@@ -4,6 +4,6 @@
   });
 
   $('#description-salle').val('');
-  $('#textarea1').trigger('');
+  $('#description-salle').trigger('autoresize');
         
         
