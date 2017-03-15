@@ -16,22 +16,25 @@ use Doctrine\ORM\EntityManager;
  * @author ffortin
  */
 class TypeEquipementService {
-    
+
     private $em;
-    
+
     public function __construct(EntityManager $entityManager) {
         $this->em = $entityManager;
     }
-    
-    public function getTypeEquipementById($id) {
-        $repository = $this->em->getRepository('EasyRoomAppBundle:TypeEquipement');
-        return $repository->find($id);
+
+    public function getById($id) {
+        if (!is_null($id) && is_int($id)) {
+            $repository = $this->em->getRepository('EasyRoomAppBundle:TypeEquipement');
+            return $repository->find($id);
+        } else {
+            return NULL;
+        }
     }
-    
-    public function getAllTypeEquipement() {
+
+    public function getAll() {
         $repository = $this->em->getRepository('EasyRoomAppBundle:TypeEquipement');
         return $repository->findAll();
     }
 
-    
 }

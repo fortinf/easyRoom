@@ -217,30 +217,6 @@ class Utilisateur
     }
 
     /**
-     * Add reservation
-     *
-     * @param Reservation $reservation
-     *
-     * @return Utilisateur
-     */
-    public function addReservation(Reservation $reservation)
-    {
-        $this->reservations[] = $reservation;
-
-        return $this;
-    }
-
-    /**
-     * Remove reservation
-     *
-     * @param Reservation $reservation
-     */
-    public function removeReservation(Reservation $reservation)
-    {
-        $this->reservations->removeElement($reservation);
-    }
-
-    /**
      * Get reservations
      *
      * @return Collection
@@ -248,30 +224,6 @@ class Utilisateur
     public function getReservations()
     {
         return $this->reservations;
-    }
-
-    /**
-     * Add reservationProprietaire
-     *
-     * @param Reservation $reservationProprietaire
-     *
-     * @return Utilisateur
-     */
-    public function addReservationProprietaire(Reservation $reservationProprietaire)
-    {
-        $this->reservationProprietaires = $reservationProprietaire;
-
-        return $this;
-    }
-
-    /**
-     * Remove reservation
-     *
-     * @param Reservation $reservationProprietaire
-     */
-    public function removeReservationProprietaire(Reservation $reservationProprietaire)
-    {
-        $this->reservationProprietaires->removeElement($reservationProprietaire);
     }
 
     /**

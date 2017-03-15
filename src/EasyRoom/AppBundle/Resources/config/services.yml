@@ -5,11 +5,11 @@ services:
 
     salle.service:
         class: EasyRoom\AppBundle\Service\SalleService
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@disposition.service", "@equipement.service"]
 
     utilisateur.service:
         class: EasyRoom\AppBundle\Service\UtilisateurService
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@role.service"]
 
     role.service:
         class: EasyRoom\AppBundle\Service\RoleService
@@ -25,7 +25,7 @@ services:
 
     reservation.service:
         class: EasyRoom\AppBundle\Service\ReservationService
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@salle.service", "@utilisateur.service", "@equipement.service", "@inviteexterne.service"]
 
     inviteexterne.service:
         class: EasyRoom\AppBundle\Service\InviteExterneService

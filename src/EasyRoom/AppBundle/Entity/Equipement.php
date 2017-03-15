@@ -282,7 +282,7 @@ class Equipement
      */
     public function addReservation(Reservation $reservation)
     {
-        $this->reservations[] = $reservation;
+        $this->reservations->add($reservation);
 
         return $this;
     }

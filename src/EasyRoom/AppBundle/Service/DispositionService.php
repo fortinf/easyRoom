@@ -16,15 +16,25 @@ use Doctrine\ORM\EntityManager;
  * @author ffortin
  */
 class DispositionService {
-    
+
     private $em;
-    
+
     public function __construct(EntityManager $entityManager) {
         $this->em = $entityManager;
     }
-    
-    public function getDispositionById($id) { 
-        $repository = $this->em->getRepository('EasyRoomAppBundle:Disposition');
-        return $repository->find($id);
+
+    public function getById($id) {
+        if (!is_null($id) && is_int($id)) {
+            $repository = $this->em->getRepository('EasyRoomAppBundle:Disposition');
+            return $repository->find($id);
+        } else {
+            return NULL;
+        }
     }
+
+    public function getAll() {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Disposition');
+        return $repository->findAll();
+    }
+
 }
