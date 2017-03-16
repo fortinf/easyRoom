@@ -28,6 +28,46 @@
   .reservation form .row.debut {
     margin-bottom: 0; }
 
+section.description-resa {
+  max-height: 300px; }
+
+section.capacites-caracteristiques, section.equipement {
+  padding: 1em;
+  background: #e9e9e9; }
+  section.capacites-caracteristiques h5, section.equipement h5 {
+    color: #2db0e5;
+    font-size: 1em;
+    margin: 0; }
+
+div.col.capacites {
+  border-right: 1px solid #b4b4b4; }
+  div.col.capacites ul {
+    text-align: right;
+    list-style-type: none;
+    display: inline-block;
+    padding-left: 50px; }
+    div.col.capacites ul li {
+      display: inline-block; }
+
+div.col.caracteristiques {
+  padding-left: 40px; }
+  div.col.caracteristiques i {
+    color: #2db0e5;
+    position: relative;
+    top: 5px;
+    left: -2px; }
+
+section.equipement {
+  margin-top: 50px;
+  padding: 2em; }
+  section.equipement i {
+    color: #2db0e5;
+    position: relative;
+    top: 5px;
+    left: -2px; }
+  section.equipement ul {
+    padding-left: 40px; }
+
 .btn, .btn-large {
   text-decoration: none;
   color: #fff;

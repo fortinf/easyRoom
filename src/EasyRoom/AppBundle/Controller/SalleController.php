@@ -24,7 +24,6 @@ class SalleController
         extends Controller {
 
     public function creationAction() {
-
         return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
     }
 
@@ -98,5 +97,4 @@ class SalleController
     public function affichageAction() {
         return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
     }
-
 }

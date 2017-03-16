@@ -1,26 +1,26 @@
 <div class="col s12 l4">
-  <div class="card horizontal">
-    <div class="card-stacked">
-      <div class="card-content row">
-        <div class="card-description col s6">
-          <div class="row">
-            <h4>{{ salle.libelle }}</h4>
-            <p>{{ salle.description[:70]~'...' }}</p>
-          </div>
-          <div class="row">
-            <p class="bottom">
-                <i class="material-icons">people_outline</i>{{ salle.DispositionParDefaut.nbPlace }}
-            </p>
-          </div>
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content row">
+                <div class="card-description col s6">
+                    <div class="row">
+                        <h4>{{ salle.libelle }}</h4>
+                        <p>{{ salle.description[:70]~'...' }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="bottom">
+                            <i class="material-icons">people_outline</i>{{ salle.DispositionParDefaut.nbPlace }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col s6 card-image">
+                    <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
+                </div>
+            </div>
+            <div class="card-action">
+                <a class="learn-more-link" href="{{ path('easy_room_app_salle_fiche') }}">En savoir +</a>
+                <a class="book-link" href="#">Réserver</a>
+            </div>
         </div>
-        <div class="col s6 card-image">
-          <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
-        </div>
-      </div>
-      <div class="card-action">
-        <a class="learn-more-link" href="{{ path('easy_room_app_salle_fiche') }}">En savoir +</a>
-        <a class="book-link" href="#">Réserver</a>
-      </div>
     </div>
-  </div>
 </div>

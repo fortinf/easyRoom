@@ -41,17 +41,21 @@ nav {
 
 #sidenav-overlay {z-index:0}
 
-/** FOOTER **/
-footer {
-  color: $blue-easyroom;
-  position:absolute;
-  bottom:0;
-  right:0.8em;
-}
 
 /** INPUTS & BUTTONS **/
+[type="checkbox"]:checked+label:before {
+  border-right: 2px solid $blue-easyroom;
+  border-bottom: 2px solid $blue-easyroom;
+}
 
-input[type=email], input[type=password], input[type=text], input[type=number] {
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+  background-color: $blue-easyroom;
+}
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+  border:2px solid $blue-easyroom;
+}
+
+input[type=email], input[type=password], input[type=text], input[type=number], textarea.materialize-textarea {
   &.valid {
     border-bottom: 1px solid $blue-easyroom;
     box-shadow: 0 1px 0 0 $blue-easyroom;
@@ -104,7 +108,20 @@ input[type=email], input[type=password], input[type=text], input[type=number] {
 
 /** CONTAINER **/
 .container {
-  width:95%;
-  max-width:1500px;
+  width: 95%;
+  max-width: 1500px;
 }
 
+/** DATE + TIME PICKER */
+button.picker__today:focus, button.picker__clear:focus, button.picker__close:focus,
+.picker__nav--prev:hover, .picker__nav--next:hover {
+  background-color: lighten($blue-easyroom, 20%)
+}
+.picker__close, .picker__today,.picker__day.picker__day--today {color: $blue-easyroom}
+.picker__date-display {background-color: $blue-easyroom}
+.picker__weekday-display,.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+  background-color: darken($blue-easyroom, 20%)
+}
+
+/** STYLES DIVERS **/
+.bold {font-weight:bold;}

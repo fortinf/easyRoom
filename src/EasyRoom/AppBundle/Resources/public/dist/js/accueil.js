@@ -23,11 +23,13 @@ function initDatePicker() {
     $dateDebut.on('change', function() {
         var picker = $dateFin.pickadate('picker');
         picker.set('min',$(this).val());
+        datePickerWorkaround();
     });
 
     $dateFin.on('change', function() {
         var picker = $dateDebut.pickadate('picker');
         picker.set('max',$(this).val());
+        datePickerWorkaround();
     });
 }
 
@@ -40,7 +42,14 @@ function initTimePicker() {
     });
 }
 
+function setMenu() {
+    $('.navbar-fixed li').removeClass("active");
+    $('li.menu_accueil').addClass("active");
+}
+
 $( document ).ready(function(){
+    // Gestion du menu
+    setMenu();
     initDatePicker();
     initTimePicker();
 });

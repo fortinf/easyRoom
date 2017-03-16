@@ -9,6 +9,7 @@ and open the template in the editor.
         <title>EasyRoom</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{{ asset('bundles/easyroomapp/dist/images/favicon.ico') }}" />
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
@@ -21,22 +22,59 @@ and open the template in the editor.
       </head>
     <body>
         <header>
-            {% block navbar %}{% endblock %}
+            <div class="navbar-fixed">
+                <ul id="dropdown1" class="dropdown-content">
+                    <li class="menu_mon_profil"><a href="#!">Mon profil</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ path('easy_room_app_login_index') }}">Se
+                            déconnecter</a></li>
+                </ul>
+                <ul id="dropdown2" class="dropdown-content">
+                    <li class="menu_creation_salle"><a href="{{ path('easy_room_app_salle_creation') }}">Création</a></li>
+                    <li class="divider"></li>
+                    <li class="menu_recherche_salle"><a href="{{ path('easy_room_app_salle_search') }}">Recherche</a></li>
+                </ul>
+                <nav class="white" role="navigation nav-wrapper">
+                    <div class="container">
+                        <a id="logo-container" href="#" class="brand-logo"><img
+                                    src="{{ asset('bundles/easyroomapp/dist/images/logo-menu.png') }}"
+                                    alt="Logo Easyroom"></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li class="menu_accueil"><a href="{{ path('easy_room_app_accueil_index') }}">Accueil</a></li>
+                            <li class="menu_salles"><a class="dropdown-button" href="#" data-activates='dropdown2'>Salles</a></li>
+                            <li class="menu_mes_reservations"><a href="#">Mes réservations</a></li>
+                            <!-- Dropdown Trigger -->
+                            <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">person_pin</i></a></li>
+                        </ul>
+
+                        <ul id="nav-mobile" class="side-nav">
+                            <li class="menu_accueil"><a
+                                        href="{{ path('easy_room_app_accueil_index') }}">Accueil</a></li>
+                            <li class="menu_recherche_salle"><a href="{{ path('easy_room_app_salle_search') }}">Salles</a></li>
+                            <li class="menu_creation_salle"><a href="{{ path('easy_room_app_salle_creation') }}">Créer une salle</a></li>
+                            <li class="menu_mes_reservations"><a href="#">Mes réservations</a></li>
+                            <li class="menu_mon_profil"><a href="#!">Mon profil</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('easy_room_app_login_index') }}">Se
+                                    déconnecter</a></li>
+                        </ul>
+                        <a href="#" data-activates="nav-mobile"
+                           class="blue-text button-collapse"><i class="material-icons">menu</i></a>
+                    </div>
+                </nav>
+            </div>
         </header>
         <main>
           {% block main %}{% endblock %}
         </main>
 
         <footer>
-            <p class="right-align">
-                © Copyright ECN Team 2017
-            </p>
         </footer>
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="{{ asset('bundles/easyroomapp/dist/js/jquery-3.1.1.min.js') }}"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="{{ asset('bundles/easyroomapp/dist/js/materialize.min.js') }}"></script>
-        <script src="{{ asset('bundles/easyroomapp/dist/js/menu.js') }}"></script>
+        <script src="{{ asset('bundles/easyroomapp/dist/js/global.js') }}"></script>
         {% block javascript %}{% endblock %}
     </body>
 </html>
