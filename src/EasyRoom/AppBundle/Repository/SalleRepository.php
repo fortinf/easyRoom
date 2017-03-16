@@ -33,47 +33,56 @@ class SalleRepository
 
         $sqb = $this->getEntityManager()->createQueryBuilder();
 
-        $and = $sqb->expr()->andX();
-
         // Conditions sur les dates (date début / date fin)
-        $orDate = $sqb->expr()->orX();
+        $andDate1 = $sqb->expr()->andX();
+        $andDate1->add($sqb->expr()->lt(':searchDateDebut', 'reservationSQ.dateDebut'));
+        $andDate1->add($sqb->expr()->gt(':searcDateFin', 'reservationSQ.dateFin'));
+        $andDate2 = $sqb->expr()->andX();
+        $andDate2->add($sqb->expr()->gt(':searchDateDebut', 'reservationSQ.dateDebut'));
+        $andDate2->add($sqb->expr()->lt(':searcDateFin', 'reservationSQ.dateFin'));
+        $orDate  = $sqb->expr()->orX();
         $orDate->add($sqb->expr()->between('reservationSQ.dateDebut', ':searchDateDebut', ':searcDateFin'));
         $orDate->add($sqb->expr()->between('reservationSQ.dateFin', ':searchDateDebut', ':searcDateFin'));
-        $and->add($orDate);
-
-        // Conditions sur les heures (heure début / heure fin)
-        $orHeure = $sqb->expr()->orX();
-        $orHeure->add($sqb->expr()->between('reservationSQ.heureDebut', ':searchHeureDebut', ':searchHeureFin'));
-        $orHeure->add($sqb->expr()->between('reservationSQ.heureFin', ':searchHeureDebut', ':searchHeureFin'));
-        $and->add($orHeure);
-
+        $orDate->add($andDate1);
+        $orDate->add($andDate2);
 
         $subQuery = $sqb
                 ->select(['salleSQ.id'])
                 ->from('EasyRoomAppBundle:Salle', 'salleSQ')
                 ->innerJoin('salleSQ.reservations', 'reservationSQ')
-                ->innerJoin('salleSQ.dispositionSalles', 'dispoSalleSQ')
-                ->where($and)
-                ->andWhere($sqb->expr()->gte('dispoSalleSQ.nbPlace', ':searchNbPlace'))
-                ->andWhere($sqb->expr()->eq('dispoSalleSQ.dispositionDefaut', 1))
+                ->where($orDate)
                 ->setParameters($subQueryParams)
                 ->getQuery()
         ;
+        
+        $resultSQ = $subQuery->getArrayResult();
+        
+        var_dump($subQuery->getSQL());
+        var_dump($subQuery->getParameters());
+        var_dump($subQuery->getArrayResult());
 
         /*
          * REQUETE
          */
 
+        $queryParams = $this->buildSearchSalleQueryParams($searchSalle, $resultSQ);
+
         $qb    = $this->getEntityManager()->createQueryBuilder();
         $query = $qb
                 ->select('salle')
                 ->from('EasyRoomAppBundle:Salle', 'salle')
-                ->where($qb->expr()->notIn('salle.id', ':subQuery'))
-                ->setParameter('subQuery', $subQuery->getArrayResult())
-                ->getQuery()
-        ;
+                ->innerJoin('salle.dispositionSalles', 'dispoSalle')
+                ->where($qb->expr()->eq(1, 1));
 
-        $result = $query->getResult();
+        if (!empty($resultSQ)) {
+            $query->andWhere($qb->expr()->notIn('salle.id', ':subQuery'));
+        }
+
+        $query->andWhere($sqb->expr()->gte('dispoSalle.nbPlace', ':searchNbPlace'))
+                ->andWhere($sqb->expr()->eq('dispoSalle.dispositionDefaut', 1))
+                ->setParameters($queryParams);
+
+        $result = $query->getQuery()->getResult();
 
         return $result;
     }
@@ -86,35 +95,47 @@ class SalleRepository
      */
     private function buildSearchSalleSubQueryParams(SearchSalleBean $searchSalle) {
 
-        $dateDebut = DateTime::createFromFormat('Y-m-d', '1900-01-01');
-        $dateFin = DateTime::createFromFormat('Y-m-d', '1900-01-01');
-        $heureDebut = DateTime::createFromFormat('H:i', '00:00');
-        $heureFin = DateTime::createFromFormat('H:i', '00:00');
-        $nbPlace = 0;
-        
+        $dateDebut  = DateTime::createFromFormat('Y-m-d H:i', '1900-01-01 01:00');
+        $dateFin    = DateTime::createFromFormat('Y-m-d H:i', '1900-01-01 01:01');
+
         if (!is_null($searchSalle->getDateDebut()) && !is_null($searchSalle->getDateFin())) {
-            $dateDebut = $searchSalle->getDateDebut()->format('Y-m-d');
-            $dateFin = $searchSalle->getDateFin()->format('Y-m-d');
-        }
-        
-        if (!is_null($searchSalle->getHeureDebut()) && !is_null($searchSalle->getHeureFin())) {
-            $heureDebut = $searchSalle->getHeureDebut()->format('H:i');
-            $heureFin = $searchSalle->getHeureFin()->format('H:i');
-        }
-        
-        if (!is_null($searchSalle->getNbPlace())) {
-            $nbPlace = $searchSalle->getNbPlace();
+            $dateDebut = $searchSalle->getDateDebut()->format('Y-m-d H:i');
+            $dateFin   = $searchSalle->getDateFin()->format('Y-m-d H:i');
         }
 
         $subQueryParams = new ArrayCollection(array(
             new Parameter('searchDateDebut', $dateDebut),
-            new Parameter('searcDateFin', $dateFin),
-            new Parameter('searchHeureDebut', $heureDebut),
-            new Parameter('searchHeureFin', $heureFin),
-            new Parameter('searchNbPlace', $nbPlace)
+            new Parameter('searcDateFin', $dateFin)
         ));
-        
+
         return $subQueryParams;
+    }
+
+    /**
+     * Fabrique la liste des paramètres utiles pour la requête principale
+     * 
+     * @param SearchSalleBean $searchSalle
+     * @param array $subQueryArrayResult
+     * @return ArrayCollection
+     */
+    private function buildSearchSalleQueryParams(SearchSalleBean $searchSalle, array $subQueryArrayResult) {
+
+        $nbPlace = 0;
+        $params  = array();
+
+        if (!is_null($searchSalle->getNbPlace())) {
+            $nbPlace = $searchSalle->getNbPlace();
+        }
+        array_push($params, new Parameter('searchNbPlace', $nbPlace));
+
+        // 
+        if (!is_null($subQueryArrayResult) && is_array($subQueryArrayResult) && !empty($subQueryArrayResult)) {
+            array_push($params, new Parameter('subQuery', $subQueryArrayResult));
+        }
+
+        $queryParams = new ArrayCollection($params);
+
+        return $queryParams;
     }
 
 }
