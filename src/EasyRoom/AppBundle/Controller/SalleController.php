@@ -19,11 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author ffortin
  */
-class SalleController
-        extends Controller {
 
-    public function indexAction() {
-        return $this->render('EasyRoomAppBundle:Salle:index.html.twig');
+class SalleController extends Controller {
+    
+    public function creationAction()
+    {
+    	
+        return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
+        
     }
 
     public function searchAction(Request $request) {
@@ -87,6 +90,11 @@ class SalleController
         return $this->render('EasyRoomAppBundle:Salle:search_salle.html.twig', array(
             'salles' => $salles
         ));
+    }
+
+    public function affichageAction()
+    {
+    	return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
     }
 
 }

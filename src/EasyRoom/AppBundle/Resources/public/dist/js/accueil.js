@@ -40,16 +40,7 @@ function initTimePicker() {
     });
 }
 
-
-function initSelect() {
-    $('select').material_select();
-}
-
 $( document ).ready(function(){
     initDatePicker();
     initTimePicker();
-    //initSelect();
-    $(".button-collapse").sideNav();
-    $(".dropdown-button").dropdown();
-    // Extend the default picker options for all instances.
 });

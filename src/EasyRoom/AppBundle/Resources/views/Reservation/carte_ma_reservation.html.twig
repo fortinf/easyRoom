@@ -3,17 +3,20 @@
         <div class="card-stacked">
             <div class="card-content row">
                 <div class="card-description col s6">
-                    <h4>{{ reservation.salle.libelle }}</h4>
-                    <p>{{ reservation.salle.description[:70]~'...' }}</p>
-                    <p class="bottom">
-                        <i class="material-icons">today</i><br/>
-                        
-                            <span class="lib-date">Début :</span>
-                            {{ reservation.dateDebut|date('d/m/Y H:i') }}<br/>
-                           <span class="lib-date">Fin :</span>
-                            {{ reservation.dateFin|date('d/m/Y H:i') }}
-                        
-                    </p>
+                    <div class="row">
+                      <h4>{{ reservation.salle.libelle }}</h4>
+                      <p>{{ reservation.salle.description[:70]~'...' }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="bottom">
+                            <i class="material-icons">today</i><br/>
+
+                                <span class="lib-date">Début :</span>
+                                {{ reservation.dateDebut|date('d/m/Y H:i') }}<br/>
+                               <span class="lib-date">Fin :</span>
+                                {{ reservation.dateFin|date('d/m/Y H:i') }}                        
+                        </p>
+                    </div>
                 </div>
                 <div class="col s6 card-image">
                     <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
