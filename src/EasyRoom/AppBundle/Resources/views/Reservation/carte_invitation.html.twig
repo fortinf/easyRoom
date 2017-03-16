@@ -1,38 +1,27 @@
 <div class="col s12 l4">
-  <div class="card horizontal">
-    <div class="card-stacked">
-      <div class="card-content row">
-        <div class="card-description col s6">
-          <h4>Salle hipster</h4>
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-          <p class="bottom"><i class="material-icons">date_range</i>20/04/2017 15:30</p>
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content row">
+                <div class="card-description col s6">
+                    <h4>{{ reservationInvite.salle.libelle }}</h4>
+                    <p>{{ reservationInvite.salle.description[:70]~'...' }}</p>
+                    <p class="bottom">
+                        <i class="material-icons">today</i><br/>
+                        
+                            <span class="lib-date">Début :</span>
+                            {{ reservationInvite.dateDebut|date('d/m/Y H:i') }}<br/>
+                           <span class="lib-date">Fin :</span>
+                            {{ reservationInvite.dateFin|date('d/m/Y H:i') }}
+                        
+                    </p>
+                </div>
+                <div class="col s6 card-image">
+                    <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
+                </div>
+            </div>
+            <div class="card-action">
+                <span><i class="material-icons">perm_identity</i> Invité(e) par : {{ reservationInvite.utilisateurMaitre.prenom }} {{ reservationInvite.utilisateurMaitre.nom }}</span>
+            </div>
         </div>
-        <div class="col s6 card-image">
-          <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
-        </div>
-      </div>
-      <div class="card-action">
-        <span>Hôte : Stéphane Jaffrain</span>
-      </div>
     </div>
-  </div>
-</div>
-<div class="col s12 l4">
-  <div class="card horizontal">
-    <div class="card-stacked">
-      <div class="card-content row">
-        <div class="card-description col s6">
-          <h4>Salle hipster</h4>
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-          <p class="bottom"><i class="material-icons">date_range</i>20/04/2017 15:30</p>
-        </div>
-        <div class="col s6 card-image">
-          <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
-        </div>
-      </div>
-      <div class="card-action">
-        <span>Hôte : Stéphanie Lorant</span>
-      </div>
-    </div>
-  </div>
 </div>

@@ -41,14 +41,20 @@ section.mes-reservations .card, section.join-meeting .card {
     height: 100%; }
     section.mes-reservations .card .card-description p, section.join-meeting .card .card-description p {
       color: #9b9b9b; }
+  section.mes-reservations .card .card-action .material-icons, section.join-meeting .card .card-action .material-icons {
+    color: #2db0e5; }
   section.mes-reservations .card .bottom, section.join-meeting .card .bottom {
     position: absolute;
     bottom: 0; }
     section.mes-reservations .card .bottom .material-icons, section.join-meeting .card .bottom .material-icons {
-      color: #2db0e5;
+      color: #4e4e4e;
       position: relative;
       top: 5px;
       right: 5px; }
+    section.mes-reservations .card .bottom .lib-date, section.join-meeting .card .bottom .lib-date {
+      display: inline-block;
+      width: 50px;
+      color: #4e4e4e; }
 
 section.mes-reservations .card-action a {
   position: relative;
@@ -57,7 +63,7 @@ section.mes-reservations .card-action a {
 
 section.join-meeting {
   background-color: #2db0e5; }
-  section.join-meeting h3 {
+  section.join-meeting h5 {
     color: #fff; }
   section.join-meeting .card-action span {
     position: relative;

@@ -1,20 +1,28 @@
 <div class="col s12 l4">
-  <div class="card horizontal">
-    <div class="card-stacked">
-      <div class="card-content row">
-        <div class="card-description col s6">
-          <h4>{{ reservation.salle.libelle }}</h4>
-          <p>{{ reservation.salle.description[:70]~'...' }}</p>
-          <p class="bottom"><i class="material-icons">date_range</i>20/04/2017 15:30</p>
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content row">
+                <div class="card-description col s6">
+                    <h4>{{ reservation.salle.libelle }}</h4>
+                    <p>{{ reservation.salle.description[:70]~'...' }}</p>
+                    <p class="bottom">
+                        <i class="material-icons">today</i><br/>
+                        
+                            <span class="lib-date">Début :</span>
+                            {{ reservation.dateDebut|date('d/m/Y H:i') }}<br/>
+                           <span class="lib-date">Fin :</span>
+                            {{ reservation.dateFin|date('d/m/Y H:i') }}
+                        
+                    </p>
+                </div>
+                <div class="col s6 card-image">
+                    <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
+                </div>
+            </div>
+            <div class="card-action right-align">
+                <a href="#">Supprimer</a>
+                <a href="#">Modifier</a>
+            </div>
         </div>
-        <div class="col s6 card-image">
-          <img src="{{ asset('bundles/easyroomapp/dist/images/card_salle_hipster.jpg') }}">
-        </div>
-      </div>
-      <div class="card-action right-align">
-        <a href="#">Supprimer</a>
-        <a href="#">Modifier</a>
-      </div>
     </div>
-  </div>
 </div>

@@ -3,6 +3,7 @@
 {# Contenu du block stylesheets #}
 {% block stylesheets %}
     <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/accueil.css') }}"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/accueil.css') }}"/>
 {% endblock %}
 
 {# Contenu du block navbar #}
@@ -48,7 +49,7 @@
 
     <section class="section row mes-reservations">
         <div class="container">
-            <h3 class="col s12 header">Mes réservations</h3>
+            <h5 class="col s12 header">Mes réservations</h5>
             {% for reservation in reservationsMaitres%}
                 {% include 'EasyRoomAppBundle:Reservation:carte_ma_reservation.html.twig' %}
             {% endfor %}
@@ -57,8 +58,10 @@
 
     <section class="section row join-meeting">
         <div class="container">
-            <h3 class="col s12 header">Vous avez été invité à rejoindre les salles suivantes :</h3>
+            <h5 class="col s12 header">Vous avez été invité à rejoindre les salles suivantes :</h5>
+            {% for reservationInvite in reservationInvites %}
             {% include 'EasyRoomAppBundle:Reservation:carte_invitation.html.twig' %}
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

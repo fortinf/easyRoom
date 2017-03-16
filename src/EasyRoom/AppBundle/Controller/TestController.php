@@ -31,20 +31,11 @@ class TestController
 
         $searchSalle = new SearchSalleBean();
         
-        /*
-        $searchSalle->setDateDebut(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
-        $searchSalle->setDateFin(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
-        $searchSalle->setHeureDebut(DateTime::createFromFormat('H:i', '09:00'));
-        $searchSalle->setHeureFin(DateTime::createFromFormat('H:i', '12:30'));
-        $searchSalle->setNbPlace(10);
-        */
         
+        $searchSalle->setDateDebut(DateTime::createFromFormat('Y-m-d H:i', '2017-03-20 10:00'));
+        $searchSalle->setDateFin(DateTime::createFromFormat('Y-m-d H:i', '2017-03-20 11:00'));
+        $searchSalle->setNbPlace(5);
         
-        $searchSalle->setDateDebut(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
-        $searchSalle->setDateFin(DateTime::createFromFormat('d/m/Y', '05/12/2016'));
-        $searchSalle->setHeureDebut(DateTime::createFromFormat('H:i', '09:00'));
-        $searchSalle->setHeureFin(DateTime::createFromFormat('H:i', '12:30'));
-        $searchSalle->setNbPlace(10);
 
 
         $em             = $this->getDoctrine()->getManager();

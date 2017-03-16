@@ -42,10 +42,19 @@ section.mes-reservations, section.join-meeting {
     .card-content {padding:1em; margin-bottom:0}
     .card-description {
       position:relative; height:100%;
-      p{color: lighten($soft-black, 30%)}}
+      p{color: lighten($soft-black, 30%)}
+    }
+    .card-action {
+      .material-icons {color: $blue-easyroom;}
+    }
     .bottom {
       position:absolute; bottom:0;
-      .material-icons {color: $blue-easyroom; position:relative; top:5px;right:5px;}
+      .material-icons {color: $soft-black; position:relative; top:5px;right:5px;}
+      .lib-date{
+          display: inline-block;
+          width: 50px;
+          color: $soft-black;
+      }
     }
   }
 }
@@ -59,7 +68,7 @@ section.mes-reservations {
 }
 
 section.join-meeting {
-  h3 {color:$white}
+  h5 {color:$white}
   background-color: $blue-easyroom;
   .card-action span {
     position:relative;
