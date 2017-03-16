@@ -2,6 +2,9 @@ section.recherche {
   background: url(../images/accueil_background_search_salle.png) 50% 70%;
   background-size: cover;
   min-height: 300px; }
+  section.recherche .container {
+    width: 70%;
+    max-width: 1280px; }
   section.recherche h3 {
     color: #fff;
     font-size: 2em; }
@@ -20,35 +23,9 @@ section.recherche {
     color: #2db0e5;
     background-color: #fff; }
 
-section.mes-reservations .container, section.join-meeting .container {
-  width: 95%;
-  max-width: 1500px; }
-
 section.mes-reservations h3, section.join-meeting h3 {
   color: #2db0e5;
   font-size: 2.5em; }
-
-section.mes-reservations .card, section.join-meeting .card {
-  position: relative;
-  max-width: 500px; }
-  section.mes-reservations .card h4, section.join-meeting .card h4 {
-    margin-top: 0; }
-  section.mes-reservations .card .card-content, section.join-meeting .card .card-content {
-    padding: 1em;
-    margin-bottom: 0; }
-  section.mes-reservations .card .card-description, section.join-meeting .card .card-description {
-    position: relative;
-    height: 100%; }
-    section.mes-reservations .card .card-description p, section.join-meeting .card .card-description p {
-      color: #9b9b9b; }
-  section.mes-reservations .card .bottom, section.join-meeting .card .bottom {
-    position: absolute;
-    bottom: 0; }
-    section.mes-reservations .card .bottom .material-icons, section.join-meeting .card .bottom .material-icons {
-      color: #2db0e5;
-      position: relative;
-      top: 5px;
-      right: 5px; }
 
 section.mes-reservations .card-action a {
   position: relative;

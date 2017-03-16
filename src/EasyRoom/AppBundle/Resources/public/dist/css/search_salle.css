@@ -17,36 +17,10 @@ section.recherche {
     color: #2db0e5;
     background-color: #fff; }
 
-section.resultats-recherche .container {
-  width: 95%;
-  max-width: 1500px; }
-
 section.resultats-recherche h3 {
   color: #2db0e5;
   font-size: 2.5em;
   margin-bottom: 1em; }
-
-section.resultats-recherche .card {
-  position: relative;
-  max-width: 500px; }
-  section.resultats-recherche .card h4 {
-    margin-top: 0; }
-  section.resultats-recherche .card .card-content {
-    padding: 1em;
-    margin-bottom: 0; }
-  section.resultats-recherche .card .card-description {
-    position: relative;
-    height: 100%; }
-    section.resultats-recherche .card .card-description p {
-      color: #9b9b9b; }
-  section.resultats-recherche .card .bottom {
-    position: absolute;
-    bottom: 0; }
-    section.resultats-recherche .card .bottom .material-icons {
-      color: #2db0e5;
-      position: relative;
-      top: 5px;
-      right: 5px; }
 
 section.resultats-recherche .card-action {
   position: relative;

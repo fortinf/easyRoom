@@ -6,9 +6,12 @@ html {
 }
 body {
   min-height: 100%;
+  position:relative;
 }
 
-/** TOP BAR **/
+main {height:100%;}
+
+/** TOP BAR + NAV **/
 nav {
   line-height: normal;
   #logo-container {
@@ -36,12 +39,19 @@ nav {
 
 .dropdown-content li>a, .dropdown-content li>span {color:$blue-easyroom}
 
+#sidenav-overlay {z-index:0}
+
 /** FOOTER **/
-footer {color: $blue-easyroom;margin-right:0.8em}
+footer {
+  color: $blue-easyroom;
+  position:absolute;
+  bottom:0;
+  right:0.8em;
+}
 
 /** INPUTS & BUTTONS **/
 
-input[type=email], input[type=password], input[type=text] {
+input[type=email], input[type=password], input[type=text], input[type=number] {
   &.valid {
     border-bottom: 1px solid $blue-easyroom;
     box-shadow: 0 1px 0 0 $blue-easyroom;
@@ -74,7 +84,27 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .btn:focus, .btn-large:focus, .btn-floating:focus {
-  background-color: darken($blue-easyroom,10%)
+  background-color: darken($blue-easyroom,10%);
+  color: $white;
 }
 
-#sidenav-overlay {z-index:0}
+/** CARTES **/
+.card {
+  position:relative;
+  max-width:500px;
+  h4 {margin-top:0;font-size:2em;}
+  .card-content {padding:25px; margin-bottom:0; position:relative;}
+  .card-description p{color: lighten($soft-black, 30%)}
+
+  .bottom {
+    position:absolute; bottom:10px;
+    .material-icons {color: $blue-easyroom; position:relative; top:5px;right:5px;}
+  }
+}
+
+/** CONTAINER **/
+.container {
+  width:95%;
+  max-width:1500px;
+}
+
