@@ -14,19 +14,40 @@ du menu déroulant pour l'onglet profil du menu #}
 	<li><a href="#!" class="blue-text text-lighten-1">Déconnexion</a>
 	</li>
 </ul>
-{% endblock %} {# Contenu du block navbar #} {% block navbar %} {#
-(Contenu obligatoire) ici doit être ajouté le contenu du menu identique
-pour tous les écran sauf pour la page de login #}
-<ul id="nav-mobile" class="right hide-on-med-and-down">
-	<li><a href="#" class="blue-text text-lighten-1">Accueil</a></li>
-	<li><a href="#" class="blue-text text-lighten-1">Salles</a></li>
-	<li><a href="#" class="blue-text text-lighten-1">Mes
-			réservations</a></li>
-	<li><a class="dropdown-button blue-text text-lighten-1" href="#!"
-		data-activates="dropdown1">Compte<i class="material-icons right">perm_identity</i>
-	</a></li>
-</ul>
-{% endblock %} {# Contenu du block navbar #} {% block main %} {#
+{% endblock %}
+
+{% block navbar %}
+    <div class="navbar-fixed">
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href="#!">Mon profil</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ path('easy_room_app_login_index') }}">Se déconnecter</a></li>
+        </ul>
+        <nav class="white" role="navigation nav-wrapper">
+            <div class="container">
+                <a id="logo-container" href="#" class="brand-logo"><img src="{{ asset('bundles/easyroomapp/dist/images/logo-menu.png') }}" alt="Logo Easyroom"></a>
+                <ul class="right hide-on-med-and-down">
+                    <li ><a href="{{ path('easy_room_app_accueil_index') }}">Accueil</a></li>
+                    <li class="active"><a href="{{ path('easy_room_app_salle_creation') }}">Salles</a></li>
+                    <li><a href="#">Mes réservations</a></li>
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">person_pin</i></a></li>
+                </ul>
+
+                <ul id="nav-mobile" class="side-nav">
+                    <li class="active"><a href="{{ path('easy_room_app_accueil_index') }}">Accueil</a></li>
+                    <li><a href="{{ path('easy_room_app_salle_creation') }}">Salles</a></li>
+                    <li><a href="#">Mes réservations</a></li>
+                    <li><a href="#!">Mon profil</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ path('easy_room_app_login_index') }}">Se déconnecter</a></li>
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="blue-text button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </div>
+{% endblock %} 
+{# Contenu du block navbar #} {% block main %} {#
 (Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
 <section id="salle-section-description" class="valign-wrapper">
 	<div class="valign white lighten-1 container"
