@@ -8,6 +8,7 @@
 
 namespace EasyRoom\AppBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Bean\SearchSalleBean;
@@ -157,6 +158,14 @@ class SalleService {
      */
     public function search(SearchSalleBean $searchSalle) {
         
+        $salles = new ArrayCollection();
+        
+        if (!is_null($searchSalle) && $searchSalle instanceof SearchSalleBean) {
+            $easyRepository = $this->em->getRepository('EasyRoomAppBundle:Salle');
+            $salles = $easyRepository->searchSalle($searchSalle);
+        }
+        
+        return $salles;
     }
 
     /**
