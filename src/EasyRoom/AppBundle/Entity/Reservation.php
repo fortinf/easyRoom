@@ -34,44 +34,16 @@ class Reservation {
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="RES_DATE_DEBUT", type="date", nullable=false)
+     * @ORM\Column(name="RES_DATE_DEBUT", type="datetime", nullable=false)
      */
     private $dateDebut;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="RES_DATE_FIN", type="date", nullable=false)
+     * @ORM\Column(name="RES_DATE_FIN", type="datetime", nullable=false)
      */
     private $dateFin;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="RES_HEURE_DEBUT", type="time", nullable=false)
-     */
-    private $heureDebut;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="RES_HEURE_FIN", type="time", nullable=false)
-     */
-    private $heureFin;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="RES_DUREE_HEURE", type="smallint", nullable=true)
-     */
-    private $dureeHeure;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="RES_DUREE_JOUR", type="smallint", nullable=true)
-     */
-    private $dureeJour;
 
     /**
      * @var Salle
@@ -207,94 +179,6 @@ class Reservation {
      */
     public function getDateFin() {
         return $this->dateFin;
-    }
-
-    /**
-     * Set heureDebut
-     *
-     * @param DateTime $heureDebut
-     *
-     * @return Reservation
-     */
-    public function setHeureDebut($heureDebut) {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    /**
-     * Get heureDebut
-     *
-     * @return DateTime
-     */
-    public function getHeureDebut() {
-        return $this->heureDebut;
-    }
-
-    /**
-     * Set heureFin
-     *
-     * @param DateTime $heureFin
-     *
-     * @return Reservation
-     */
-    public function setHeureFin($heureFin) {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
-
-    /**
-     * Get heureFin
-     *
-     * @return DateTime
-     */
-    public function getHeureFin() {
-        return $this->heureFin;
-    }
-
-    /**
-     * Set dureeHeure
-     *
-     * @param integer $dureeHeure
-     *
-     * @return Reservation
-     */
-    public function setDureeHeure($dureeHeure) {
-        $this->dureeHeure = $dureeHeure;
-
-        return $this;
-    }
-
-    /**
-     * Get dureeHeure
-     *
-     * @return integer
-     */
-    public function getDureeHeure() {
-        return $this->dureeHeure;
-    }
-
-    /**
-     * Set dureeJour
-     *
-     * @param integer $dureeJour
-     *
-     * @return Reservation
-     */
-    public function setDureeJour($dureeJour) {
-        $this->dureeJour = $dureeJour;
-
-        return $this;
-    }
-
-    /**
-     * Get dureeJour
-     *
-     * @return integer
-     */
-    public function getDureeJour() {
-        return $this->dureeJour;
     }
 
     /**

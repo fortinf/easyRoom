@@ -112,8 +112,6 @@ class ReservationService {
                 $updateReservation->setLibelle($reservation->getLibelle());
                 $updateReservation->setDateDebut($reservation->getDateDebut());
                 $updateReservation->setDateFin($reservation->getDateFin());
-                $updateReservation->setHeureDebut($reservation->getHeureDebut());
-                $updateReservation->setHeureFin($reservation->getHeureFin());
                 $this->em->persist($reservation);
                 $this->em->flush();
             }
