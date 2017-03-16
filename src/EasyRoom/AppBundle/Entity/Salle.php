@@ -298,5 +298,25 @@ class Salle {
     public function getReservations() {
         return $this->reservations;
     }
+    
+    /**
+     * Retourne la disposition par défaut d'une salle
+     * 
+     * @return Disposition
+     */
+    public function getDispositionParDefaut() {
+        
+        $dispositionParDefaut = new DispositionSalle();
+        
+        $arrayDispositionSalle = $this->getDispositionSalles()->toArray();
+        foreach ($arrayDispositionSalle as $dispositionSalle) {
+            if ($dispositionSalle->getDispositionDefaut()) {
+                $dispositionParDefaut = $dispositionSalle;
+            }
+        }
+        
+        return $dispositionParDefaut;
+        
+    }
 
 }

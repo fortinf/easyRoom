@@ -8,6 +8,7 @@
 
 namespace EasyRoom\AppBundle\Controller;
 
+use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use EasyRoom\AppBundle\Bean\SearchSalleBean;
@@ -19,18 +20,16 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author ffortin
  */
+class SalleController
+        extends Controller {
 
-class SalleController extends Controller {
-    
-    public function creationAction()
-    {
-    	
+    public function creationAction() {
+
         return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
-        
     }
 
     public function searchAction(Request $request) {
-        
+
         $salles = new ArrayCollection();
 
         if ($request->isMethod('POST')) {
@@ -43,7 +42,6 @@ class SalleController extends Controller {
 
             $searchSalle = new SearchSalleBean();
 
-
             // Effectif
             if (!empty($postEffectif)) {
                 $searchSalle->setNbPlace(intval($postEffectif));
@@ -51,7 +49,7 @@ class SalleController extends Controller {
 
             // Date et heure de début
             if (!empty($postDateDebut)) {
-                if (!empty($postHeureDebut)) {
+                if (empty($postHeureDebut)) {
                     $postHeureDebut = '00:01';
                 }
                 $postDateHeureDebut = $postDateDebut . ' ' . $postHeureDebut;
@@ -64,37 +62,41 @@ class SalleController extends Controller {
             if ($dateDebut !== FALSE) {
                 $searchSalle->setDateDebut($dateDebut);
             }
+            
+            var_dump($postDateDebut);
 
             // Date et heure de fin
             if (!empty($postDateFin)) {
-                if (!empty($postHeureFin)) {
-                    $postHeureFin = '00:01';
+                if (empty($postHeureFin)) {
+                    $postHeureFin = '23:59';
                 }
                 $postDateHeureFin = $postDateFin . ' ' . $postHeureFin;
                 $dateFin          = DateTime::createFromFormat('d/m/Y H:i', $postDateHeureFin);
-
-                if ($dateFin !== FALSE) {
-                    $searchSalle->setDateFin($dateFin);
-                }
+            } elseif (!empty($postDateDebut)) {
+                $postDateHeureFin = $postDateDebut . ' ' . $postHeureDebut;
+                $dateFin          = DateTime::createFromFormat('d/m/Y H:i', $postDateHeureFin);
             } else {
                 $dateFin = new DateTime();
-                $dateDebut->setTime(0, 1, 0);
+                $dateFin->setTime(0, 1, 0);
             }
+
+            if ($dateFin !== FALSE) {
+                $searchSalle->setDateFin($dateFin);
+            }
+
+            var_dump($searchSalle);
 
             $salleService = $this->container->get('salle.service');
             $salles       = $salleService->search($searchSalle);
         }
-        
-        var_dump($salles);
-        
+
         return $this->render('EasyRoomAppBundle:Salle:search_salle.html.twig', array(
-            'salles' => $salles
+                    'salles' => $salles
         ));
     }
 
-    public function affichageAction()
-    {
-    	return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
+    public function affichageAction() {
+        return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
     }
 
 }

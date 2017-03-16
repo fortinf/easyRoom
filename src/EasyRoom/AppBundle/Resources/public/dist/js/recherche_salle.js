@@ -5,8 +5,9 @@ function initDatePicker() {
         weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
         today: 'Aujourd\'hui',
         clear: 'Effacer',
-        close: '',
-        formatSubmit: 'yyyy/mm/dd'
+        close: 'Valider',
+        format: 'dd/mm/yyyy',
+        formatSubmit: 'dd/mm/yyyy'
     });
 
     var $dateDebut = $('.datepicker#date_debut').pickadate({
