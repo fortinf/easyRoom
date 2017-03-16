@@ -7,32 +7,28 @@ and open the template in the editor.
     Created on : 7 mars 2017, 23:41:10
     Author     : ffortin
 */
-#salle-section-recherche {
-  background-image: url(../../images/accueil_background_search_salle.png);
-  background-size: 1200px 400px;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 400px;
+#salle-section-description {
+  padding-bottom:50px;
 }
 
 /* label color */
  .input-field {
-   color: #fff;
+   //color: #fff;
  }
 
 /* label color */
  .input-field label {
-   color: #fff;
+   //color: #fff;
  }
  /* label focus color */
  .input-field:focus label {
-   color: #fff;
+   //color: #fff;
  }
  /* label underline focus color */
  .input-field:focus {
    border-bottom: 1px solid #fff;
    box-shadow: 0 1px 0 0 #fff;
-   color: #fff;
+   //color: #fff;
  }
  /* valid color */
  .input-field .valid {

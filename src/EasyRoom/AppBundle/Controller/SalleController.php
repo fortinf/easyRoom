@@ -24,13 +24,11 @@ class SalleController extends Controller {
     
     public function creationAction()
     {
-    	
         return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
-        
     }
 
     public function searchAction(Request $request) {
-        
+
         $salles = new ArrayCollection();
 
         if ($request->isMethod('POST')) {
@@ -84,17 +82,16 @@ class SalleController extends Controller {
             $salleService = $this->container->get('salle.service');
             $salles       = $salleService->search($searchSalle);
         }
-        
+
         var_dump($salles);
-        
+
         return $this->render('EasyRoomAppBundle:Salle:search_salle.html.twig', array(
             'salles' => $salles
         ));
     }
-
+    
     public function affichageAction()
     {
     	return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
     }
-
 }
