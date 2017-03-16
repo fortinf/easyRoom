@@ -1,0 +1,61 @@
+section.recherche {
+  background: url(../images/accueil_background_search_salle.png) 50% 70%;
+  background-size: cover;
+  min-height: 300px; }
+  section.recherche .container {
+    width: 70%;
+    max-width: 1280px; }
+  section.recherche h3 {
+    color: #fff;
+    font-size: 2em; }
+  section.recherche form {
+    background-color: rgba(45, 176, 229, 0.97); }
+  section.recherche input.valid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff; }
+  section.recherche input, section.recherche input:focus:not([readonly]) {
+    color: #fff;
+    border-bottom: 1px solid #fff; }
+  section.recherche .input-field label, section.recherche input:focus:not([readonly]) + label {
+    color: #137299; }
+  section.recherche .btn, section.recherche .btn-large {
+    text-decoration: none;
+    color: #2db0e5;
+    background-color: #fff; }
+
+section.mes-reservations h3, section.join-meeting h3 {
+  color: #2db0e5;
+  font-size: 2.5em; }
+
+section.mes-reservations .card .card-action .material-icons, section.join-meeting .card .card-action .material-icons {
+  color: #2db0e5; }
+
+section.mes-reservations .card .bottom .material-icons, section.join-meeting .card .bottom .material-icons {
+  color: #2db0e5;
+  position: relative;
+  top: 5px;
+  right: 5px; }
+
+section.mes-reservations .card .bottom .lib-date, section.join-meeting .card .bottom .lib-date {
+  display: inline-block;
+  width: 50px;
+  color: #4e4e4e; }
+
+section.mes-reservations .card-action a {
+  position: relative;
+  left: 2em;
+  color: #2db0e5 !important; }
+
+section.join-meeting {
+  background-color: #2db0e5; }
+  section.join-meeting h5 {
+    color: #fff; }
+  section.join-meeting .card-action span {
+    position: relative;
+    left: -0.7em;
+    text-transform: uppercase;
+    color: #2db0e5 !important; }
+
+.picker__frame {
+  max-width: 355px;
+  width: 355px; }

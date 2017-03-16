@@ -49,7 +49,11 @@
     <section class="section row resultats-recherche">
         <div class="container">
             <h3 class="col s12 header center-align">Résultats de votre recherche</h3>
-            {% include 'EasyRoomAppBundle:Salle:carte_resultat.html.twig' %}
+            {% if salles is not null %}
+                {% for salle in salles %}
+                    {% include 'EasyRoomAppBundle:Salle:carte_resultat.html.twig' %}
+                {% endfor %}
+            {% endif %}
         </div>
     </section>
 {% endblock %}

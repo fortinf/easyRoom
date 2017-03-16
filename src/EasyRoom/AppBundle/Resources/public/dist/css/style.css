@@ -1,0 +1,101 @@
+html {
+  color: #4e4e4e;
+  height: 100%; }
+
+body {
+  min-height: 100%;
+  position: relative; }
+
+main {
+  height: 100%; }
+
+/** TOP BAR + NAV **/
+nav {
+  line-height: normal; }
+  nav #logo-container {
+    padding-top: 5px; }
+  nav ul li {
+    line-height: 58px; }
+    nav ul li.active {
+      background: none;
+      border-bottom: 3px solid #2db0e5; }
+    nav ul li a {
+      color: #2db0e5; }
+  nav ul a:hover {
+    background: none; }
+  nav .dropdown-content {
+    min-width: 150px;
+    top: 45px !important; }
+  nav .select-wrapper input.select-dropdown {
+    border-bottom: 1px solid #fff; }
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #2db0e5; }
+
+#sidenav-overlay {
+  z-index: 0; }
+
+/** FOOTER **/
+footer {
+  color: #2db0e5;
+  position: absolute;
+  bottom: 0;
+  right: 0.8em; }
+
+/** INPUTS & BUTTONS **/
+input[type=email], input[type=password], input[type=text], input[type=number] {
+  border-bottom: 1px solid #2db0e5;
+  box-shadow: 0 1px 0 0 #2db0e5; }
+  input[type=email].valid, input[type=password].valid, input[type=text].valid, input[type=number].valid {
+    border-bottom: 1px solid #2db0e5;
+    box-shadow: 0 1px 0 0 #2db0e5; }
+  input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=number]:focus:not([readonly]) {
+    border-bottom: 1px solid #2db0e5;
+    box-shadow: 0 1px 0 0 #2db0e5; }
+    input[type=email]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label {
+      color: #2db0e5; }
+
+.input-field .prefix.active {
+  color: #2db0e5; }
+
+.material-icons {
+  color: #9e9e9e; }
+
+.btn, .btn-large {
+  text-decoration: none;
+  color: #2db0e5;
+  background-color: #fff; }
+  .btn:hover, .btn-large:hover {
+    background-color: #2db0e5;
+    color: #fff; }
+
+.btn:focus, .btn-large:focus, .btn-floating:focus {
+  background-color: #1994c6;
+  color: #fff; }
+
+/** CARTES **/
+.card {
+  position: relative;
+  max-width: 500px; }
+  .card h4 {
+    margin-top: 0;
+    font-size: 2em; }
+  .card .card-content {
+    padding: 25px;
+    margin-bottom: 0;
+    position: relative; }
+  .card .card-description p {
+    color: #9b9b9b; }
+  .card .bottom {
+    position: absolute;
+    bottom: 10px; }
+    .card .bottom .material-icons {
+      color: #2db0e5;
+      position: relative;
+      top: 5px;
+      right: 5px; }
+
+/** CONTAINER **/
+.container {
+  width: 95%;
+  max-width: 1500px; }

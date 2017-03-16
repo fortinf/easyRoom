@@ -1,0 +1,41 @@
+#photo-salle {
+  min-height: 500px;
+  background: url(../images/photos_salles/salle-hipster.jpg) 50% 70%;
+  background-size: cover; }
+
+.container {
+  width: 90%;
+  max-width: 1300px; }
+
+.description h4 {
+  color: #2db0e5; }
+
+.reservation {
+  position: relative;
+  top: -77px; }
+  .reservation h5 {
+    margin: 0;
+    color: #fff;
+    background-color: rgba(45, 176, 229, 0.9);
+    padding: 15px; }
+  .reservation .card {
+    margin: 0;
+    padding: 2em;
+    padding-top: 1.5em;
+    min-height: 250px; }
+  .reservation form .input-field {
+    margin-top: 0; }
+  .reservation form .row.debut {
+    margin-bottom: 0; }
+
+.btn, .btn-large {
+  text-decoration: none;
+  color: #fff;
+  background-color: #2db0e5; }
+  .btn:hover, .btn-large:hover {
+    background-color: #fff;
+    color: #2db0e5; }
+
+.btn:focus, .btn-large:focus, .btn-floating:focus {
+  background-color: #1994c6;
+  color: #fff; }
