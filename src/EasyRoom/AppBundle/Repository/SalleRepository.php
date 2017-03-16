@@ -56,10 +56,6 @@ class SalleRepository
         ;
         
         $resultSQ = $subQuery->getArrayResult();
-        
-        var_dump($subQuery->getSQL());
-        var_dump($subQuery->getParameters());
-        var_dump($subQuery->getArrayResult());
 
         /*
          * REQUETE
