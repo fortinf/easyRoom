@@ -19,7 +19,7 @@ easy_room_app_salle_creation:
     defaults: { _controller: EasyRoomAppBundle:Salle:creation }
 
 easy_room_app_salle_fiche:
-    path:     /salle-fiche
+    path:     /salle-fiche/{idSalle}
     defaults: { _controller: EasyRoomAppBundle:Salle:affichage }
 
 easy_room_app_salle_search:

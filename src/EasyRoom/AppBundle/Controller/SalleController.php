@@ -12,6 +12,7 @@ use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use EasyRoom\AppBundle\Bean\SearchSalleBean;
+use Proxies\__CG__\EasyRoom\AppBundle\Entity\Salle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -61,8 +62,6 @@ class SalleController
             if ($dateDebut !== FALSE) {
                 $searchSalle->setDateDebut($dateDebut);
             }
-            
-            var_dump($postDateDebut);
 
             // Date et heure de fin
             if (!empty($postDateFin)) {
@@ -83,8 +82,6 @@ class SalleController
                 $searchSalle->setDateFin($dateFin);
             }
 
-            var_dump($searchSalle);
-
             $salleService = $this->container->get('salle.service');
             $salles       = $salleService->search($searchSalle);
         }
@@ -94,7 +91,23 @@ class SalleController
         ));
     }
 
-    public function affichageAction() {
-        return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig');
+    public function affichageAction($idSalle) {
+        
+        $salle = null;
+        
+        $id = intval($idSalle);
+        
+        if (isset($id) && is_int($id)) {
+            $salleService = $this->container->get('salle.service');
+            $salle = $salleService->getById($id);
+        }
+        
+        if (!isset($salle)) {
+            $salle = new Salle();
+        }
+        
+        return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig', array(
+            'salle' => $salle
+        ));
     }
 }

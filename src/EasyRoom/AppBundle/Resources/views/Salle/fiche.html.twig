@@ -12,9 +12,9 @@
 
 	<section class="row description-resa container">
 		<div class="col s8 description">
-			<h4>Salle Hipster</h4>
-			<p>10 max.</p>
-			<p class="summary">Salle cool et détendue pour des réunions en toute convivialité. La salle est équipée d'un rétroprojecteur et de 2 tableaux blancs.</p>
+			<h4>{{ salle.libelle }}</h4>
+			<p>{{ salle.DispositionParDefaut.nbPlace }} max.</p>
+			<p class="summary">{{ salle.description }}</p>
 		</div>
 		<div class="col s4 reservation">
 			<h5>Réservation</h5>
@@ -54,17 +54,20 @@
         <div class="col s6 capacites">
             <h5>Capacités</h5>
             <ul>
-                <li>Table rectangulaire : <span class="bold">20</span></li><br/>
-                <li>Salle de classe : <span class="bold">20</span></li><br/>
-                <li>Conférence : <span class="bold">20</span></li><br/>
-                <li>Vide : <span class="bold">20</span></li>
+                {% for dispositionSalle in salle.dispositionSalles %}
+                    <li>{{ dispositionSalle.disposition.libelle }} : <span class="bold">{{ dispositionSalle.nbPlace }}</span></li><br/>
+                {% endfor %}
             </ul>
         </div>
         <div class="col s6 caracteristiques">
             <h5>Caractéristiques</h5>
             <ul>
+                {% if salle.handicap %}
                 <li><i class="material-icons">accessible</i> Accessible</li><br/>
-                <li><i class="material-icons">wb_sunny</i> Ensoleillé</li><br/>
+                {% endif %}
+                {% if salle.lumiereJour %}
+                <li><i class="material-icons">wb_sunny</i> Lumière du jour</li><br/>
+                {% endif %}
             </ul>
         </div>
     </section>

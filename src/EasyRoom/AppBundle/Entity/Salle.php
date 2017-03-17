@@ -91,8 +91,8 @@ class Salle {
      */
     public function __construct() {
         $this->dispositionSalles = new ArrayCollection();
-        $this->equipements = new ArrayCollection();
-        $this->reservations = new ArrayCollection();
+        $this->equipements       = new ArrayCollection();
+        $this->reservations      = new ArrayCollection();
     }
 
     /**
@@ -298,25 +298,26 @@ class Salle {
     public function getReservations() {
         return $this->reservations;
     }
-    
+
     /**
      * Retourne la disposition par défaut d'une salle
      * 
      * @return Disposition
      */
     public function getDispositionParDefaut() {
-        
+
         $dispositionParDefaut = new DispositionSalle();
-        
-        $arrayDispositionSalle = $this->getDispositionSalles()->toArray();
-        foreach ($arrayDispositionSalle as $dispositionSalle) {
-            if ($dispositionSalle->getDispositionDefaut()) {
-                $dispositionParDefaut = $dispositionSalle;
+
+        if (!is_null($this->getDispositionSalles())) {
+            $arrayDispositionSalle = $this->getDispositionSalles()->toArray();
+            foreach ($arrayDispositionSalle as $dispositionSalle) {
+                if ($dispositionSalle->getDispositionDefaut()) {
+                    $dispositionParDefaut = $dispositionSalle;
+                }
             }
         }
-        
+
         return $dispositionParDefaut;
-        
     }
 
 }

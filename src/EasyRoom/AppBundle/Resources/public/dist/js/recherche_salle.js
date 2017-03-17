@@ -38,7 +38,7 @@ function initTimePicker() {
         autoclose: false,
         twelvehour: false,
         default: 'now',
-        donetext: 'Valider',      // done button text
+        donetext: 'Valider'     // done button text
     });
 }
 
