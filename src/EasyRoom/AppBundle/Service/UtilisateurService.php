@@ -10,7 +10,7 @@ namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Entity\Role;
-use EasyRoom\AppBundle\Entity\Utilisateur;
+use EasyRoom\UserBundle\Entity\Utilisateur;
 
 /**
  * Description of UtilisateurService

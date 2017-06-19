@@ -4,6 +4,12 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    easyroom.form.registration:
+        class: EasyRoom\AppBundle\Form\RegistrationType
+        tags: 
+            - { name: form.type, alias: easyroom_user_registration}
+            
+    easyroom.form.profile:
+        class: EasyRoom\AppBundle\Form\RegistrationType
+        tags: 
+            - { name: form.type, alias: easyroom_user_profile}

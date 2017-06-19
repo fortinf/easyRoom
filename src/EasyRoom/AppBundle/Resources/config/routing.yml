@@ -1,10 +1,10 @@
-easy_room_app_login_index:
+index:
     path:     /
+    defaults: { _controller: EasyRoomAppBundle:Accueil:index }
+    
+easy_room_app_login_index:
+    path:     /loginPerso
     defaults: { _controller: EasyRoomAppBundle:Login:index }
-
-easy_room_app_login_authentification:
-    path:     /authentification
-    defaults: { _controller: EasyRoomAppBundle:Login:authentification }
 
 easy_room_app_test_index:
     path:     /test

@@ -5,15 +5,15 @@ namespace EasyRoom\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use EasyRoom\AppBundle\Entity\Role;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Utilisateur
  *
- * @ORM\Table(name="T_UTILISATEUR", uniqueConstraints={@ORM\UniqueConstraint(name="UTI_ID", columns={"UTI_ID"})}, indexes={@ORM\Index(name="UTI_FK_ROL_ID", columns={"UTI_FK_ROL_ID"})})
+ * @ORM\Table(name="T_UTILISATEUR", uniqueConstraints={@ORM\UniqueConstraint(name="UTI_ID", columns={"UTI_ID"})})
  * @ORM\Entity
  */
-class Utilisateur
+class Utilisateur extends BaseUser
 {
 
     /**
@@ -23,14 +23,7 @@ class Utilisateur
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="UTI_MAIL", type="string", length=255, nullable=false)
-     */
-    private $mail;
+    protected $id;
 
     /**
      * @var string
@@ -45,23 +38,6 @@ class Utilisateur
      * @ORM\Column(name="UTI_PRENOM", type="string", length=50, nullable=false)
      */
     private $prenom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="UTI_MDP", type="string", length=50, nullable=false)
-     */
-    private $motDePasse;
-
-    /**
-     * @var Role
-     *
-     * @ORM\ManyToOne(targetEntity="Role")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="UTI_FK_ROL_ID", referencedColumnName="ROL_ID")
-     * })
-     */
-    private $role;
 
     /**
      * @var Collection
@@ -82,32 +58,9 @@ class Utilisateur
      */
     public function __construct()
     {
+        parent::__construct();
         $this->reservations = new ArrayCollection();
         $this->reservationProprietaires = new ArrayCollection();
-    }
-
-    /**
-     * Set mail
-     *
-     * @param string $mail
-     *
-     * @return Utilisateur
-     */
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    /**
-     * Get mail
-     *
-     * @return string
-     */
-    public function getMail()
-    {
-        return $this->mail;
     }
 
     /**
@@ -159,64 +112,6 @@ class Utilisateur
     }
 
     /**
-     * Set motDePasse
-     *
-     * @param string $motDePasse
-     *
-     * @return Utilisateur
-     */
-    public function setMotDePasse($motDePasse)
-    {
-        $this->motDePasse = $motDePasse;
-
-        return $this;
-    }
-
-    /**
-     * Get motDePasse
-     *
-     * @return string
-     */
-    public function getMotDePasse()
-    {
-        return $this->motDePasse;
-    }
-      
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set role
-     *
-     * @param Role $role
-     *
-     * @return Utilisateur
-     */
-    public function setRole(Role $role = null)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return Role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Get reservations
      *
      * @return Collection
@@ -235,4 +130,14 @@ class Utilisateur
     {
         return $this->reservationProprietaires;
     }
+    
+    public function setEmail($email) {
+        $this->$email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
+        
+        return $this;
+    }
+
 }
+

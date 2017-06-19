@@ -3,6 +3,7 @@
 namespace EasyRoom\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AccueilController
         extends Controller {
