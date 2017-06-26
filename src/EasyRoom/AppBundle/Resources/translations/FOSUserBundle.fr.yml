@@ -87,3 +87,6 @@ form:
     lastname: 'Nom'
     firstname: 'Prénom'
     roles: 'Rôle'
+roles:
+    user: 'Rôle utilisateur'
+    admin: 'Rôle administrateur'

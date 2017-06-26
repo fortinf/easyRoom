@@ -1,3 +1,7 @@
+easy_room_user:
+    resource: "@EasyRoomUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 easy_room_app:
     resource: "@EasyRoomAppBundle/Resources/config/routing.yml"
     prefix:   /

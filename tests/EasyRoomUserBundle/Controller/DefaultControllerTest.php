@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyRoom\UserBundle\Tests\Controller;
+namespace EasyRoomUserBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
