@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace EasyRoom\AppBundle\Form;
+namespace EasyRoom\UserBundle\Form;
 
 /**
  * Description of ProfileFormType
