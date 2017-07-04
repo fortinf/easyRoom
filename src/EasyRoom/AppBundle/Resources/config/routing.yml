@@ -18,9 +18,13 @@ easy_room_app_salle_search:
     path:     /salle
     defaults: { _controller: EasyRoomAppBundle:Salle:search }
 
-easy_room_app_equipemet_index:
+easy_room_app_equipement:
     path:     /equipement
     defaults: { _controller: EasyRoomAppBundle:Equipement:index }
+
+easy_room_app_equipement_add:
+    path:     /equipement/add
+    defaults: { _controller: EasyRoomAppBundle:Equipement:add }
 
 easy_room_app_reservation_index:
     path:     /reservation
