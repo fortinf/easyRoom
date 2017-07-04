@@ -1,0 +1,51 @@
+{% extends "EasyRoomAppBundle::template_parent.html.twig" %}
+
+
+{# Contenu du block stylesheets #}
+{% block stylesheets %}
+{% endblock %}
+
+{# Contenu du block main #}
+{% block main %}
+
+    {% trans_default_domain 'FOSUserBundle' %}
+
+    <div class="container">
+        <div>
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Adresse mail</th>
+                        <th>Rôle</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% for role in user.roles %}
+                                    {{ role }} 
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('easy_room_user_edit', {'idUser': user.id}) }}"><i class="material-icons">mode_edit</i></a></td>
+                            <td><a href="{{ path('easy_room_user_edit', {'idUser': user.id}) }}"><i class="material-icons">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div><a href="{{ path('fos_user_registration_register') }}"><i class="material-icons">add</i></a></div>
+    </div>
+{% endblock %}
+
+{# Contenu du block js #}
+{% block javascript %}
+    <script src="{{ asset('bundles/easyroomapp/dist/js/register.js') }}"></script>
+{% endblock %}

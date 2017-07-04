@@ -8,6 +8,11 @@ use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AccueilController
         extends Controller {
 
+    /**
+
+     * @Security("has_role('ROLE_USER')")
+
+     */
     public function indexAction() {
         $utilisateurService = $this->container->get('utilisateur.service');
         $utilisateur        = $utilisateurService->getById(1);

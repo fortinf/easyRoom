@@ -17,7 +17,6 @@
 /.settings
 .project
 .buildpath
-.composer.lock
 /nbproject
 /nbproject/private/
 node_modules/
