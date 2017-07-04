@@ -54,7 +54,7 @@ class ReservationService {
                 $reservation->setSalle($salle);
             }
 
-            // Utilisateuru maître
+            // Utilisateur maître
             $utilisateurMaitre = $this->utilisateurService->getById($idUtilisateurMaitre);
             if (!is_null($utilisateurMaitre)) {
                 $reservation->setUtilisateurMaitre($utilisateurMaitre);

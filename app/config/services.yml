@@ -7,3 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    easyroom.form.registration:
+        class: EasyRoom\UserBundle\Form\RegistrationType
+        tags: 
+            - { name: form.type, alias: easyroom_user_registration}
+            
+    easyroom.form.profile:
+        class: EasyRoom\UserBundle\Form\RegistrationType
+        tags: 
+            - { name: form.type, alias: easyroom_user_profile}

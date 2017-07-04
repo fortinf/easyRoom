@@ -1,0 +1,61 @@
+{% extends "EasyRoomAppBundle::template_parent.html.twig" %}
+
+
+{# Contenu du block stylesheets #}
+{% block stylesheets %}
+{% endblock %}
+
+{# Contenu du block main #}
+{% block main %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container">
+    <div>
+        {# On affiche tous les messages flash dont le nom est « info » #}
+        {% for message in app.session.flashbag.get('success') %}
+          <p>Message flash : {{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="row">
+      {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register col s12'}}) }}
+        <div class="row">
+          <div class="input-field col s6">
+            {{ form_row(form.nom) }}
+          </div>
+          <div class="input-field col s6">
+            {{ form_row(form.prenom) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {{ form_row(form.email) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {{ form_row(form.plainPassword) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {{ form_widget(form.roles, {'attr': {'class': 'initialized'}}) }}
+            {{ form_label(form.roles) }}  
+            {{ form_errors(form.roles) }}
+          </div>
+        </div>
+      <div>
+          <input type="submit" value="{{ 'registration.submit'|trans }}" />
+      </div>
+      {{ form_end(form) }}
+    </div>
+</div>
+      
+        
+
+{% endblock %}
+
+{# Contenu du block js #}
+{% block javascript %}
+    <script src="{{ asset('bundles/easyroomapp/dist/js/register.js') }}"></script>
+{% endblock %}

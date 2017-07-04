@@ -1,0 +1,11 @@
+easy_room_user_list:
+    path:     /user/list
+    defaults: { _controller: EasyRoomUserBundle:User:list }
+    
+easy_room_user_edit:
+    path:     /user/edit/{idUser}
+    defaults: { _controller: EasyRoomUserBundle:User:edit }
+    
+easy_room_user_delete:
+    path:     /user/delete/{idUser}
+    defaults: { _controller: EasyRoomUserBundle:User:delete }

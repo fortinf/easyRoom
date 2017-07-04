@@ -32,6 +32,9 @@ nav {
 .dropdown-content li > a, .dropdown-content li > span {
   color: #2db0e5; }
 
+#dropdown_profile {
+  width: auto; }
+
 #sidenav-overlay {
   z-index: 0; }
 

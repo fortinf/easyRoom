@@ -16,6 +16,8 @@ use Proxies\__CG__\EasyRoom\AppBundle\Entity\Salle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 /**
  * Description of SalleController
  *
@@ -24,6 +26,10 @@ use Symfony\Component\HttpFoundation\Request;
 class SalleController
         extends Controller {
 
+    /**
+     * 
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function creationAction() {
         return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
     }

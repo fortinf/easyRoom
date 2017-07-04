@@ -22,29 +22,59 @@ and open the template in the editor.
 <body class="valign-wrapper" style="background-image:url({{ asset('bundles/easyroomapp/dist/images/login-bg.jpg') }})">
 <main class="valign">
     <div class="row">
-        <form class="card-panel" action="{{ path('easy_room_app_login_authentification') }}">
+        <form class="card-panel" action="{{ path('fos_user_security_check') }}" method="post">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
 
         <div id="logo">
             <img src="{{ asset('bundles/easyroomapp/dist/images/logo-login.png') }}" alt="Logo Easyroom">
         </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="icon_prefix" type="email" class="validate" required>
-                <label for="icon_prefix">Adresse mail</label>
+                <input id="username" name="_username" type="email" class="validate" required value="{{ last_username }}">
+                <label for="username">Adresse mail</label>
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">lock</i>
-                <input id="icon_lock" type="password" class="validate" required>
-                <label for="icon_lock">Mot de passe</label>
+                <input id="password" name="_password" type="password" class="validate" required>
+                <label for="password">Mot de passe</label>
             </div>
             <div class="submit col s12 center-align">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Se connecter</button>
+                <button class="btn waves-effect waves-light" type="submit" name="_submit">Se connecter</button>
             </div>
             <p class="right-align">
                 <a href="#" class="forgot">Mot de passe oublié ?</a>
             </p>
         </form>
+        {% if error %}
+            {{ error.message }}
+        {% endif %}
     </div>
+    
+    <!-- FOSUserbundle -->
+    <div>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+    </div>
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    <!-- End FoSUserbundle -->  
+    
 </main>
 <footer>
     <p class="center-align">
@@ -58,4 +88,3 @@ and open the template in the editor.
 {% block javascript %}{% endblock %}
 </body>
 </html>
-
