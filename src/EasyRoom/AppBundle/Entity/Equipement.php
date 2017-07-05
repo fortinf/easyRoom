@@ -5,6 +5,7 @@ namespace EasyRoom\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Equipement
@@ -28,6 +29,8 @@ class Equipement
      * @var string
      *
      * @ORM\Column(name="EQU_LIBELLE", type="string", length=255, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Length(max=255, maxMessage="Le libellé ne doit pas dépasser {{ limit }} caractères.")   
      */
     private $libelle;
 
@@ -42,6 +45,7 @@ class Equipement
      * @var string
      *
      * @ORM\Column(name="EQU_REF", type="string", length=25, nullable=true)
+     * @Assert\Length(max=25, maxMessage="La référence ne doit pas dépasser {{ limit }} caractères.") 
      */
     private $reference;
 
@@ -55,7 +59,8 @@ class Equipement
     /**
      * @var string
      *
-     * @ORM\Column(name="EQU_DESCRIPTION", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="EQU_DESCRIPTION", type="text", length=3000, nullable=true)
+     * @Assert\Length(max=3000, maxMessage="La description ne doit pas dépasser {{ limit }} caractères.") 
      */
     private $description;
     
@@ -76,6 +81,7 @@ class Equipement
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="EQU_FK_TEQ_ID", referencedColumnName="TEQ_ID")
      * })
+     * @Assert\NotNull
      */
     private $typeEquipement;
 

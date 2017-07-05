@@ -33,8 +33,15 @@ class EquipementController
             $form->handleRequest($request);
 
             // On vérifie que les valeurs entrées sont correctes
-            // (Nous verrons la validation des objets en détail dans le prochain chapitre)
             if ($form->isValid()) {
+
+                // Maj du flag "disponible" 
+                if (!is_null($equipement->getSalle())) {
+                    $equipement->setMobilite(FALSE);
+                } else {
+                    $equipement->setMobilite(TRUE);
+                }
+
                 // On enregistre notre objet $advert dans la base de données, par exemple
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($equipement);
@@ -44,8 +51,8 @@ class EquipementController
 
                 // On redirige vers la page de visualisation de l'annonce nouvellement créée
                 return $this->render('EasyRoomAppBundle:Equipement:add.html.twig', array(
-                    'form' => $form->createView(),
-        ));
+                            'form' => $form->createView(),
+                ));
             }
         }
 
@@ -53,5 +60,5 @@ class EquipementController
                     'form' => $form->createView(),
         ));
     }
-    
+
 }
