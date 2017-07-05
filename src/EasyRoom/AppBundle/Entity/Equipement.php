@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="T_EQUIPEMENT", uniqueConstraints={@ORM\UniqueConstraint(name="EQU_ID", columns={"EQU_ID"}), @ORM\UniqueConstraint(name="EQU_FK_TEQ_ID", columns={"EQU_FK_TEQ_ID"})}, indexes={@ORM\Index(name="EQU_FK_SAL_ID", columns={"EQU_FK_SAL_ID"})})
  * @ORM\Entity
+ * @UniqueEntity(fields="libelle", message="Un équipement existe déjà avec ce libellé.")
  */
 class Equipement
 {
