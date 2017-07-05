@@ -83,5 +83,15 @@ class EquipementService {
             return NULL;
         }
     }
+    
+    /**
+     * Service qui retourne tous les équipements
+     * 
+     * @return mixed
+     */
+    public function getAll() {
+        $repository = $this->em->getRepository('EasyRoomAppBundle:Equipement');
+        return $repository->findAll();
+    }
 
 }

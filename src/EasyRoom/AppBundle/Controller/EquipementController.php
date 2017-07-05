@@ -60,5 +60,16 @@ class EquipementController
                     'form' => $form->createView(),
         ));
     }
+    
+    public function listAction() {
+        
+        $equipementService = $this->container->get('equipement.service');
+        $equipements = $equipementService->getAll();
+        
+        return $this->render('EasyRoomAppBundle:Equipement:list.html.twig', array(
+            'equipements' => $equipements,
+        ));
+        
+    }
 
 }

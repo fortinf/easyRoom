@@ -8,6 +8,53 @@
 {# Contenu du block main #}
 {% block main %}
     {# (Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
+
+    <div class="container">
+        <div>
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Type</th>
+                        <th>Référence</th>
+                        <th>Disponible</th>
+                        <th>Salle</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equipement in equipements %}
+                        <tr>
+                            <td>{{ equipement.libelle }}</td>
+                            <td>
+                                {% if equipement.typeEquipement is not null %}
+                                    {{ equipement.typeEquipement.libelle }}
+                                {% endif %}
+                            </td>
+                            <td>{{ equipement.reference }}</td>
+                            <td>
+                                {% if equipement.disponible %}
+                                    <i class="material-icons">check_box</i>
+                                {% else %}
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if equipement.salle is not null %}
+                                    {{ equipement.salle.libelle }}
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ path('easy_room_app_equipement_edit', {'idEquipement': equipement.id}) }}"><i class="material-icons">mode_edit</i></a></td>
+                            <td><a href="{{ path('easy_room_app_equipement_delete', {'idEquipement': equipement.id}) }}"><i class="material-icons">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div><a href="{{ path('easy_room_app_equipement_add') }}"><i class="material-icons">add</i></a></div>
+    </div>
+
 {% endblock %}
 
 {# Contenu du block javascript #}

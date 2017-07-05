@@ -20,11 +20,19 @@ easy_room_app_salle_search:
 
 easy_room_app_equipement:
     path:     /equipement
-    defaults: { _controller: EasyRoomAppBundle:Equipement:index }
+    defaults: { _controller: EasyRoomAppBundle:Equipement:list }
 
 easy_room_app_equipement_add:
     path:     /equipement/add
     defaults: { _controller: EasyRoomAppBundle:Equipement:add }
+    
+easy_room_app_equipement_edit:
+    path:     /equipement/edit/{idEquipement}
+    defaults: { _controller: EasyRoomAppBundle:Equipement:edit }
+    
+easy_room_app_equipement_delete:
+    path:     /equipement/delete/{idEquipement}
+    defaults: { _controller: EasyRoomAppBundle:Equipement:delete }
 
 easy_room_app_reservation_index:
     path:     /reservation
