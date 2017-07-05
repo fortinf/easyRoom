@@ -27,7 +27,7 @@ class EquipementController
         $form       = $this->get('form.factory')->create(EquipementType::class, $equipement);
 
         // Si la requête est en POST
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod($request::METHOD_POST)) {
             // On fait le lien Requête <-> Formulaire
             // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
             $form->handleRequest($request);
@@ -53,5 +53,5 @@ class EquipementController
                     'form' => $form->createView(),
         ));
     }
-
+    
 }
