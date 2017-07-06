@@ -15,7 +15,6 @@ use EasyRoom\AppBundle\Bean\SearchSalleBean;
 use Proxies\__CG__\EasyRoom\AppBundle\Entity\Salle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -26,11 +25,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class SalleController
         extends Controller {
 
+    public function listAction() {
+        $salleService = $this->container->get('salle.service');
+        $salles       = $salleService->getAll();
+
+        return $this->render('EasyRoomAppBundle:Salle:list.html.twig', array(
+                    'salles' => $salles,
+        ));
+    }
+
     /**
      * 
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function creationAction() {
+    public function addAction() {
         return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
     }
 
@@ -97,23 +105,24 @@ class SalleController
         ));
     }
 
-    public function affichageAction($idSalle) {
-        
+    public function showAction($idSalle) {
+
         $salle = null;
-        
+
         $id = intval($idSalle);
-        
+
         if (isset($id) && is_int($id)) {
             $salleService = $this->container->get('salle.service');
-            $salle = $salleService->getById($id);
+            $salle        = $salleService->getById($id);
         }
-        
+
         if (!isset($salle)) {
             $salle = new Salle();
         }
-        
+
         return $this->render('EasyRoomAppBundle:Salle:fiche.html.twig', array(
-            'salle' => $salle
+                    'salle' => $salle
         ));
     }
+
 }

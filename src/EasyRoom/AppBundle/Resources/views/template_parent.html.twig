@@ -31,7 +31,7 @@ and open the template in the editor.
                 <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
             </ul>
             <ul id="dropdown_salle" class="dropdown-content">
-                <li class="menu_creation_salle"><a href="{{ path('easy_room_app_salle_creation') }}">Création</a></li>
+                <li class="menu_creation_salle"><a href="{{ path('easy_room_app_salle') }}">Gestion</a></li>
                 <li class="divider"></li>
                 <li class="menu_recherche_salle"><a href="{{ path('easy_room_app_salle_search') }}">Recherche</a></li>
             </ul>
@@ -55,7 +55,7 @@ and open the template in the editor.
                         <li class="menu_accueil"><a
                                 href="{{ path('index') }}">Accueil</a></li>
                         <li class="menu_recherche_salle"><a href="{{ path('easy_room_app_salle_search') }}">Salles</a></li>
-                        <li class="menu_creation_salle"><a href="{{ path('easy_room_app_salle_creation') }}">Créer une salle</a></li>
+                        <li class="menu_creation_salle"><a href="{{ path('easy_room_app_salle_add') }}">Créer une salle</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
                             <li class="menu_equipements"><a href="{{ path('easy_room_app_equipement') }}">Équipements</a></li>
                             <li class="menu_utilisateurs"><a href="{{ path('easy_room_user_list') }}">Utilisateurs</a></li>

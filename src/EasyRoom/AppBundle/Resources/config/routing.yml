@@ -5,17 +5,29 @@ index:
 easy_room_app_test_index:
     path:     /test
     defaults: { _controller: EasyRoomAppBundle:Test:index }
+    
+easy_room_app_salle :
+    path:     /salle
+    defaults: { _controller: EasyRoomAppBundle:Salle:list }
 
-easy_room_app_salle_creation:
-    path:     /salle/creation
-    defaults: { _controller: EasyRoomAppBundle:Salle:creation }
+easy_room_app_salle_add:
+    path:     /salle/add
+    defaults: { _controller: EasyRoomAppBundle:Salle:add }
+    
+easy_room_app_salle_edit:
+    path:     /salle/edit/{idSalle}
+    defaults: { _controller: EasyRoomAppBundle:Salle:edit }
+    
+easy_room_app_salle_delete:
+    path:     /salle/delete/{idSalle}
+    defaults: { _controller: EasyRoomAppBundle:Salle:delete }
 
 easy_room_app_salle_fiche:
     path:     /salle/{idSalle}
-    defaults: { _controller: EasyRoomAppBundle:Salle:affichage }
+    defaults: { _controller: EasyRoomAppBundle:Salle:show }
 
 easy_room_app_salle_search:
-    path:     /salle
+    path:     /salle/search
     defaults: { _controller: EasyRoomAppBundle:Salle:search }
 
 easy_room_app_equipement:
