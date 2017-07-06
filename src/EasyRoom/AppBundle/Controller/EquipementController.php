@@ -21,15 +21,24 @@ use Symfony\Component\HttpFoundation\Request;
 class EquipementController
         extends Controller {
 
+    public function listAction() {
+
+        $equipementService = $this->container->get('equipement.service');
+        $equipements       = $equipementService->getAll();
+
+        return $this->render('EasyRoomAppBundle:Equipement:list.html.twig', array(
+                    'equipements' => $equipements,
+        ));
+    }
+
     public function addAction(Request $request) {
 
-        $equipement = new Equipement;
+        $equipement = new Equipement();
         $form       = $this->get('form.factory')->create(EquipementType::class, $equipement);
 
         // Si la requête est en POST
         if ($request->isMethod($request::METHOD_POST)) {
-            // On fait le lien Requête <-> Formulaire
-            // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
+
             $form->handleRequest($request);
 
             // On vérifie que les valeurs entrées sont correctes
@@ -42,14 +51,12 @@ class EquipementController
                     $equipement->setMobilite(TRUE);
                 }
 
-                // On enregistre notre objet $advert dans la base de données, par exemple
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($equipement);
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add('info', 'Équipement créé.');
 
-                // On redirige vers la page de visualisation de l'annonce nouvellement créée
                 return $this->render('EasyRoomAppBundle:Equipement:add.html.twig', array(
                             'form' => $form->createView(),
                 ));
@@ -60,16 +67,53 @@ class EquipementController
                     'form' => $form->createView(),
         ));
     }
-    
-    public function listAction() {
-        
+
+    public function editAction($idEquipement, Request $request) {
+
         $equipementService = $this->container->get('equipement.service');
-        $equipements = $equipementService->getAll();
-        
-        return $this->render('EasyRoomAppBundle:Equipement:list.html.twig', array(
-            'equipements' => $equipements,
+
+
+        $idEquipementInt = intval($idEquipement);
+        $equipement      = $equipementService->getById($idEquipementInt);
+
+
+        if (is_null($equipement)) {
+            $request->getSession()->getFlashBag()->add('error', 'Équipement non trouvé.');
+            $equipement = new Equipement();
+        }
+
+        $form = $this->get('form.factory')->create(EquipementType::class, $equipement);
+
+        // Si la requête est en POST
+        if ($request->isMethod($request::METHOD_POST)) {
+
+            $form->handleRequest($request);
+
+            // On vérifie que les valeurs entrées sont correctes
+            if ($form->isValid()) {
+
+                // Maj du flag "disponible" 
+                if (!is_null($equipement->getSalle())) {
+                    $equipement->setMobilite(FALSE);
+                } else {
+                    $equipement->setMobilite(TRUE);
+                }
+
+                $equipementService->update(intval($idEquipement), $equipement);
+
+                $request->getSession()->getFlashBag()->add('info', 'Équipement modifié.');
+
+                return $this->render('EasyRoomAppBundle:Equipement:edit.html.twig', array(
+                            'form'         => $form->createView(),
+                            'idEquipement' => $idEquipementInt,
+                ));
+            }
+        }
+
+        return $this->render('EasyRoomAppBundle:Equipement:edit.html.twig', array(
+                    'form'         => $form->createView(),
+                    'idEquipement' => $idEquipementInt,
         ));
-        
     }
 
 }

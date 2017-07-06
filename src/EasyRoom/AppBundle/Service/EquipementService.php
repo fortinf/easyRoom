@@ -60,9 +60,14 @@ class EquipementService {
             $updateEquipement->setLibelle($equipement->getLibelle());
             $updateEquipement->setDescription($equipement->getDescription());
             $updateEquipement->setReference($equipement->getReference());
+            $updateEquipement->setDisponible($equipement->getDisponible());
+            $updateEquipement->setMobilite($equipement->getMobilite());
 
             // Type équipement
             $updateEquipement->setTypeEquipement($equipement->getTypeEquipement());
+            
+            // Salle
+            $updateEquipement->setSalle($equipement->getSalle());
 
             // Modification de l'équipement
             $this->em->persist($updateEquipement);
