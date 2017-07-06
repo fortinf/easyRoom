@@ -68,27 +68,14 @@ class RegistrationController extends Controller
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
                 
-                $user->addRole('ROLE_USER');
-
                 $userManager->updateUser($user);
 
-                
-                if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('fos_user_registration_confirmed');
-                    $response = new RedirectResponse($url);
-                }
-
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                return $response;
+                return $this->redirectToRoute('easy_room_user_list');
             }
 
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
-
-            if (null !== $response = $event->getResponse()) {
-                return $response;
-            }
+            
         }
 
         return $this->render('@FOSUser/Registration/register.html.twig', array(
