@@ -23,7 +23,7 @@ easy_room_app_salle_delete:
     defaults: { _controller: EasyRoomAppBundle:Salle:delete }
 
 easy_room_app_salle_fiche:
-    path:     /salle/{idSalle}
+    path:     /salle/fiche/{idSalle}
     defaults: { _controller: EasyRoomAppBundle:Salle:show }
 
 easy_room_app_salle_search:

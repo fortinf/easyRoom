@@ -5,6 +5,8 @@ namespace EasyRoom\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Salle
@@ -27,6 +29,8 @@ class Salle {
      * @var string
      *
      * @ORM\Column(name="SAL_LIBELLE", type="string", length=50, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Length(max=50, maxMessage="Le libellé ne doit pas dépasser {{ limit }} caractères.")
      */
     private $libelle;
 
@@ -41,6 +45,7 @@ class Salle {
      * @var string
      *
      * @ORM\Column(name="SAL_DESCRIPTION", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=3000, maxMessage="La description ne doit pas dépasser {{ limit }} caractères.") 
      */
     private $description;
 
@@ -85,6 +90,67 @@ class Salle {
      * @ORM\OneToMany(targetEntity="Reservation", mappedBy="salle")
      */
     private $reservations;
+    
+    /**
+     *
+     * @var UploadedFile
+     * @Assert\Image
+     */
+    private $file;
+
+    /**
+     *
+     * @var integer 
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *  min = 1,
+     *  max = 1000,
+     *  minMessage = "La capacité doit être supérieur à 0.",
+     *  maxMessage = "La capacité ne peut dépasser 1000."
+     * )
+     */
+    private $dipositionRectable;
+
+    /**
+     *
+     * @var integer 
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *  min = 1,
+     *  max = 1000,
+     *  minMessage = "La capacité doit être supérieur à 0.",
+     *  maxMessage = "La capacité ne peut dépasser 1000."
+     * )
+     */
+    private $dispositionConference;
+
+    /**
+     *
+     * @var integer 
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *  min = 1,
+     *  max = 1000,
+     *  minMessage = "La capacité doit être supérieur à 0.",
+     *  maxMessage = "La capacité ne peut dépasser 1000."
+     * )
+     */
+    private $dispositionClasse;
+
+    /**
+     *
+     * @var integer 
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *  min = 1,
+     *  max = 1000,
+     *  minMessage = "La capacité doit être supérieur à 0.",
+     *  maxMessage = "La capacité ne peut dépasser 1000."
+     * )
+     */
+    private $dispositionVide;
+    
+    private $dispositionDefaut;
 
     /**
      * Constructor
@@ -304,20 +370,71 @@ class Salle {
      * 
      * @return Disposition
      */
-    public function getDispositionParDefaut() {
+    public function getDispositionSalleParDefaut() {
 
-        $dispositionParDefaut = new DispositionSalle();
+        $dispositionSalleParDefaut = new DispositionSalle();
 
         if (!is_null($this->getDispositionSalles())) {
             $arrayDispositionSalle = $this->getDispositionSalles()->toArray();
             foreach ($arrayDispositionSalle as $dispositionSalle) {
                 if ($dispositionSalle->getDispositionDefaut()) {
-                    $dispositionParDefaut = $dispositionSalle;
+                    $dispositionSalleParDefaut = $dispositionSalle;
                 }
             }
         }
 
-        return $dispositionParDefaut;
+        return $dispositionSalleParDefaut;
     }
+
+    public function getFile() {
+        return $this->file;
+    }
+
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+    }
+    
+    public function getDipositionRectable() {
+        return $this->dipositionRectable;
+    }
+
+    public function getDispositionConference() {
+        return $this->dispositionConference;
+    }
+
+    public function getDispositionClasse() {
+        return $this->dispositionClasse;
+    }
+
+    public function getDispositionVide() {
+        return $this->dispositionVide;
+    }
+
+    public function setDipositionRectable($dipositionRectable) {
+        $this->dipositionRectable = $dipositionRectable;
+    }
+
+    public function setDispositionConference($dispositionConference) {
+        $this->dispositionConference = $dispositionConference;
+    }
+
+    public function setDispositionClasse($dispositionClasse) {
+        $this->dispositionClasse = $dispositionClasse;
+    }
+
+    public function setDispositionVide($dispositionVide) {
+        $this->dispositionVide = $dispositionVide;
+    }
+
+    public function getDispositionDefaut() {
+        return $this->dispositionDefaut;
+    }
+
+    public function setDispositionDefaut($dispositionDefaut) {
+        $this->dispositionDefaut = $dispositionDefaut;
+    }
+
+
+
 
 }
