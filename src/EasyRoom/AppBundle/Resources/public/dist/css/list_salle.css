@@ -8,8 +8,8 @@ and open the template in the editor.
     Author     : ffortin
 */
 #photo-salle {
-  min-height: 500px;
-  background: url(../images/photos_salles/salle-hipster.jpg) 50% 70%;
+  min-height: 150px;
+  background-color: #afbd2b;
   background-size: cover; }
 
 .container {

@@ -46,11 +46,26 @@ class SalleController
         // Liste des dispositions
         $dispositionService = $this->container->get('disposition.service');
         $dispositions       = $dispositionService->getAll();
-        
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            
-            var_dump($salle);
-            
+
+        if ($request->isMethod('POST')) {
+
+            $form->handleRequest($request);
+
+            if($form->isValid()) {
+
+                // Liste des dispositions
+                $dispositionBeans = $dispositionService->buildListDispositionBean($salle);
+
+                // Création de la salle
+                $salleService = $this->container->get('salle.service');
+
+                $salleService->create($salle, $dispositionBeans, array());
+
+                $request->getSession()->getFlashBag()->add('success', 'Salle créée.');
+
+                // Redirection vers l'écran de gestion des salles
+                return $this->redirectToRoute('easy_room_app_salle');
+            }
         }
 
         return $this->render('EasyRoomAppBundle:Salle:add.html.twig', array(

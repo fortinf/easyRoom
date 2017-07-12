@@ -40,16 +40,17 @@ class SalleType
                     'required' => false
                 ))
                 ->add('file', FileType::class)
-                ->add('dipositionRectable', IntegerType::class, array(
-                    'label' => 'Capacité de la disposition "Rectangle"'
+                ->add('capaciteRectangle', IntegerType::class, array(
+                    'label' => 'Capacité de la disposition "Rectangle"',
+                    'required' => false
                 ))
-                ->add('dispositionConference', IntegerType::class, array(
+                ->add('capaciteConference', IntegerType::class, array(
                     'label' => 'Capacité de la disposition "Conférence"'
                 ))
-                ->add('dispositionClasse', IntegerType::class, array(
+                ->add('capaciteClasse', IntegerType::class, array(
                     'label' => 'Capacité de la disposition "Classe"'
                 ))
-                ->add('dispositionVide', IntegerType::class, array(
+                ->add('capaciteVide', IntegerType::class, array(
                     'label' => 'Capacité de la disposition "Vide"'
                 ))
                 ->add('dispositionDefaut', EntityType::class, array(

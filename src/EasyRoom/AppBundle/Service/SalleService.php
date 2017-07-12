@@ -49,9 +49,11 @@ class SalleService {
         if (!is_null($salle) && $salle instanceof Salle && !is_null($dispositionBeans) && is_array($dispositionBeans) && !is_null($idEquipements) && is_array($idEquipements)) {
 
             // Dispositions
-            foreach ($dispositionBeans as $id => $dispositionBean) {
-                if (!is_null($id) && is_int($id)) {
-                    $disposition = $this->dispositionService->getById($id);
+            foreach ($dispositionBeans as $dispositionBean) {
+                
+                if (!is_null($dispositionBean->getId()) && is_int($dispositionBean->getId())) {
+                    
+                    $disposition = $this->dispositionService->getById($dispositionBean->getId());
 
                     if (!is_null($disposition)) {
                         $dispositionSalle = new DispositionSalle();

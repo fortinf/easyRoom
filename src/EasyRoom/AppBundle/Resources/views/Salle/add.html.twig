@@ -17,16 +17,8 @@
         <div class="col s4 titre-page">
             <h5>Création salle</h5>
         </div>
-        <div class="container">
-            <div>
-                {# On affiche tous les messages flash dont le nom est « info » #}
-                {% if app.session.flashbag.get('info') is not empty %}
-                    <i class="material-icons">sentiment_very_satisfied</i> :
-                    {% for message in app.session.flashbag.get('info') %}
-                        <p>Message flash : {{ message }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>  
+        <div class="container"> 
+            {{ form_errors(form) }}
             <div class="row">
                 {{ form_start(form, {'method' : 'post', 'action' : path('easy_room_app_salle_add')}) }}
                 <div class="card-panel col s12">
@@ -87,16 +79,16 @@
                                     </li>
                                 {% endfor #}
                                 <li class="collection-item">
-                                    {{ form_row(form.dipositionRectable) }}
+                                    {{ form_row(form.capaciteRectangle) }}
                                 </li>
                                 <li class="collection-item">
-                                    {{ form_row(form.dispositionConference) }}
+                                    {{ form_row(form.capaciteConference) }}
                                 </li>
                                 <li class="collection-item">
-                                    {{ form_row(form.dispositionClasse) }}
+                                    {{ form_row(form.capaciteClasse) }}
                                 </li>
                                 <li class="collection-item">
-                                    {{ form_row(form.dispositionVide) }}
+                                    {{ form_row(form.capaciteVide) }}
                                 </li>
                             </ul>
                         </div>

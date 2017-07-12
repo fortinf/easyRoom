@@ -1,7 +1,7 @@
 services:
     disposition.service:
         class: EasyRoom\AppBundle\Service\DispositionService
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", %disposition.id.rectangle%, %disposition.id.conference%, %disposition.id.classe%, %disposition.id.vide%]
 
     salle.service:
         class: EasyRoom\AppBundle\Service\SalleService

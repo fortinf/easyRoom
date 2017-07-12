@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @ORM\Table(name="T_SALLE", uniqueConstraints={@ORM\UniqueConstraint(name="SAL_ID", columns={"SAL_ID"})})
  * @ORM\Entity(repositoryClass="EasyRoom\AppBundle\Repository\SalleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Salle {
 
@@ -90,7 +91,7 @@ class Salle {
      * @ORM\OneToMany(targetEntity="Reservation", mappedBy="salle")
      */
     private $reservations;
-    
+
     /**
      *
      * @var UploadedFile
@@ -109,7 +110,7 @@ class Salle {
      *  maxMessage = "La capacité ne peut dépasser 1000."
      * )
      */
-    private $dipositionRectable;
+    private $capaciteRectangle;
 
     /**
      *
@@ -122,7 +123,7 @@ class Salle {
      *  maxMessage = "La capacité ne peut dépasser 1000."
      * )
      */
-    private $dispositionConference;
+    private $capaciteConference;
 
     /**
      *
@@ -135,7 +136,7 @@ class Salle {
      *  maxMessage = "La capacité ne peut dépasser 1000."
      * )
      */
-    private $dispositionClasse;
+    private $capaciteClasse;
 
     /**
      *
@@ -148,9 +149,19 @@ class Salle {
      *  maxMessage = "La capacité ne peut dépasser 1000."
      * )
      */
-    private $dispositionVide;
-    
+    private $capaciteVide;
+
+    /**
+     *
+     * @var Disposition
+     */
     private $dispositionDefaut;
+    
+    /**
+     *
+     * @var type 
+     */
+    private $tempNomPhoto;
 
     /**
      * Constructor
@@ -308,6 +319,11 @@ class Salle {
      * @param DispositionSalle $dispositionSalle
      */
     public function addDispositionSalle(DispositionSalle $dispositionSalle) {
+        
+        if (is_null($this->dispositionSalles)) {
+            $this->dispositionSalles = new ArrayCollection(); 
+        }
+        
         if (!$this->dispositionSalles->contains($dispositionSalle)) {
             $this->dispositionSalles->add($dispositionSalle);
             $dispositionSalle->setSalle($this);
@@ -329,6 +345,11 @@ class Salle {
      * @param Equipement $equipement
      */
     public function addEquipement(Equipement $equipement) {
+        
+        if (is_null()) {
+            $this->equipements = new ArrayCollection(); 
+        }
+        
         if (!$this->equipements->contains($equipement)) {
             $this->equipements->add($equipement);
             $equipement->setSalle($this);
@@ -341,6 +362,11 @@ class Salle {
      * @param Equipement $equipement
      */
     public function removeEquipement(Equipement $equipement) {
+        
+        if (is_null()) {
+            $this->equipements = new ArrayCollection(); 
+        }
+        
         if ($$this->equipements->contains($equipement)) {
             $this->equipements->removeElement($equipement);
             $equipement->setSalle(null);
@@ -390,40 +416,47 @@ class Salle {
         return $this->file;
     }
 
-    public function setFile(UploadedFile $file = null) {
+    public function setFile(UploadedFile $file) {
+
         $this->file = $file;
-    }
-    
-    public function getDipositionRectable() {
-        return $this->dipositionRectable;
+
+        // S'il existe déjà une photo on met de côté son nom pour la supprimer plus tard
+        if (null !== $this->photo) {
+            $this->tempNomPhoto = $this->photo;
+            $this->photo        = NULL;
+        }
     }
 
-    public function getDispositionConference() {
-        return $this->dispositionConference;
+    public function getCapaciteRectangle() {
+        return $this->capaciteRectangle;
     }
 
-    public function getDispositionClasse() {
-        return $this->dispositionClasse;
+    public function getCapaciteConference() {
+        return $this->capaciteConference;
     }
 
-    public function getDispositionVide() {
-        return $this->dispositionVide;
+    public function getCapaciteClasse() {
+        return $this->capaciteClasse;
     }
 
-    public function setDipositionRectable($dipositionRectable) {
-        $this->dipositionRectable = $dipositionRectable;
+    public function getCapaciteVide() {
+        return $this->capaciteVide;
     }
 
-    public function setDispositionConference($dispositionConference) {
-        $this->dispositionConference = $dispositionConference;
+    public function setCapaciteRectangle($capaciteRectangle) {
+        $this->capaciteRectangle = $capaciteRectangle;
     }
 
-    public function setDispositionClasse($dispositionClasse) {
-        $this->dispositionClasse = $dispositionClasse;
+    public function setCapaciteConference($capaciteConference) {
+        $this->capaciteConference = $capaciteConference;
     }
 
-    public function setDispositionVide($dispositionVide) {
-        $this->dispositionVide = $dispositionVide;
+    public function setCapaciteClasse($capaciteClasse) {
+        $this->capaciteClasse = $capaciteClasse;
+    }
+
+    public function setCapaciteVide($capaciteVide) {
+        $this->capaciteVide = $capaciteVide;
     }
 
     public function getDispositionDefaut() {
@@ -434,7 +467,61 @@ class Salle {
         $this->dispositionDefaut = $dispositionDefaut;
     }
 
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload() {
+        
+        // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
+        if (null === $this->file) {
+            return;
+        }
 
+        // Si on avait un ancien fichier, on le supprime
+        if (null !== $this->tempNomPhoto) {
+            $oldFile = $this->getUploadRootDir() . '/' . $this->tempNomPhoto;
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+        
+        $this->photo = 'photo_salle_' . $this->id . '.' . $this->file->guessExtension();
 
+        // On déplace le fichier envoyé dans le répertoire de notre choix
+        $this->file->move(
+                $this->getUploadRootDir(), // Le répertoire de destination
+                $this->photo   // Le nom du fichier à créer
+        );
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload() {
+        // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
+        $this->tempNomPhoto = $this->getUploadRootDir() . '/' . $this->photo;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload() {
+        // En PostRemove, on n'a pas accès au nom de la photo, on utilise le nom sauvegardé
+        if (file_exists($this->tempNomPhoto)) {
+            // On supprime le fichier
+            unlink($this->tempNomPhoto);
+        }
+    }
+
+    public function getUploadDir() {
+        // On retourne le chemin relatif vers l'image pour un navigateur
+        return 'photo_salles';
+    }
+
+    protected function getUploadRootDir() {
+        // On retourne le chemin relatif vers l'image pour notre code PHP
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
 
 }

@@ -15,10 +15,22 @@ namespace EasyRoom\AppBundle\Bean;
  */
 class DispositionBean {
     
+    /**
+     *
+     * Donnée de l'objet Disposition (Identifiant)
+     */
     private $id;
             
+    /**
+     *
+     * Donnée de l'objet DispositionSalle (Capacité)
+     */
     private $nbPlace;
     
+    /**
+     *
+     * Donnée de l'objet DispositionSalle (Indicateur de la disposition par défaut)
+     */
     private $dispositionDefaut;
     
     public function getId() {

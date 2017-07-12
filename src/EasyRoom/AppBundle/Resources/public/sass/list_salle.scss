@@ -11,8 +11,8 @@ and open the template in the editor.
 @import "_variables.scss";
 
 #photo-salle {
-  min-height:500px;
-  background: url(../images/photos_salles/salle-hipster.jpg) 50% 70%;
+  min-height:150px;
+  background-color: $green-easyroom;
   background-size: cover;
 }
 
