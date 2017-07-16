@@ -12,10 +12,11 @@ use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use EasyRoom\AppBundle\Bean\SearchSalleBean;
+use EasyRoom\AppBundle\Form\SalleType;
 use Proxies\__CG__\EasyRoom\AppBundle\Entity\Salle;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Description of SalleController
@@ -38,8 +39,39 @@ class SalleController
      * 
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction() {
-        return $this->render('EasyRoomAppBundle:Salle:creation.html.twig');
+    public function addAction(Request $request) {
+        $salle = new Salle();
+        $form  = $this->get('form.factory')->create(SalleType::class, $salle);
+
+        // Liste des dispositions
+        $dispositionService = $this->container->get('disposition.service');
+        $dispositions       = $dispositionService->getAll();
+
+        if ($request->isMethod('POST')) {
+
+            $form->handleRequest($request);
+
+            if($form->isValid()) {
+
+                // Liste des dispositions
+                $dispositionBeans = $dispositionService->buildListDispositionBean($salle);
+
+                // Création de la salle
+                $salleService = $this->container->get('salle.service');
+
+                $salleService->create($salle, $dispositionBeans, array());
+
+                $request->getSession()->getFlashBag()->add('success', 'Salle créée.');
+
+                // Redirection vers l'écran de gestion des salles
+                return $this->redirectToRoute('easy_room_app_salle');
+            }
+        }
+
+        return $this->render('EasyRoomAppBundle:Salle:add.html.twig', array(
+                    'form'         => $form->createView(),
+                    'dispositions' => $dispositions,
+        ));
     }
 
     public function searchAction(Request $request) {

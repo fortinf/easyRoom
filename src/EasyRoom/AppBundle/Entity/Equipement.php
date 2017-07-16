@@ -93,7 +93,7 @@ class Equipement
      * @ORM\ManyToMany(targetEntity="Reservation", mappedBy="equipements")
      */
     private $reservations;
-
+    
     /**
      * Constructor
      */

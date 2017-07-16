@@ -1,3 +1,4 @@
+{# Surcharge des champs radio et checkbox pour un rendu "Materialize" #}
 {%- block choice_widget -%}
     {% if expanded %}
         {{- block('choice_widget_expanded') -}}
@@ -10,7 +11,7 @@
     <div {{ block('widget_container_attributes') }}>
     {%- for child in form %}
         {{- form_widget(child) -}}
-        {# {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}} <--------------------- remove this line #}
+        {# {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}} <--------------------- supression du libellé #}
     {% endfor -%}
     </div>
 {%- endblock choice_widget_expanded -%}
@@ -38,13 +39,32 @@
 {%- block checkbox_widget -%}
 {% spaceless %}
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    <label  for="{{ id }}">{{ label|trans }}</label>
+    <label  for="{{ id }}">{{ label|trans }}</label> {# Ajout du libellé derrière le champ input#}
 {% endspaceless %}
 {%- endblock checkbox_widget -%}
 
 {%- block radio_widget -%}
 {% spaceless %}
     <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    <label  for="{{ id }}">{{ label|trans }}</label>
+    <label  for="{{ id }}">{{ label|trans }}</label> {# Ajout du libellé derrière le champ input#}
 {% endspaceless %}
 {%- endblock radio_widget -%}
+
+
+{# Surcharge du champ input file pour un rendu "Materialize" #}
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {% if type == 'file'%}
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Image</span>
+                <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" {% if value is not empty %}value="{{ value }}" {% endif %}>
+            </div>
+        </div>
+    {% else %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% endif %}
+{%- endblock form_widget_simple -%}

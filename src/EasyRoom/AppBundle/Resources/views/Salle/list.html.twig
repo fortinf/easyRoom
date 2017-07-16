@@ -19,55 +19,70 @@
             <h5>Salles</h5>
         </div>
         <div class="col s12 liste-salle">
-            <table class="striped">
-                <thead>
-                    <tr>
-                        <th>Libellé</th>
-                        <th>Éffectif par défaut</th>
-                        <th>Disponible</th>
-                        <th>Jour</th>
-                        <th>Accès handicapé</th>
-                        <th>Réservation(s)</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for salle in salles %}
-                        <tr>
-                            <td>{{ salle.libelle }}</td>
-                            <td>{{ salle.DispositionParDefaut.nbPlace }}</td>
-                            <td>
-                                {% if salle.disponible %}
-                                    <i class="material-icons">check_box</i>
-                                {% else %}
-                                    <i class="material-icons">check_box_outline_blank</i>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if salle.lumiereJour %}
-                                    <i class="material-icons">check_box</i>
-                                {% else %}
-                                    <i class="material-icons">check_box_outline_blank</i>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if salle.handicap %}
-                                    <i class="material-icons">check_box</i>
-                                {% else %}
-                                    <i class="material-icons">check_box_outline_blank</i>
-                                {% endif %}
-                            </td>
-                            <td>{{ salle.reservations|length }}</td>
-                            <td><a href="{{ path('easy_room_app_salle_edit', {'idSalle': salle.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">mode_edit</i></a></td>
-                            <td><a href="{{ path('easy_room_app_salle_delete', {'idSalle': salle.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">delete_forever</i></a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col s12">
+                    {# On affiche tous les messages flash dont le nom est « info » #}
+                    {% if app.session.flashBag.has('success') %}
+                        <i class="material-icons">sentiment_very_satisfied</i> :
+                        {% for message in app.session.flashBag.get('success') %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Éffectif par défaut</th>
+                                <th>Disponible</th>
+                                <th>Jour</th>
+                                <th>Accès handicapé</th>
+                                <th>Réservation(s)</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for salle in salles %}
+                                <tr>
+                                    <td>{{ salle.libelle }}</td>
+                                    <td>{{ salle.DispositionSalleParDefaut.nbPlace }}</td>
+                                    <td>
+                                        {% if salle.disponible %}
+                                            <i class="material-icons">check_box</i>
+                                        {% else %}
+                                            <i class="material-icons">check_box_outline_blank</i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if salle.lumiereJour %}
+                                            <i class="material-icons">check_box</i>
+                                        {% else %}
+                                            <i class="material-icons">check_box_outline_blank</i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if salle.handicap %}
+                                            <i class="material-icons">check_box</i>
+                                        {% else %}
+                                            <i class="material-icons">check_box_outline_blank</i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ salle.reservations|length }}</td>
+                                    <td><a href="{{ path('easy_room_app_salle_edit', {'idSalle': salle.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">mode_edit</i></a></td>
+                                    <td><a href="{{ path('easy_room_app_salle_delete', {'idSalle': salle.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">delete_forever</i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div><a href="{{ path('easy_room_app_equipement_add') }}" class="waves-effect waves-light btn"><i class="material-icons right">add</i> Ajouter une salle</a></div>
+        <div><a href="{{ path('easy_room_app_salle_add') }}" class="waves-effect waves-light btn"><i class="material-icons right">add</i> Ajouter une salle</a></div>
     </section>
 
 {% endblock %}

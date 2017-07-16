@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Disposition
  *
  * @ORM\Table(name="T_DISPOSITION", uniqueConstraints={@ORM\UniqueConstraint(name="DIS_ID", columns={"DIS_ID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EasyRoom\AppBundle\Repository\DispositionRepository")
  */
 class Disposition
 {
