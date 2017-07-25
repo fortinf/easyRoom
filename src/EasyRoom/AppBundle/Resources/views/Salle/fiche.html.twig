@@ -3,6 +3,7 @@
 {# Contenu du block stylesheets #}
 {% block stylesheets %}
 	<link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/salle_show.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ path('easy_room_app_salle_fiche_css', {'idSalle' : salle.id}) }}"/>
 {% endblock %}
 
 {# Contenu du block navbar #}

@@ -26,6 +26,10 @@ easy_room_app_salle_fiche:
     path:     /salle/fiche/{idSalle}
     defaults: { _controller: EasyRoomAppBundle:Salle:show }
 
+easy_room_app_salle_fiche_css:
+    path:     /salle/fiche/style/{idSalle}
+    defaults: { _controller: EasyRoomAppBundle:SalleFicheStyle:buildStyle } 
+
 easy_room_app_salle_search:
     path:     /salle/search
     defaults: { _controller: EasyRoomAppBundle:Salle:search }
