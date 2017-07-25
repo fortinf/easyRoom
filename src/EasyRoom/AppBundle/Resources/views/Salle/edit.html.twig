@@ -45,13 +45,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12">
+                        <div class="col s6">
                             {{ form_widget(form.file) }}
                             {{ form_errors(form.file) }}
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
+                        <div class="col s6">
                             {% if salle.extensionPhoto is not null %}
                                 <div id="cadre_photoSalle">
                                     <img id="photoSalle" src="{{ asset(salle.photoPath) }}" />

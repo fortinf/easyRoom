@@ -432,12 +432,8 @@ class Salle {
         }
 
         if (!is_null($this->file)) {
-            $this->extensionPhoto = $this->file->guessExtension();
+            $this->extensionPhoto = time() . '.' . $this->file->guessExtension();
         }
-
-        var_dump('setFile');
-        var_dump($this->file);
-        var_dump($this->extensionPhoto);
     }
 
     public function getCapaciteRectangle() {
@@ -494,26 +490,10 @@ class Salle {
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload() {
-
-        var_dump('preUpload');
-        var_dump($this->nomPhoto);
-    }
-
-    /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
     public function upload() {
-
-        var_dump('postUpdate');
-
-        var_dump($this->nomPhoto);
-        var_dump($this->extensionPhoto);
-
         /*
          * Si une nouvelle photo a été chargée on la copie (s'il y en avait une, l'ancienne est remplacée).
          * Si aucune photo a été chargée et que l'actuelle a été supprimée, on la supprime du répertoire de stockage.
@@ -522,7 +502,9 @@ class Salle {
 
             // Si une photo a été remplacée, on la supprime
             if (null !== $this->oldExtensionPhoto) {
-                $oldPhotoFile = $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . '.' . $this->oldExtensionPhoto;
+                
+                $oldPhotoFile = $this->getRootPhotoPath($this->oldExtensionPhoto);
+                
                 if (file_exists($oldPhotoFile)) {
                     unlink($oldPhotoFile);
                 }
@@ -534,10 +516,8 @@ class Salle {
                     'photo_salle_' . $this->id . '.' . $this->extensionPhoto   // Le nom du fichier à créer
             );
         } else if (is_null($this->nomPhoto) && !is_null($this->oldExtensionPhoto)) {
-
-            var_dump('suppression de la photo');
             // Suppression de la photo actuelle 
-            $photoFile = $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . '.' . $this->oldExtensionPhoto;
+            $photoFile = $this->getRootPhotoPath($this->oldExtensionPhoto);
             if (file_exists($photoFile)) {
                 unlink($photoFile);
             }
@@ -549,7 +529,7 @@ class Salle {
      */
     public function preRemoveUpload() {
         // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
-        $this->oldExtensionPhoto = $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . '.' . $this->extensionPhoto;
+        $this->oldExtensionPhoto = $this->getRootPhotoPath($this->extensionPhoto);
     }
 
     /**
@@ -575,6 +555,10 @@ class Salle {
 
     public function getPhotoPath() {
         return $this->getUploadDir() . '/' . $this->nomPhoto;
+    }
+    
+    private function getRootPhotoPath($extension) {
+        return $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . $extension;
     }
 
 }

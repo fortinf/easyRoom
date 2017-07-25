@@ -100,39 +100,25 @@ class SalleService {
      * 
      * Fonction de mise à jour de la salle
      * 
-     * @param integer $idSalle
      * @param Salle $salle
      * @param array $dispositionBeans { integer idDisposition => DispositionBean dispositionBean }
      */
-    public function update($idSalle, Salle $salle, array $dispositionBeans) {
+    public function update(Salle $salle, array $dispositionBeans) {
 
-        if (!is_null($idSalle) && is_int($idSalle) && !is_null($salle) && $salle instanceof Salle && !is_null($dispositionBeans) && is_array($dispositionBeans)) {
-            $repository  = $this->em->getRepository('EasyRoomAppBundle:Salle');
-            $udpateSalle = $repository->find($idSalle);
-
-            if (!is_null($udpateSalle)) {
-                // Informations de base
-                $udpateSalle->setLibelle($salle->getLibelle());
-                $udpateSalle->setDescription($salle->getDescription());
-                $udpateSalle->setDisponible($salle->getDisponible());
-                $udpateSalle->setHandicap($salle->getHandicap());
-                $udpateSalle->setLumiereJour($salle->getLumiereJour());
-
-                // Dispostions
-                $arrayDispositionSalles = $udpateSalle->getDispositionSalles()->toArray();
-                foreach ($arrayDispositionSalles as $dispositionSalle) {
-                    $idDisposition = $dispositionSalle->getDisposition()->getId();
-                    if (!is_null($dispositionBeans) && array_key_exists($idDisposition, $dispositionBeans)) {
-                        $dispositionBean = $dispositionBeans[$idDisposition];
-                        $dispositionSalle->setNbPlace($dispositionBean->getNbPlace());
-                        $dispositionSalle->setDispositionDefaut($dispositionBean->getDispositionDefaut());
-                    }
+        if (!is_null($salle) && $salle instanceof Salle && !is_null($dispositionBeans) && is_array($dispositionBeans)) {
+            
+            // Dispostions
+            $arrayDispositionSalles = $salle->getDispositionSalles()->toArray();
+            foreach ($arrayDispositionSalles as $dispositionSalle) {
+                $idDisposition = $dispositionSalle->getDisposition()->getId();
+                if (!is_null($dispositionBeans) && array_key_exists($idDisposition, $dispositionBeans)) {
+                    $dispositionBean = $dispositionBeans[$idDisposition];
+                    $dispositionSalle->setNbPlace($dispositionBean->getNbPlace());
+                    $dispositionSalle->setDispositionDefaut($dispositionBean->getDispositionDefaut());
                 }
-
-                // Modification de la salle
-                $this->em->persist($udpateSalle);
-                $this->em->flush();
             }
+
+            $this->em->flush();
         }
     }
 
@@ -159,15 +145,14 @@ class SalleService {
                 $salle->setCapaciteConference($this->getCapaciteByIdDisposition($salle, $this->idDispoConference));
                 $salle->setCapaciteClasse($this->getCapaciteByIdDisposition($salle, $this->idDispoClasse));
                 $salle->setCapaciteVide($this->getCapaciteByIdDisposition($salle, $this->idDispoVide));
-                
+
                 // Nom de la photo
                 if (!is_null($salle->getExtensionPhoto())) {
-                    
+
                     $salle->setNomPhoto('photo_salle_' . $salle->getId() . '.' . $salle->getExtensionPhoto());
                 }
-                
             }
-            
+
             return $salle;
         } else {
             return NULL;

@@ -98,7 +98,7 @@ class SalleController
                 $dispositionBeans   = $dispositionService->buildListDispositionBean($salle);
 
                 // MOdification de la salle
-                $salleService->update($intIdSalle, $salle, $dispositionBeans);
+                $salleService->update($salle, $dispositionBeans);
 
                 $request->getSession()->getFlashBag()->add('success', 'Salle modifiée.');
 
