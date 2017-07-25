@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Salle
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="T_SALLE", uniqueConstraints={@ORM\UniqueConstraint(name="SAL_ID", columns={"SAL_ID"})})
  * @ORM\Entity(repositoryClass="EasyRoom\AppBundle\Repository\SalleRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields="libelle", message="Ce libellé a déjà été attribué.")
  */
 class Salle {
 
@@ -55,7 +57,7 @@ class Salle {
      *
      * @ORM\Column(name="SAL_PHOTO", type="string", length=255, nullable=true)
      */
-    private $photo;
+    private $extensionPhoto;
 
     /**
      * @var boolean
@@ -156,12 +158,20 @@ class Salle {
      * @var Disposition
      */
     private $dispositionDefaut;
-    
+
     /**
-     *
-     * @var type 
+     * Extension de la photo remplacée
+     * 
+     * @var string 
      */
-    private $tempNomPhoto;
+    private $oldExtensionPhoto;
+
+    /**
+     * Nom de la photo
+     * 
+     * @var string 
+     */
+    private $nomPhoto;
 
     /**
      * Constructor
@@ -239,25 +249,21 @@ class Salle {
     }
 
     /**
-     * Set photo
-     *
-     * @param string $photo
-     *
-     * @return Salle
+     * Get extensionPhoto
+     * 
+     * @return string
      */
-    public function setPhoto($photo) {
-        $this->photo = $photo;
-
-        return $this;
+    public function getExtensionPhoto() {
+        return $this->extensionPhoto;
     }
 
     /**
-     * Get photo
-     *
-     * @return string
+     * Set extensionPhoto
+     * 
+     * @param string $extensionPhoto
      */
-    public function getPhoto() {
-        return $this->photo;
+    public function setExtensionPhoto($extensionPhoto) {
+        $this->extensionPhoto = $extensionPhoto;
     }
 
     /**
@@ -319,11 +325,11 @@ class Salle {
      * @param DispositionSalle $dispositionSalle
      */
     public function addDispositionSalle(DispositionSalle $dispositionSalle) {
-        
+
         if (is_null($this->dispositionSalles)) {
-            $this->dispositionSalles = new ArrayCollection(); 
+            $this->dispositionSalles = new ArrayCollection();
         }
-        
+
         if (!$this->dispositionSalles->contains($dispositionSalle)) {
             $this->dispositionSalles->add($dispositionSalle);
             $dispositionSalle->setSalle($this);
@@ -345,11 +351,11 @@ class Salle {
      * @param Equipement $equipement
      */
     public function addEquipement(Equipement $equipement) {
-        
-        if (is_null()) {
-            $this->equipements = new ArrayCollection(); 
+
+        if (is_null($this->equipements)) {
+            $this->equipements = new ArrayCollection();
         }
-        
+
         if (!$this->equipements->contains($equipement)) {
             $this->equipements->add($equipement);
             $equipement->setSalle($this);
@@ -362,11 +368,11 @@ class Salle {
      * @param Equipement $equipement
      */
     public function removeEquipement(Equipement $equipement) {
-        
-        if (is_null()) {
-            $this->equipements = new ArrayCollection(); 
+
+        if (is_null($this->equipements)) {
+            $this->equipements = new ArrayCollection();
         }
-        
+
         if ($$this->equipements->contains($equipement)) {
             $this->equipements->removeElement($equipement);
             $equipement->setSalle(null);
@@ -421,10 +427,17 @@ class Salle {
         $this->file = $file;
 
         // S'il existe déjà une photo on met de côté son nom pour la supprimer plus tard
-        if (null !== $this->photo) {
-            $this->tempNomPhoto = $this->photo;
-            $this->photo        = NULL;
+        if (!is_null($this->extensionPhoto)) {
+            $this->oldExtensionPhoto = $this->extensionPhoto;
         }
+
+        if (!is_null($this->file)) {
+            $this->extensionPhoto = $this->file->guessExtension();
+        }
+
+        var_dump('setFile');
+        var_dump($this->file);
+        var_dump($this->extensionPhoto);
     }
 
     public function getCapaciteRectangle() {
@@ -467,32 +480,68 @@ class Salle {
         $this->dispositionDefaut = $dispositionDefaut;
     }
 
+    public function getNomPhoto() {
+        return $this->nomPhoto;
+    }
+
+    public function setNomPhoto($nomPhoto) {
+        $this->nomPhoto = $nomPhoto;
+
+        if (is_null($this->file) && is_null($this->nomPhoto)) {
+            $this->oldExtensionPhoto = $this->extensionPhoto;
+            $this->extensionPhoto    = NULL;
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload() {
+
+        var_dump('preUpload');
+        var_dump($this->nomPhoto);
+    }
+
     /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
     public function upload() {
-        
-        // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
-        if (null === $this->file) {
-            return;
-        }
 
-        // Si on avait un ancien fichier, on le supprime
-        if (null !== $this->tempNomPhoto) {
-            $oldFile = $this->getUploadRootDir() . '/' . $this->tempNomPhoto;
-            if (file_exists($oldFile)) {
-                unlink($oldFile);
+        var_dump('postUpdate');
+
+        var_dump($this->nomPhoto);
+        var_dump($this->extensionPhoto);
+
+        /*
+         * Si une nouvelle photo a été chargée on la copie (s'il y en avait une, l'ancienne est remplacée).
+         * Si aucune photo a été chargée et que l'actuelle a été supprimée, on la supprime du répertoire de stockage.
+         */
+        if (!is_null($this->file)) {
+
+            // Si une photo a été remplacée, on la supprime
+            if (null !== $this->oldExtensionPhoto) {
+                $oldPhotoFile = $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . '.' . $this->oldExtensionPhoto;
+                if (file_exists($oldPhotoFile)) {
+                    unlink($oldPhotoFile);
+                }
+            }
+
+            // On déplace la photo envoyé dans le répertoire de stockage
+            $this->file->move(
+                    $this->getUploadRootDir(), // Le répertoire de destination
+                    'photo_salle_' . $this->id . '.' . $this->extensionPhoto   // Le nom du fichier à créer
+            );
+        } else if (is_null($this->nomPhoto) && !is_null($this->oldExtensionPhoto)) {
+
+            var_dump('suppression de la photo');
+            // Suppression de la photo actuelle 
+            $photoFile = $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . '.' . $this->oldExtensionPhoto;
+            if (file_exists($photoFile)) {
+                unlink($photoFile);
             }
         }
-        
-        $this->photo = 'photo_salle_' . $this->id . '.' . $this->file->guessExtension();
-
-        // On déplace le fichier envoyé dans le répertoire de notre choix
-        $this->file->move(
-                $this->getUploadRootDir(), // Le répertoire de destination
-                $this->photo   // Le nom du fichier à créer
-        );
     }
 
     /**
@@ -500,7 +549,7 @@ class Salle {
      */
     public function preRemoveUpload() {
         // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
-        $this->tempNomPhoto = $this->getUploadRootDir() . '/' . $this->photo;
+        $this->oldExtensionPhoto = $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . '.' . $this->extensionPhoto;
     }
 
     /**
@@ -508,9 +557,9 @@ class Salle {
      */
     public function removeUpload() {
         // En PostRemove, on n'a pas accès au nom de la photo, on utilise le nom sauvegardé
-        if (file_exists($this->tempNomPhoto)) {
+        if (file_exists($this->oldExtensionPhoto)) {
             // On supprime le fichier
-            unlink($this->tempNomPhoto);
+            unlink($this->oldExtensionPhoto);
         }
     }
 
@@ -522,6 +571,10 @@ class Salle {
     protected function getUploadRootDir() {
         // On retourne le chemin relatif vers l'image pour notre code PHP
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    public function getPhotoPath() {
+        return $this->getUploadDir() . '/' . $this->nomPhoto;
     }
 
 }

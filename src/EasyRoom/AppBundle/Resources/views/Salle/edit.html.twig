@@ -3,7 +3,7 @@
 {# Contenu du block stylesheets #}
 {% block stylesheets %}
     {# (Contenu optionnel) ici doit être ajouté seulement des balises <link> pour faire appel à des fichiers css spécifiques à la vue #}
-    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/add_salle.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/edit_salle.css') }}"/>
 {% endblock %}
 
 {# Contenu du block main #}
@@ -15,12 +15,21 @@
         <div class="col s8">
         </div>
         <div class="col s4 titre-page">
-            <h5>Création salle</h5>
+            <h5>Modification salle</h5>
         </div>
         <div class="container"> 
             {{ form_errors(form) }}
+            <div>
+                {# On affiche tous les messages flash dont le nom est « info » #}
+                {% if app.session.flashBag.has('success')%}
+                    <i class="material-icons">sentiment_very_satisfied</i>
+                    {% for message in app.session.flashBag.get('success') %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>  
             <div class="row">
-                {{ form_start(form, {'method' : 'post', 'action' : path('easy_room_app_salle_add')}) }}
+                {{ form_start(form, {'method' : 'post', 'action' : path('easy_room_app_salle_edit', {'idSalle': salle.id  } ) }) }}
                 <div class="card-panel col s12">
                     <h5 class="header2">Informations de la salle</h5>
                     <div class="row">
@@ -39,6 +48,28 @@
                         <div class="col s12">
                             {{ form_widget(form.file) }}
                             {{ form_errors(form.file) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            {% if salle.extensionPhoto is not null %}
+                                <div id="cadre_photoSalle">
+                                    <img id="photoSalle" src="{{ asset(salle.photoPath) }}" />
+                                </div>
+                                <button class="btn waves-effect waves-light" data-target="modal_delete_photo" id="delete_photo" name="delete_photo"><i class="material-icons">delete_forever</i></button>
+                                <div id="modal_delete_photo" class="modal">
+                                    <div class="modal-content">
+                                        <h4>Suppression photo</h4>
+                                        <p>L'action de suppression prendra effet lors de la validation du formulaire. La photo sera alors surpprimée de manière définitive.</p>
+                                        <p>Souhaitez-vous poursuivre?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="modale_delete_msg_oui">Oui</a>
+                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="modale_delete_msg_non">Non</a>
+                                    </div>
+                                </div>
+                                {{ form_row(form.nomPhoto) }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -101,5 +132,5 @@
 
 {# Contenu du block javascript #}
 {% block javascript %}
-    <script src="{{ asset('bundles/easyroomapp/dist/js/salle_add.js') }}"></script>
+    <script src="{{ asset('bundles/easyroomapp/dist/js/salle_edit.js') }}"></script>
 {% endblock %}

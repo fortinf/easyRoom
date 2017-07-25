@@ -10,7 +10,7 @@ namespace EasyRoom\AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Bean\DispositionBean;
-use Proxies\__CG__\EasyRoom\AppBundle\Entity\Salle;
+use EasyRoom\AppBundle\Entity\Salle;
 
 /**
  * Description of DispositionService
@@ -49,6 +49,7 @@ class DispositionService {
     
     /**
      * Construit un tableau de DispositionBean avec les données de la salle en paramètre
+     * (ID disposition => DispositionBean)
      * 
      * @param Salle $salle
      * @param integer $idDispositionParDefaut
@@ -78,7 +79,11 @@ class DispositionService {
         $dispositionBeanVide->setNbPlace($salle->getCapaciteVide());
         $dispositionBeanVide->setDispositionDefaut(($this->idDispoVide === $idDispositionParDefaut) ? TRUE : FALSE);
         
-        return array($dispositionBeanRectangle, $dispositionBeanConference, $dispositionBeanClasse, $dispositionBeanVide);
+        return array(
+            $dispositionBeanRectangle->getId() => $dispositionBeanRectangle, 
+            $dispositionBeanConference->getId() => $dispositionBeanConference, 
+            $dispositionBeanClasse->getId() => $dispositionBeanClasse, 
+            $dispositionBeanVide->getId() => $dispositionBeanVide);
     }
 
 }

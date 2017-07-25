@@ -29,11 +29,19 @@ class SalleService {
     private $em;
     private $dispositionService;
     private $equipementService;
+    private $idDispoRectangle;
+    private $idDispoConference;
+    private $idDispoClasse;
+    private $idDispoVide;
 
-    public function __construct(EntityManager $entityManager, DispositionService $dispositionSrv, EquipementService $equipementSrv) {
+    public function __construct(EntityManager $entityManager, DispositionService $dispositionSrv, EquipementService $equipementSrv, $paramIdDispoRectangle, $paramIdDispoConference, $paramIdDispoClasse, $paramIdDispoVide) {
         $this->em                 = $entityManager;
         $this->dispositionService = $dispositionSrv;
         $this->equipementService  = $equipementSrv;
+        $this->idDispoRectangle   = $paramIdDispoRectangle;
+        $this->idDispoConference  = $paramIdDispoConference;
+        $this->idDispoClasse      = $paramIdDispoClasse;
+        $this->idDispoVide        = $paramIdDispoVide;
     }
 
     /**
@@ -50,9 +58,9 @@ class SalleService {
 
             // Dispositions
             foreach ($dispositionBeans as $dispositionBean) {
-                
+
                 if (!is_null($dispositionBean->getId()) && is_int($dispositionBean->getId())) {
-                    
+
                     $disposition = $this->dispositionService->getById($dispositionBean->getId());
 
                     if (!is_null($disposition)) {
@@ -135,9 +143,32 @@ class SalleService {
      * @return Salle
      */
     public function getById($id) {
+
         if (!is_null($id) && is_int($id)) {
             $repository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-            return $repository->find($id);
+            $salle      = $repository->find($id);
+
+            if (!is_null($salle)) {
+
+                // Disposition par défaut
+                $dispositionSalleDefaut = $salle->getDispositionSalleParDefaut();
+                $salle->setDispositionDefaut($dispositionSalleDefaut->getDisposition());
+
+                // Capacité des dispositions
+                $salle->setCapaciteRectangle($this->getCapaciteByIdDisposition($salle, $this->idDispoRectangle));
+                $salle->setCapaciteConference($this->getCapaciteByIdDisposition($salle, $this->idDispoConference));
+                $salle->setCapaciteClasse($this->getCapaciteByIdDisposition($salle, $this->idDispoClasse));
+                $salle->setCapaciteVide($this->getCapaciteByIdDisposition($salle, $this->idDispoVide));
+                
+                // Nom de la photo
+                if (!is_null($salle->getExtensionPhoto())) {
+                    
+                    $salle->setNomPhoto('photo_salle_' . $salle->getId() . '.' . $salle->getExtensionPhoto());
+                }
+                
+            }
+            
+            return $salle;
         } else {
             return NULL;
         }
@@ -159,14 +190,14 @@ class SalleService {
      * @param SearchSalleBean $searchSalle
      */
     public function search(SearchSalleBean $searchSalle) {
-        
+
         $salles = new ArrayCollection();
-        
+
         if (!is_null($searchSalle) && $searchSalle instanceof SearchSalleBean) {
             $easyRepository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-            $salles = $easyRepository->searchSalle($searchSalle);
+            $salles         = $easyRepository->searchSalle($searchSalle);
         }
-        
+
         return $salles;
     }
 
@@ -204,6 +235,29 @@ class SalleService {
                 $this->em->flush();
             }
         }
+    }
+
+    /**
+     * Retourne la capacité d'une salle selon la disposition donnée (id de la disposition)
+     * 
+     * @param integer $idDisposition
+     * @return integer
+     */
+    public function getCapaciteByIdDisposition($salle, $idDisposition) {
+
+        $capacite = NULL;
+
+        if (!is_null($salle->getDispositionSalles()) && !is_null($idDisposition) && is_int($idDisposition)) {
+            $arrayDispositionSalle = $salle->getDispositionSalles()->toArray();
+
+            foreach ($arrayDispositionSalle as $dispositionSalle) {
+                if ($dispositionSalle->getDisposition()->getId() === $idDisposition) {
+                    $capacite = $dispositionSalle->getNbPlace();
+                }
+            }
+        }
+
+        return $capacite;
     }
 
 }

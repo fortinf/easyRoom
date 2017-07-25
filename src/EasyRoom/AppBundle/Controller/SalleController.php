@@ -17,6 +17,7 @@ use Proxies\__CG__\EasyRoom\AppBundle\Entity\Salle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Description of SalleController
@@ -43,18 +44,15 @@ class SalleController
         $salle = new Salle();
         $form  = $this->get('form.factory')->create(SalleType::class, $salle);
 
-        // Liste des dispositions
-        $dispositionService = $this->container->get('disposition.service');
-        $dispositions       = $dispositionService->getAll();
-
         if ($request->isMethod('POST')) {
 
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if ($form->isValid()) {
 
                 // Liste des dispositions
-                $dispositionBeans = $dispositionService->buildListDispositionBean($salle);
+                $dispositionService = $this->container->get('disposition.service');
+                $dispositionBeans   = $dispositionService->buildListDispositionBean($salle);
 
                 // Création de la salle
                 $salleService = $this->container->get('salle.service');
@@ -69,8 +67,52 @@ class SalleController
         }
 
         return $this->render('EasyRoomAppBundle:Salle:add.html.twig', array(
-                    'form'         => $form->createView(),
-                    'dispositions' => $dispositions,
+                    'form' => $form->createView(),
+        ));
+    }
+
+    public function editAction(Request $request, $idSalle) {
+        
+        $intIdSalle = intval($idSalle);
+
+        $salleService = $this->container->get('salle.service');
+        $salle        = $salleService->getById($intIdSalle);
+
+        if (is_null($salle)) {
+            $salle = new Salle();
+
+            // TODO : exception
+            throw new NotFoundHttpException("La salle d'id " . $idSalle . " n'existe pas.");
+        }
+
+        $form = $this->get('form.factory')->create(SalleType::class, $salle);
+
+        if ($request->isMethod('POST')) {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                
+                // Liste des dispositions
+                $dispositionService = $this->container->get('disposition.service');
+                $dispositionBeans   = $dispositionService->buildListDispositionBean($salle);
+
+                // MOdification de la salle
+                $salleService->update($intIdSalle, $salle, $dispositionBeans);
+
+                $request->getSession()->getFlashBag()->add('success', 'Salle modifiée.');
+
+                // Redirection vers l'écran de gestion des salles
+                return $this->redirectToRoute('easy_room_app_salle_edit', array(
+                            'idSalle' => $idSalle,
+                            'salle'   => $salle,
+                ));
+            }
+        }
+
+        return $this->render('EasyRoomAppBundle:Salle:edit.html.twig', array(
+                    'form'  => $form->createView(),
+                    'salle' => $salle,
         ));
     }
 
