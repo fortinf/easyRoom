@@ -33,8 +33,8 @@ class SalleFicheStyleController
         $response = new Response(
                 $this->renderView('EasyRoomAppBundle:Salle:fiche_style.css.twig', array(
                     'photoPath' => $salle->getPhotoPath()
-                )), 
-                200);
+                )));
+        $response->setStatusCode(Response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/css');
         
         //var_dump($response);
