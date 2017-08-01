@@ -130,6 +130,19 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 /** STYLES DIVERS **/
 .bold {font-weight:bold;}
 
+
+/** ECRAN **/
+.titre-page {
+  position:relative;
+  top:-77px;
+  h5{
+    margin:0;
+    color: $white;
+    background-color: rgba($blue-easyroom, 0.9);
+    padding:15px;
+  }
+}
+
 /** ADMIN **/
 
 .entete-admin {

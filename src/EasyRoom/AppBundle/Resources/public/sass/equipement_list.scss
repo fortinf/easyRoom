@@ -4,9 +4,13 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 6 juil. 2017, 15:53:28
+    Created on : 1 août 2017, 17:27:40
     Author     : ffortin
 */
+
+@import "_variables.scss";
+
 .container {
-  width: 90%;
-  max-width: 1300px; }
+  width:90%;
+  max-width:1300px;
+}

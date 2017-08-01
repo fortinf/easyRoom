@@ -10,39 +10,50 @@
 
     {% trans_default_domain 'FOSUserBundle' %}
 
-    <div class="container">
-        <div>
-            <table class="striped">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Adresse mail</th>
-                        <th>Rôle</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
-                        <tr>
-                            <td>{{ user.nom }}</td>
-                            <td>{{ user.prenom }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>
-                                {% for role in user.roles %}
-                                    {{ role }} 
-                                {% endfor %}
-                            </td>
-                            <td><a href="{{ path('easy_room_user_edit', {'idUser': user.id}) }}"><i class="material-icons">mode_edit</i></a></td>
-                            <td><a href="{{ path('easy_room_user_edit', {'idUser': user.id}) }}"><i class="material-icons">delete_forever</i></a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="row entete-admin"></div>
+
+    <section class="row container">
+        <div class="col s8">
         </div>
-        <div><a href="{{ path('fos_user_registration_register') }}"><i class="material-icons">add</i></a></div>
-    </div>
+        <div class="col s4 titre-page">
+            <h5>Utilisateurs</h5>
+        </div>
+        <div class="col s12">
+            <div class="row">
+                <div class="col s12">
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Adresse mail</th>
+                                <th>Rôle</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.nom }}</td>
+                                    <td>{{ user.prenom }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            {{ role }} 
+                                        {% endfor %}
+                                    </td>
+                                    <td><a href="{{ path('easy_room_user_edit', {'idUser': user.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">mode_edit</i></a></td>
+                                    <td><a href="#" class="waves-effect waves-light btn"><i class="material-icons">delete_forever</i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div><a href="{{ path('fos_user_registration_register') }}" class="waves-effect waves-light btn"><i class="material-icons right">add</i> Ajouter un utilisateur</a></div>
+    </section>
 {% endblock %}
 
 {# Contenu du block js #}

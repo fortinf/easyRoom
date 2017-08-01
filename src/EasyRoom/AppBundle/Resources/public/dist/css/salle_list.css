@@ -10,12 +10,3 @@ and open the template in the editor.
 .container {
   width: 90%;
   max-width: 1300px; }
-
-.titre-page {
-  position: relative;
-  top: -77px; }
-  .titre-page h5 {
-    margin: 0;
-    color: #fff;
-    background-color: rgba(45, 176, 229, 0.9);
-    padding: 15px; }
