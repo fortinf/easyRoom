@@ -3,57 +3,80 @@
 {# Contenu du block stylesheets #}
 {% block stylesheets %}
     {# (Contenu optionnel) ici doit être ajouté seulement des balises <link> pour faire appel à des fichiers css spécifiques à la vue #}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/equipement_list.css') }}"/>
 {% endblock %}
 
 {# Contenu du block main #}
 {% block main %}
     {# (Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
+    <div class="row entete-admin"></div>
 
-    <div class="container">
-        <div>
-            <table class="striped">
-                <thead>
-                    <tr>
-                        <th>Libellé</th>
-                        <th>Type</th>
-                        <th>Référence</th>
-                        <th>Disponible</th>
-                        <th>Salle</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for equipement in equipements %}
-                        <tr>
-                            <td>{{ equipement.libelle }}</td>
-                            <td>
-                                {% if equipement.typeEquipement is not null %}
-                                    {{ equipement.typeEquipement.libelle }}
-                                {% endif %}
-                            </td>
-                            <td>{{ equipement.reference }}</td>
-                            <td>
-                                {% if equipement.disponible %}
-                                    <i class="material-icons">check_box</i>
-                                {% else %}
-                                    <i class="material-icons">check_box_outline_blank</i>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if equipement.salle is not null %}
-                                    {{ equipement.salle.libelle }}
-                                {% endif %}
-                            </td>
-                            <td><a href="{{ path('easy_room_app_equipement_edit', {'idEquipement': equipement.id}) }}"><i class="material-icons">mode_edit</i></a></td>
-                            <td><a href="{{ path('easy_room_app_equipement_delete', {'idEquipement': equipement.id}) }}"><i class="material-icons">delete_forever</i></a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <section class="row container">
+        <div class="col s8">
         </div>
-        <div><a href="{{ path('easy_room_app_equipement_add') }}"><i class="material-icons">add</i></a></div>
+        <div class="col s4 titre-page">
+            <h5>Équipements</h5>
+        </div>
+        <div class="col s12">
+            <div class="row">
+                <div class="col s12">
+                    {# On affiche tous les messages flash dont le nom est « info » #}
+                    {% if app.session.flashBag.has('success') %}
+                        <i class="material-icons">sentiment_very_satisfied</i> :
+                        {% for message in app.session.flashBag.get('success') %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Type</th>
+                                <th>Référence</th>
+                                <th>Disponible</th>
+                                <th>Salle</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for equipement in equipements %}
+                                <tr>
+                                    <td>{{ equipement.libelle }}</td>
+                                    <td>
+                                        {% if equipement.typeEquipement is not null %}
+                                            {{ equipement.typeEquipement.libelle }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ equipement.reference }}</td>
+                                    <td>
+                                        {% if equipement.disponible %}
+                                            <i class="material-icons">check_box</i>
+                                        {% else %}
+                                            <i class="material-icons">check_box_outline_blank</i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if equipement.salle is not null %}
+                                            {{ equipement.salle.libelle }}
+                                        {% endif %}
+                                    </td>
+                                    <td><a href="{{ path('easy_room_app_equipement_edit', {'idEquipement': equipement.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">mode_edit</i></a></td>
+                                    <td><a href="{{ path('easy_room_app_equipement_delete', {'idEquipement': equipement.id}) }}" class="waves-effect waves-light btn"><i class="material-icons">delete_forever</i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+    <div><a href="{{ path('easy_room_app_equipement_add') }}" class="waves-effect waves-light btn"><i class="material-icons right">add</i> Ajouter un équipement</a></div>
+</section>
 
 {% endblock %}
 
