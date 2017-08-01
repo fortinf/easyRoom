@@ -7,11 +7,6 @@ and open the template in the editor.
     Created on : 6 juil. 2017, 15:53:28
     Author     : ffortin
 */
-#photo-salle {
-  min-height: 150px;
-  background-color: #afbd2b;
-  background-size: cover; }
-
 .container {
   width: 90%;
   max-width: 1300px; }

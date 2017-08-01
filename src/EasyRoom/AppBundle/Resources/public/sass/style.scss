@@ -129,3 +129,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 /** STYLES DIVERS **/
 .bold {font-weight:bold;}
+
+/** ADMIN **/
+
+.entete-admin {
+  min-height:150px;
+  background-color: $green-easyroom;
+  background-size: cover;
+}
+
