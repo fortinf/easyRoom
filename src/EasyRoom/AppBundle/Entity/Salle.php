@@ -502,9 +502,9 @@ class Salle {
 
             // Si une photo a été remplacée, on la supprime
             if (null !== $this->oldExtensionPhoto) {
-                
+
                 $oldPhotoFile = $this->getRootPhotoPath($this->oldExtensionPhoto);
-                
+
                 if (file_exists($oldPhotoFile)) {
                     unlink($oldPhotoFile);
                 }
@@ -554,9 +554,18 @@ class Salle {
     }
 
     public function getPhotoPath() {
-        return $this->getUploadDir() . '/' . $this->nomPhoto;
+        
+        $photoPath = '';
+        
+        // Nom de la photo
+        if (!is_null($this->getExtensionPhoto())) {
+
+            $photoPath = $this->getUploadDir() . '/' . 'photo_salle_' . $this->getId() . '.' . $this->getExtensionPhoto();
+        }
+        
+        return $photoPath;
     }
-    
+
     private function getRootPhotoPath($extension) {
         return $this->getUploadRootDir() . '/' . 'photo_salle_' . $this->id . $extension;
     }

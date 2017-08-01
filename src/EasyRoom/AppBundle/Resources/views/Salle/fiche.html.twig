@@ -3,12 +3,13 @@
 {# Contenu du block stylesheets #}
 {% block stylesheets %}
 	<link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/salle_show.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ path('easy_room_app_salle_fiche_css', {'idSalle' : salle.id}) }}"/>
 {% endblock %}
 
 {# Contenu du block navbar #}
 {% block main %}
 
-	<div class="row" id="photo-salle"></div>
+	<div class="row entete-photo-salle"></div>
 
 	<section class="row description-resa container">
 		<div class="col s8 description">
