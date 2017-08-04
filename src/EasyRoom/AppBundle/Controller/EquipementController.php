@@ -115,5 +115,14 @@ class EquipementController
                     'idEquipement' => $idEquipementInt,
         ));
     }
+    
+    public function showAction($idEquipement) {
+        $equipementService = $this->container->get('equipement.service');
+        $equipement = $equipementService->getById(intval($idEquipement));
+        
+        return $this->render('EasyRoomAppBundle:Equipement:show.html.twig', array(
+            'equipement' => $equipement,
+        ));
+    }
 
 }

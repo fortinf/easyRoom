@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 4 août 2017, 15:01:45
+    Author     : ffortin
+*/
+.container {
+  width: 90%;
+  max-width: 1300px; }

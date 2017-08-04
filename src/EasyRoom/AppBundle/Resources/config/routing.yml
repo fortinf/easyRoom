@@ -49,6 +49,10 @@ easy_room_app_equipement_edit:
 easy_room_app_equipement_delete:
     path:     /equipement/delete/{idEquipement}
     defaults: { _controller: EasyRoomAppBundle:Equipement:delete }
+    
+easy_room_app_equipement_show:
+    path:     /equipement/show/{idEquipement}
+    defaults: { _controller: EasyRoomAppBundle:Equipement:show }
 
 easy_room_app_reservation_index:
     path:     /reservation

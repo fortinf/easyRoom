@@ -46,7 +46,7 @@
                         <tbody>
                             {% for equipement in equipements %}
                                 <tr>
-                                    <td>{{ equipement.libelle }}</td>
+                                    <td><a href="{{ path('easy_room_app_equipement_show', {'idEquipement' : equipement.id }) }}">{{ equipement.libelle }}</a></td>
                                     <td>
                                         {% if equipement.typeEquipement is not null %}
                                             {{ equipement.typeEquipement.libelle }}
