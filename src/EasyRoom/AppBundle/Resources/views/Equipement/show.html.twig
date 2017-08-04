@@ -1,0 +1,71 @@
+{% extends "EasyRoomAppBundle::template_parent.html.twig" %}
+
+{# Contenu du block stylesheets #}
+{% block stylesheets %}
+    {# (Contenu optionnel) ici doit être ajouté seulement des balises <link> pour faire appel à des fichiers css spécifiques à la vue #}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/easyroomapp/dist/css/equipement_show.css') }}"/>
+{% endblock %}
+
+{# Contenu du block main #}
+{% block main %}
+    {# (Contenu obligatoire) ici doit être ajouté le contenu de l'écran #}
+    <div class="row entete-admin"></div>
+
+    <section class="row container">
+        <div class="col s8">
+        </div>
+        <div class="col s4 titre-page">
+            <h5>{{ equipement.libelle }}</h5>
+        </div>
+        <div class="container">
+            <div>
+                {# On affiche tous les messages flash dont le nom est « error » #}
+                {% if app.session.flashBag.has('error') %}
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                    {% for message in app.session.flashBag.get('error') %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div> 
+            <div class="row">
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ equipement.libelle }} (Référence : {{ equipement.reference }})
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        Type : {{ equipement.typeEquipement.libelle }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ equipement.description }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {% if equipement.disponible %}
+                            <i class="material-icons">&#xE876;</i> Disponible
+                        {% else %}
+                            <i class="material-icons">&#xE14B;</i> En maintenance
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {% if equipement.mobilite %}
+                            <i class="material-icons">&#xE876;</i> Peut être empruntable
+                        {% else %}
+                            <i class="material-icons">&#xE0DA;</i> Dédié à la salle {{ equipement.salle.libelle }} (non empruntable)
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{# Contenu du block javascript #}
+{% block javascript %}
+{% endblock %}
