@@ -14,7 +14,7 @@
 	<section class="row description-resa container">
 		<div class="col s8 description">
 			<h4>{{ salle.libelle }}</h4>
-			<p>{{ salle.DispositionSalleParDefaut.nbPlace }} max.</p>
+			<p>Capacité maximale (disposition par défaut) : {{ salle.DispositionSalleParDefaut.nbPlace }}</p>
 			<p class="summary">{{ salle.description }}</p>
 		</div>
 		<div class="col s4 reservation">
@@ -73,9 +73,11 @@
         </div>
     </section>
     <section class="equipement row container">
-        <h5>Équipement</h5>
+        <h5>Équipements dédiés</h5>
         <ul>
-            <li><i class="material-icons">music_note</i> Chaîne Hi-Fi</li>
+            {% for equipement in salle.equipements %}
+                <li>{{ equipement.libelle }}</li>
+            {% endfor %}
         </ul>
     </section>
 
