@@ -49,7 +49,7 @@
                         <tbody>
                             {% for salle in salles %}
                                 <tr>
-                                    <td>{{ salle.libelle }}</td>
+                                    <td><a href="{{ path('easy_room_app_salle_fiche', {'idSalle' : salle.id }) }}">{{ salle.libelle }}</a></td>
                                     <td>{{ salle.DispositionSalleParDefaut.nbPlace }}</td>
                                     <td>
                                         {% if salle.disponible %}
