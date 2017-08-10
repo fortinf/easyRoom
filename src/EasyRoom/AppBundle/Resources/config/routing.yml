@@ -54,9 +54,13 @@ easy_room_app_equipement_show:
     path:     /equipement/show/{idEquipement}
     defaults: { _controller: EasyRoomAppBundle:Equipement:show }
 
-easy_room_app_reservation_index:
-    path:     /reservation
-    defaults: { _controller: EasyRoomAppBundle:Reservation:index }
+easy_room_app_reservation_add:
+    path:     /reservation/add/{idSalle}
+    defaults: { _controller: EasyRoomAppBundle:Reservation:add }
+
+easy_room_app_reservation_add_submit:
+    path:     /reservation/submitAdd/
+    defaults: { _controller: EasyRoomAppBundle:Reservation:submitAdd }
 
 easy_room_app_utilisateur_index:
     path:     /utilisateur

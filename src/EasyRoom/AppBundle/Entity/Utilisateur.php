@@ -138,6 +138,10 @@ class Utilisateur extends BaseUser
         
         return $this;
     }
+    
+    public function getChoiceLabel() {
+        return $this->prenom . ' ' . $this->nom . ' (' . $this->email . ')';
+    }
 
 }
 

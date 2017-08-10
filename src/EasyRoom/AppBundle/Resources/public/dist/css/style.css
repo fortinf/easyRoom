@@ -136,6 +136,6 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 /** ADMIN **/
 .entete-admin {
-  min-height: 150px;
+  min-height: 300px;
   background-color: #afbd2b;
   background-size: cover; }

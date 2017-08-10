@@ -15,7 +15,7 @@ class AccueilController
      */
     public function indexAction() {
         $utilisateurService = $this->container->get('utilisateur.service');
-        $utilisateur        = $utilisateurService->getById(1);
+        $utilisateur        = $this->getUser();
 
         $reservationInvites = null;
         $reservationMaitres = null;
