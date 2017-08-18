@@ -180,7 +180,7 @@ class SalleService {
 
         if (!is_null($searchSalle) && $searchSalle instanceof SearchSalleBean) {
             $easyRepository = $this->em->getRepository('EasyRoomAppBundle:Salle');
-            $salles         = $easyRepository->searchSalle($searchSalle);
+            $salles         = $easyRepository->searchUnusedSalle($searchSalle);
         }
 
         return $salles;

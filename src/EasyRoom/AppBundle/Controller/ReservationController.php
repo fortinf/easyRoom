@@ -31,6 +31,7 @@ class ReservationController
         $postDateFin    = '';
         $postHeureDebut = '';
         $postHeureFin   = '';
+        $libSalle       = '';
 
         if ($request->isMethod('POST')) {
             $postDateDebut  = $request->request->get("date_debut"); // ex: 20 mars, 2017
@@ -43,6 +44,7 @@ class ReservationController
             $salleService = $this->container->get('salle.service');
             $salle        = $salleService->getById(intval($idSalle));
             $reservation->setSalle($salle);
+            $libSalle     = $salle->getLibelle();
         }
 
         $form = $this->get('form.factory')->create(ReservationType::class, $reservation, array(
@@ -55,6 +57,7 @@ class ReservationController
                     'dateFin'    => $postDateFin,
                     'heureDebut' => $postHeureDebut,
                     'heureFin'   => $postHeureFin,
+                    'libSalle'   => $libSalle,
         ));
     }
 
@@ -62,6 +65,7 @@ class ReservationController
 
         $reservation = new Reservation();
         $utilisateur = $this->getUser();
+        $libSalle    = '';
 
         $form = $this->get('form.factory')->create(ReservationType::class, $reservation, array(
             'idUtilisateur' => $utilisateur->getId(),
@@ -76,7 +80,11 @@ class ReservationController
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            $salle = $reservation->getSalle();
+
+            if ($form->isValid() && !is_null($salle)) {
+                
+                $libSalle = $salle->getLibelle();
 
                 // Propriétaire de la réservation : utilisateur connecté
                 $reservation->setUtilisateurMaitre($utilisateur);
@@ -91,14 +99,31 @@ class ReservationController
                 $dateFin          = DateTime::createFromFormat('d/m/Y H:i', $postDateHeureFin);
                 $reservation->setDateFin($dateFin);
 
-                // Création
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($reservation);
-                $em->flush();
+                // Gestion des conflits
+                $reservationService = $this->container->get('reservation.service');
+                if (!$reservationService->searchConflicts($salle->getId(), $dateDebut, $dateFin)) {
+                    // Création
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($reservation);
+                    $em->flush();
+
+                    return $this->redirectToRoute('index');
+                } else {
+                    $request->getSession()->getFlashBag()->add('error', 'Création impossible! La salle est déjà réservée pour la période désirée.');
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add('error', 'Erreurs de données');
             }
         }
 
-        return $this->redirectToRoute('index');
+        return $this->render('EasyRoomAppBundle:Reservation:add.html.twig', array(
+                    'form'       => $form->createView(),
+                    'dateDebut'  => $postDateDebut,
+                    'dateFin'    => $postDateFin,
+                    'heureDebut' => $postHeureDebut,
+                    'heureFin'   => $postHeureFin,
+                    'libSalle'   => $libSalle,
+        ));
     }
 
 }

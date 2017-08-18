@@ -23,7 +23,7 @@ class ReservationType
                 ->add('salle', EntityType::class, array(
                     'label'        => 'Salle à réserver',
                     'class'        => 'EasyRoom\AppBundle\Entity\Salle',
-                    'choice_label' => 'libelle'
+                    'choice_label' => 'libelle',
                 ))
                 ->add('utilisateurs', EntityType::class, array(
                     'label'         => 'Participants',

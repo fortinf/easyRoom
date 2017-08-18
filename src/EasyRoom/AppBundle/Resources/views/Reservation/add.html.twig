@@ -15,10 +15,19 @@
         <div class="col s8">
         </div>
         <div class="col s4 titre-page">
-            <h5>Réservation</h5>
+            <h5>Réservervation de la salle {{ libSalle }}</h5>
         </div>
         <div class="container"> 
             {{ form_errors(form) }}
+            <div>
+                {# On affiche tous les messages flash dont le nom est « error » #}
+                {% if app.session.flashBag.has('error')%}
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                    {% for message in app.session.flashBag.get('error') %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div> 
             <div class="row">
                 {{ form_start(form, {'method' : 'post', 'action' : path('easy_room_app_reservation_add_submit')}) }}
                 <div class="card-panel col s12">
