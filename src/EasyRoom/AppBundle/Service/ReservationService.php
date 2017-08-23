@@ -8,6 +8,7 @@
 
 namespace EasyRoom\AppBundle\Service;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use EasyRoom\AppBundle\Entity\InviteExterne;
 use EasyRoom\AppBundle\Entity\Reservation;
@@ -239,6 +240,25 @@ class ReservationService {
                 $this->em->flush();
             }
         }
+    }
+
+    /**
+     * 
+     * @param integer $idSalle
+     * @param DateTime $dateDebut
+     * @param DateTime $dateFin
+     */
+    public function searchConflicts($idSalle, DateTime $dateDebut, DateTime $dateFin) {
+
+        $conflict = FALSE;
+        
+        if (!is_null($idSalle) && is_int($idSalle) && !is_null($dateDebut) && !is_null($dateFin)) {
+            $repository   = $this->em->getRepository('EasyRoomAppBundle:Reservation');
+            $reservations = $repository->searchBySalle($idSalle, $dateDebut, $dateFin);
+            $conflict = !empty($reservations);
+        }
+        
+        return $conflict;
     }
 
 }

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Reservation
  *
  * @ORM\Table(name="T_RESERVATION", uniqueConstraints={@ORM\UniqueConstraint(name="RES_ID", columns={"RES_ID"})}, indexes={@ORM\Index(name="RES_FK_SAL_ID", columns={"RES_FK_SAL_ID"}), @ORM\Index(name="RES_FK_UTI_ID", columns={"RES_FK_UTI_ID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EasyRoom\AppBundle\Repository\ReservationRepository")
  */
 class Reservation {
 

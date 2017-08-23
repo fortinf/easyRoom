@@ -20,7 +20,7 @@
             </div>
             <div class="card-action">
                 <a class="learn-more-link" href="{{ path('easy_room_app_salle_fiche', {'idSalle': salle.id}) }}">En savoir +</a>
-                <a class="book-link" href="#">Réserver</a>
+                <a class="book-link" href="{{ path('easy_room_app_reservation_add', {'idSalle': salle.id}) }}">Réserver</a>
             </div>
         </div>
     </div>

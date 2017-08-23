@@ -124,8 +124,8 @@ class SalleController
 
             $postEffectif   = $request->request->get("effectif");
             $postDateDebut  = $request->request->get("date_debut"); // ex: 20 mars, 2017
-            $postDateFin    = $request->request->get("date_fin"); // ex: 10:00
-            $postHeureDebut = $request->request->get("heure_debut");
+            $postDateFin    = $request->request->get("date_fin"); 
+            $postHeureDebut = $request->request->get("heure_debut"); // ex: 10:00
             $postHeureFin   = $request->request->get("heure_fin");
 
             $searchSalle = new SearchSalleBean();
